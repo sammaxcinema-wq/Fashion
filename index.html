@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Gold, White, Black Theme */
             --gold: #c9a84c;
             --gold-light: #d4b96a;
             --gold-dark: #8b6914;
@@ -269,8 +268,8 @@
             font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s;
             color: #ffffff; padding: 14px; font-size: 14px;
         }
-        .btn-whatsapp { background: #000000; border: 2px solid var(--gold); }
-        .btn-whatsapp:hover { background: var(--gold-dark); border-color: var(--gold-dark); transform: translateY(-2px); }
+        .btn-whatsapp { background: #25D366; border: 2px solid #25D366; color: #ffffff; }
+        .btn-whatsapp:hover { background: #128C7E; border-color: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); }
         .btn-download { background: #000000; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
         .btn-download:hover { background: var(--near-black); transform: translateY(-2px); }
         .float-chat {
@@ -278,15 +277,15 @@
             display: flex; flex-direction: column; align-items: center; gap: 8px;
         }
         .float-share-btn {
-            width: 58px; height: 58px; border-radius: 50%; background: var(--gold);
-            border: 2px solid #000000; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); position: relative; transition: transform 0.2s;
+            width: 58px; height: 58px; border-radius: 50%; background: #25D366;
+            border: 2px solid #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); position: relative; transition: transform 0.2s;
         }
         .float-share-btn:hover { transform: scale(1.08); }
-        .float-share-btn svg { width: 28px; height: 28px; fill: #000000; }
+        .float-share-btn svg { width: 28px; height: 28px; fill: #ffffff; }
         .pulse-ring {
             position: absolute; border-radius: 50%; width: 58px; height: 58px;
-            background: rgba(201, 168, 76, 0.4); animation: pulse 2s ease-out infinite; pointer-events: none;
+            background: rgba(37, 211, 102, 0.35); animation: pulse 2s ease-out infinite; pointer-events: none;
         }
         .pulse-ring:nth-child(2) { animation-delay: 0.8s; }
         @keyframes pulse {
@@ -294,9 +293,9 @@
             100% { transform: scale(2.3); opacity: 0; }
         }
         .share-badge {
-            position: absolute; top: -9px; right: -9px; background: #000000; color: var(--gold);
+            position: absolute; top: -9px; right: -9px; background: #000000; color: #ffffff;
             font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 8px;
-            letter-spacing: 0.8px; border-radius: 6px; padding: 2px 6px; border: 1px solid var(--gold); white-space: nowrap;
+            letter-spacing: 0.8px; border-radius: 6px; padding: 2px 6px; border: 1px solid #25D366; white-space: nowrap;
         }
         .toast {
             position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
@@ -474,7 +473,7 @@
 <div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:794px;pointer-events:none;"></div>
 
 <div class="float-chat">
-    <button class="float-share-btn" onclick="handleFloatingShare()" aria-label="Share Legal Bill to WhatsApp">
+    <button class="float-share-btn" onclick="handleFloatingShare()" aria-label="Share to WhatsApp">
         <span class="pulse-ring"></span>
         <span class="pulse-ring"></span>
         <span class="share-badge">SHARE</span>
@@ -483,18 +482,44 @@
 </div>
 
 <script>
-    // ─── LAZY-LOAD PDF LIBRARIES ───────────────────────────────
+    // ─── PDF LIBRARIES (loaded immediately for better UX) ──────
     let pdfLibsLoaded = false;
+    
+    // Pre-load PDF libraries
+    function preloadPdfLibs() {
+        if (pdfLibsLoaded || (window.html2canvas && window.jspdf)) {
+            pdfLibsLoaded = true;
+            return;
+        }
+        const script1 = document.createElement('script');
+        script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+        script1.onload = () => {
+            const script2 = document.createElement('script');
+            script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+            script2.onload = () => {
+                pdfLibsLoaded = true;
+                console.log('✅ PDF libraries loaded');
+            };
+            document.head.appendChild(script2);
+        };
+        document.head.appendChild(script1);
+    }
+    
     function loadPdfLibs() {
         return new Promise((resolve, reject) => {
-            if (pdfLibsLoaded) return resolve();
-            if (window.html2canvas && window.jspdf) { pdfLibsLoaded = true; return resolve(); }
+            if (pdfLibsLoaded || (window.html2canvas && window.jspdf)) {
+                pdfLibsLoaded = true;
+                return resolve();
+            }
             const script1 = document.createElement('script');
             script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             script1.onload = () => {
                 const script2 = document.createElement('script');
                 script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                script2.onload = () => { pdfLibsLoaded = true; resolve(); };
+                script2.onload = () => {
+                    pdfLibsLoaded = true;
+                    resolve();
+                };
                 script2.onerror = reject;
                 document.head.appendChild(script2);
             };
@@ -502,6 +527,9 @@
             document.head.appendChild(script1);
         });
     }
+
+    // Pre-load on startup
+    preloadPdfLibs();
 
     // ─── APPLICATION STATE ─────────────────────────────────────
     let currentTab = 'CALENDAR';
@@ -565,6 +593,185 @@
         clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>{t.style.display='none';},d);
     }
     function updateField(k,v){ formData[k]=v; if(k==='invoiceNo') document.getElementById('docNumber').textContent=v; }
+
+    // ─── PDF GENERATION ────────────────────────────────────────
+    function renderPDFTemplate() {
+        const tot = calcTotals();
+        const tab = window._activeBillingTab || 'INVOICE';
+        const qrURL = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(formData.invoiceNo+'-MAUNCHOLAW')}`;
+        let html = '';
+
+        const logoImgBlock = `<img src="${logoURL}" style="width:56px;height:56px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;" crossorigin="anonymous">`;
+
+        if (tab === 'RECEIPT') {
+            const paidDate = formData.date || new Date().toISOString().slice(0,10);
+            const paidDateFormatted = new Date(paidDate).toLocaleDateString('en-KE', {day:'2-digit', month:'short', year:'numeric'});
+            html = `<div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;">
+                <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
+                    <div style="display:flex;align-items:center;gap:14px;">${logoImgBlock}<div><div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div></div></div>
+                    <div style="color:#fff;text-align:right;"><h2 style="font-size:22px;font-weight:900;">OFFICIAL RECEIPT</h2><p style="color:#c9a84c;">Payment Confirmed</p></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
+                    <div><h3 style="font-size:11px;font-weight:900;">RECEIVED FROM:</h3><p style="font-size:20px;font-weight:700;">${formData.clientName}</p><p>${formData.matterRef}</p></div>
+                    <div style="text-align:right;"><p>Receipt No: ${formData.invoiceNo}</p><p>Date Paid: ${paidDateFormatted}</p><p>Method: ${paymentMethod}</p></div>
+                </div>
+                <table style="width:100%;border-collapse:collapse;margin-bottom:28px;"><thead><tr style="background:#f9fafb;border-top:2px solid #000;border-bottom:2px solid #000;"><th>Description</th><th style="text-align:right;">Amount (KSH)</th></tr></thead><tbody><tr><td style="padding:20px;">FULL SETTLEMENT FOR ${tab.replace('_',' ')} #${formData.invoiceNo}</td><td style="padding:20px;text-align:right;font-weight:900;font-size:20px;">${fmtPlain(tot.grand)}</td></tr></tbody></table>
+                <div style="background:#000;color:#c9a84c;padding:20px;border-radius:8px;text-align:right;"><p style="font-size:10px;">TOTAL PAID</p><p style="font-size:26px;font-weight:900;">KSH ${fmtPlain(tot.grand)}</p></div>
+            </div>`;
+        } else if (tab === 'FEE_NOTE') {
+            const itemsRows = lineItems.map(item => `<tr><td style="padding:10px;">${item.code||'—'}</td><td style="padding:10px;font-weight:600;">${item.description||'—'}</td><td style="text-align:center;padding:10px;">${item.hours||0}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.rate)}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.disbursement||0)}</td><td style="text-align:right;font-weight:700;padding:10px;">${fmtPlain(item.hours*item.rate + (item.disbursement||0))}</td></tr>`).join('');
+            html = `<div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;">
+                <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
+                    <div style="display:flex;align-items:center;gap:14px;">${logoImgBlock}<div><div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div></div></div>
+                    <div style="color:#fff;text-align:right;"><h2 style="font-size:22px;font-weight:900;">FEE NOTE</h2><p style="color:#c9a84c;">#${formData.invoiceNo}</p></div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;"><div><h3 style="font-weight:900;color:#8b6914;">TO:</h3><p style="font-size:18px;font-weight:700;">${formData.clientName}</p><p>${formData.matterRef}</p></div><div style="text-align:right;"><p>Date: ${formData.date}</p><p>PIN: ${formData.advocatePin}</p></div></div>
+                <table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f0e8;border-top:2px solid #000;"><th>Code</th><th>Service</th><th>Hours</th><th>Rate/hr</th><th>Disb.</th><th>Total</th></tr></thead><tbody>${itemsRows}</tbody></table>
+                <div style="display:flex;justify-content:flex-end;margin-top:20px;"><div style="width:300px;"><div style="display:flex;justify-content:space-between;padding:8px 0;">Fees<span>${fmtPlain(tot.feesSub)}</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;">Disbursements<span>${fmtPlain(tot.disbursements)}</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;">VAT (${taxPct}%)<span>${fmtPlain(tot.tax)}</span></div><div style="background:#000;color:#c9a84c;padding:14px;border-radius:6px;display:flex;justify-content:space-between;font-weight:900;">TOTAL<span>KSH ${fmtPlain(tot.grand)}</span></div></div></div>
+            </div>`;
+        } else {
+            const itemsRows = lineItems.map(item => `<tr><td style="padding:10px;">${item.code||'—'}</td><td style="padding:10px;font-weight:600;">${item.description||'—'}</td><td style="text-align:center;padding:10px;">${item.hours||0}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.rate)}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.disbursement||0)}</td><td style="text-align:right;font-weight:700;padding:10px;">${fmtPlain(item.hours*item.rate + (item.disbursement||0))}</td></tr>`).join('');
+            html = `<div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;">
+                <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;text-align:center;">${logoImgBlock}<div style="font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:#fff;margin-top:8px;">MAUNCHO LAW ADVOCATES</div></div>
+                <div style="text-align:center;margin-bottom:28px;"><h1 style="font-size:26px;font-weight:900;border-bottom:2px solid #000;display:inline-block;padding-bottom:4px;">TAX INVOICE</h1></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:32px;"><div><h3 style="font-weight:700;">BILL TO:</h3><p style="font-size:18px;font-weight:700;">${formData.clientName}</p><p>${formData.matterRef}</p></div><div style="text-align:right;"><p>Invoice No: ${formData.invoiceNo}</p><p>Date: ${formData.date}</p><p>Due: ${formData.dueDate}</p></div></div>
+                <table style="width:100%;border-collapse:collapse;"><thead><tr style="border-top:2px solid #000;border-bottom:2px solid #000;"><th>Code</th><th>Description</th><th>Hours</th><th>Rate</th><th>Disb.</th><th>Total</th></tr></thead><tbody>${itemsRows}</tbody></table>
+                <div style="display:flex;justify-content:flex-end;margin-top:20px;border-top:2px solid #000;padding-top:16px;"><div style="text-align:right;width:300px;"><div style="display:flex;justify-content:space-between;">Subtotal<span>KSH ${fmtPlain(tot.sub)}</span></div><div style="display:flex;justify-content:space-between;">VAT (${taxPct}%)<span>KSH ${fmtPlain(tot.tax)}</span></div><div style="display:flex;justify-content:space-between;border-top:2px solid #000;margin-top:6px;padding-top:8px;font-weight:900;">GRAND TOTAL<span>KSH ${fmtPlain(tot.grand)}</span></div></div></div>
+            </div>`;
+        }
+        return html;
+    }
+
+    async function generatePDFBlob() {
+        await loadPdfLibs();
+        const templateHTML = renderPDFTemplate();
+        const templateEl = document.getElementById('pdfTemplate');
+        templateEl.innerHTML = templateHTML;
+        
+        // Wait for images to load
+        await new Promise(r => setTimeout(r, 500));
+        
+        const canvas = await html2canvas(templateEl, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            width: templateEl.scrollWidth,
+            height: templateEl.scrollHeight
+        });
+        
+        const { jsPDF } = window.jspdf;
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = 210;
+        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+        
+        if (pdfHeight > 297) {
+            let remaining = pdfHeight - 297;
+            while (remaining > 0) {
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, -(297 * (pdf.getNumberOfPages() - 1)), pdfWidth, pdfHeight);
+                remaining -= 297;
+            }
+        }
+        
+        templateEl.innerHTML = '';
+        return pdf.output('blob');
+    }
+
+    // ─── WHATSAPP SHARING ──────────────────────────────────────
+    async function shareToWhatsApp() {
+        const loadingEl = document.getElementById('loadingOverlay');
+        loadingEl.classList.remove('hidden');
+        showToast('📄 Generating PDF for WhatsApp…', 4000);
+        
+        try {
+            const pdfBlob = await generatePDFBlob();
+            const tab = window._activeBillingTab || 'INVOICE';
+            const pdfName = `Mauncho_Law_${tab}_${formData.invoiceNo.replace(/[/#]/g,'_')}.pdf`;
+            const file = new File([pdfBlob], pdfName, { type: 'application/pdf' });
+            const { grand } = calcTotals();
+            
+            const shareText = `*MAUNCHO LAW ADVOCATES*\n⚖️ Laipha House, Third Floor, Nanyuki\n📄 ${tab.replace('_',' ')}: ${formData.invoiceNo}\n👤 ${formData.clientName}\n📋 ${formData.matterRef}\n💰 Grand Total: ${fmt(grand)}\n📅 ${formData.date}\n📞 ${formData.firmPhone}\n✉️ ${formData.firmEmail}`;
+            
+            // Try native share first (works on mobile)
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({
+                    title: `Mauncho Law — ${formData.invoiceNo}`,
+                    text: shareText,
+                    files: [file]
+                });
+                showToast('✅ Document shared successfully!', 3000);
+            } else {
+                // Fallback: download and open WhatsApp
+                const url = URL.createObjectURL(pdfBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = pdfName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                
+                // Open WhatsApp with message
+                const whatsappURL = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+                setTimeout(() => {
+                    window.open(whatsappURL, '_blank');
+                    URL.revokeObjectURL(url);
+                }, 500);
+                
+                showToast('📥 PDF downloaded! Opening WhatsApp…', 4000);
+            }
+        } catch (err) {
+            console.error('Share error:', err);
+            showToast('⚠️ Could not share. Trying alternative method…', 3500);
+            
+            // Ultimate fallback: just open WhatsApp with text
+            const { grand } = calcTotals();
+            const tab = window._activeBillingTab || 'INVOICE';
+            const fallbackText = `*MAUNCHO LAW ADVOCATES*\n⚖️ Laipha House, Third Floor, Nanyuki\n📄 ${tab.replace('_',' ')}: ${formData.invoiceNo}\n👤 ${formData.clientName}\n📋 ${formData.matterRef}\n💰 Grand Total: ${fmt(grand)}\n📅 ${formData.date}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(fallbackText)}`, '_blank');
+        } finally {
+            loadingEl.classList.add('hidden');
+        }
+    }
+
+    async function downloadPDF() {
+        const loadingEl = document.getElementById('loadingOverlay');
+        loadingEl.classList.remove('hidden');
+        showToast('📄 Preparing PDF download…', 3000);
+        
+        try {
+            const pdfBlob = await generatePDFBlob();
+            const tab = window._activeBillingTab || 'INVOICE';
+            const pdfName = `Mauncho_Law_${tab}_${formData.invoiceNo.replace(/[/#]/g,'_')}.pdf`;
+            
+            const url = URL.createObjectURL(pdfBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = pdfName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('✅ PDF downloaded!', 2500);
+        } catch (err) {
+            console.error('Download error:', err);
+            showToast('⚠️ Download failed. Please try again.', 3000);
+        } finally {
+            loadingEl.classList.add('hidden');
+        }
+    }
+
+    function handleFloatingShare() {
+        // Switch to billing tab and share
+        if (currentTab !== 'BILLING') {
+            switchTab('BILLING', document.querySelectorAll('.tab')[0]);
+        }
+        setTimeout(() => shareToWhatsApp(), 300);
+    }
 
     // ─── CALENDAR LOGIC ────────────────────────────────────────
     function getMattersForDate(dateStr) {
@@ -792,7 +999,7 @@
           <div class="field"><label>Terms</label><textarea rows="2" oninput="updateField('terms',this.value)">${formData.terms}</textarea></div>
         </div></div>
         <div class="section-card"><div class="form-body actions">
-          <button class="btn-whatsapp" onclick="generateAndSharePDF()">📤 SHARE TO WHATSAPP (PDF)</button>
+          <button class="btn-whatsapp" onclick="shareToWhatsApp()">📤 SHARE TO WHATSAPP (PDF)</button>
           <button class="btn-download" onclick="downloadPDF()">⬇ DOWNLOAD PDF</button>
         </div></div>`;
     }
@@ -806,11 +1013,6 @@
     function updateTax(v){ taxPct=parseFloat(v)||0; render(); }
     function setPayment(s){ paymentStatus=s; render(); }
 
-    // ─── PDF FUNCTIONS ─────────────────────────────────────────
-    async function generateAndSharePDF(){ showToast('📄 PDF feature available in Billing tab',3000); }
-    async function downloadPDF(){ showToast('📄 PDF feature available in Billing tab',3000); }
-    function handleFloatingShare(){ generateAndSharePDF(); }
-
     // ─── MAIN RENDER ───────────────────────────────────────────
     function render() {
         if (currentTab === 'CALENDAR') {
@@ -823,7 +1025,7 @@
     function switchTab(tab, el) {
         currentTab = tab;
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
+        if (el) el.classList.add('active');
         if (tab === 'BILLING') {
             document.getElementById('docNumber').textContent = formData.invoiceNo;
         } else {
@@ -852,7 +1054,7 @@
     window.updateTax = updateTax;
     window.setPayment = setPayment;
     window.updateField = updateField;
-    window.generateAndSharePDF = generateAndSharePDF;
+    window.shareToWhatsApp = shareToWhatsApp;
     window.downloadPDF = downloadPDF;
     window.handleFloatingShare = handleFloatingShare;
 
@@ -860,7 +1062,6 @@
     
     // Check reminders every 30 seconds
     setInterval(checkUpcomingReminders, 30000);
-    // Initial reminder check
     setTimeout(checkUpcomingReminders, 1000);
 </script>
 </body>
