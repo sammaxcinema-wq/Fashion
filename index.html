@@ -129,7 +129,7 @@
 <div class="toast" id="toast" style="display:none"></div>
 <div class="loading-overlay hidden" id="loadingOverlay">
     <div class="spinner"></div>
-    <div class="text">GENERATING ULTRA-PRO PDF…</div>
+    <div class="text">RENDERING PROFESSIONAL PDF…</div>
 </div>
 
 <div class="content" id="mainContent"></div>
@@ -163,8 +163,7 @@
         address: 'Laipha House, Third Floor, Nanyuki',
         email: 'wakilimauncho@gmail.com',
         phone: '+254 746 388 218',
-        logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
-        watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
+        logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg'
     };
 
     let mainTab = 'BILLING', billTab = 'INVOICE';
@@ -197,17 +196,17 @@
     }
     function toast(m,d=2500){ const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d); }
 
-    // ─── ULTRA-PRO PDF TEMPLATE ───────────────────────────────
+    // ─── ADVANCED PDF TEMPLATE ─────────────────────────────────
     function pdfTemplate() {
         const c = calc();
         const rows = items.map(i=>`
             <tr class="service-row">
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;vertical-align:top;">${i.code||'—'}</td>
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;vertical-align:top;">${i.desc||'—'}</td>
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:center;vertical-align:top;">${i.hrs||0}</td>
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;vertical-align:top;">${FP(i.rate)}</td>
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;vertical-align:top;">${FP(i.disb||0)}</td>
-                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;font-weight:700;vertical-align:top;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;">${i.code||'—'}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;">${i.desc||'—'}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:center;">${i.hrs||0}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;">${FP(i.rate)}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;">${FP(i.disb||0)}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;font-weight:700;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
             </tr>`).join('');
 
         return `<!DOCTYPE html>
@@ -288,29 +287,40 @@
 </html>`;
     }
 
-    // ─── ULTRA-PRO PDF GENERATION ────────────────────────────
+    // ─── ULTRA‑SHARP PDF RENDERING ──────────────────────────
     async function makePDF() {
         await loadLibs();
         const el = document.getElementById('pdfTemplate');
         el.innerHTML = pdfTemplate();
-        await new Promise(r=>setTimeout(r,500));
+        await new Promise(r=>setTimeout(r,600));
         const canvas = await html2canvas(el,{
-            scale:2.5, useCORS:true, backgroundColor:'#e5e7eb', logging:false,
-            width:el.scrollWidth, height:el.scrollHeight
+            scale: 3,                // 3x for extreme sharpness
+            useCORS: true,
+            backgroundColor: '#e5e7eb',  // matches body background
+            logging: false,
+            width: el.scrollWidth,
+            height: el.scrollHeight
         });
-        const {jsPDF} = window.jspdf;
-        const img = canvas.toDataURL('image/png');
-        const pw=210, ph=(canvas.height*pw)/canvas.width;
-        const pdf = new jsPDF('p','mm','a4');
-        pdf.addImage(img,'PNG',0,0,pw,Math.min(ph,297));
-        if(ph>297){let rem=ph-297;while(rem>0){pdf.addPage();pdf.addImage(img,'PNG',0,-(297*(pdf.getNumberOfPages()-1)),pw,ph);rem-=297;}}
+        const { jsPDF } = window.jspdf;
+        const img = canvas.toDataURL('image/png');  // lossless PNG for text clarity
+        const pw = 210, ph = (canvas.height * pw) / canvas.width;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        pdf.addImage(img, 'PNG', 0, 0, pw, Math.min(ph, 297));
+        if (ph > 297) {
+            let rem = ph - 297;
+            while (rem > 0) {
+                pdf.addPage();
+                pdf.addImage(img, 'PNG', 0, -(297 * (pdf.getNumberOfPages() - 1)), pw, ph);
+                rem -= 297;
+            }
+        }
         el.innerHTML = '';
         return pdf.output('blob');
     }
 
     async function shareWA(){
         const lo=document.getElementById('loadingOverlay');lo.classList.remove('hidden');
-        toast('📄 Generating ultra-pro PDF…',4000);
+        toast('📄 Generating professional PDF…',4000);
         try{
             const blob=await makePDF();
             const fn=`Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
