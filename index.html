@@ -10,7 +10,6 @@
     <style>
         :root {
             --gold: #c9a84c;
-            --gold-light: #d4b96a;
             --gold-dark: #8b6914;
             --gold-bg: #fdf8ed;
             --white: #ffffff;
@@ -25,110 +24,42 @@
             --whatsapp-dark: #128C7E;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'DM Sans', sans-serif;
-            background: #ffffff;
-            color: var(--text);
-            min-height: 100vh;
-            padding-bottom: 100px;
-        }
-        .app-header {
-            background: #000000;
-            padding: 14px 16px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            border-bottom: 2px solid var(--gold);
-        }
+        body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: var(--text); min-height: 100vh; padding-bottom: 100px; }
+        .app-header { background: #000000; padding: 14px 16px 0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border-bottom: 2px solid var(--gold); }
         .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-        .logo-icon {
-            width: 52px; height: 52px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            overflow: hidden; flex-shrink: 0; background: #ffffff;
-            border: 2px solid var(--gold); padding: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
+        .logo-icon { width: 52px; height: 52px; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; background: #ffffff; border: 2px solid var(--gold); padding: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
         .logo-icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 4px; }
         .logo-text { flex: 1; }
-        .logo-text .brand {
-            font-family: 'Playfair Display', serif; font-weight: 800;
-            font-size: 18px; color: #ffffff; letter-spacing: 1.5px; line-height: 1.1;
-        }
-        .logo-text .brand-sub {
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            font-size: 11px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
-        }
+        .logo-text .brand { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 18px; color: #ffffff; letter-spacing: 1.5px; line-height: 1.1; }
+        .logo-text .brand-sub { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 11px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
         .logo-text .tagline { font-size: 8px; color: #a09070; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
-        .doc-number {
-            background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
-            border-radius: 6px; padding: 5px 12px; font-size: 11px;
-            color: var(--gold); font-weight: 700; letter-spacing: 1.5px;
-            font-family: 'Rajdhani', sans-serif;
-        }
+        .doc-number { background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); border-radius: 6px; padding: 5px 12px; font-size: 11px; color: var(--gold); font-weight: 700; letter-spacing: 1.5px; font-family: 'Rajdhani', sans-serif; }
         .main-tabs { display: flex; gap: 4px; }
-        .main-tab {
-            flex: 1; padding: 11px 8px; text-align: center;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            font-size: 10px; letter-spacing: 1.5px; color: #999999;
-            background: none; border: none; cursor: pointer;
-            border-bottom: 3px solid transparent; transition: all 0.25s;
-            border-radius: 6px 6px 0 0; text-transform: uppercase;
-        }
+        .main-tab { flex: 1; padding: 11px 8px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 10px; letter-spacing: 1.5px; color: #999999; background: none; border: none; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.25s; border-radius: 6px 6px 0 0; text-transform: uppercase; }
         .main-tab.active { color: #ffffff; background: rgba(255,255,255,0.08); border-bottom: 3px solid var(--gold); }
-        .main-tab:hover:not(.active) { color: var(--gold-light); }
+        .main-tab:hover:not(.active) { color: #d4b96a; }
         .content { padding: 16px; max-width: 700px; margin: 0 auto; }
-        .section-card {
-            background: var(--white); border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 14px;
-            overflow: hidden; border: 1px solid var(--border);
-        }
-        .section-header {
-            display: flex; align-items: center; gap: 10px;
-            padding: 13px 16px; background: #fafaf9; border-bottom: 1px solid var(--border);
-        }
+        .section-card { background: var(--white); border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); margin-bottom: 14px; overflow: hidden; border: 1px solid var(--border); }
+        .section-header { display: flex; align-items: center; gap: 10px; padding: 13px 16px; background: #fafaf9; border-bottom: 1px solid var(--border); }
         .section-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--gold); }
-        .section-title {
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--near-black);
-        }
+        .section-title { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--near-black); }
         .form-body { padding: 14px 16px; }
         .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .field-row .field { flex: 1; }
         .field { margin-bottom: 10px; }
-        .field label {
-            display: block; font-size: 10px; font-weight: 700;
-            text-transform: uppercase; letter-spacing: 1.2px;
-            color: var(--muted); margin-bottom: 4px; font-family: 'Rajdhani', sans-serif;
-        }
-        .field input, .field select, .field textarea {
-            width: 100%; padding: 9px 11px; border: 1.5px solid var(--border);
-            border-radius: 8px; font-family: 'DM Sans', sans-serif;
-            font-size: 13px; color: var(--text); background: #ffffff;
-            transition: all 0.2s; outline: none;
-        }
-        .field input:focus, .field select:focus, .field textarea:focus {
-            border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
-        }
+        .field label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 4px; font-family: 'Rajdhani', sans-serif; }
+        .field input, .field select, .field textarea { width: 100%; padding: 9px 11px; border: 1.5px solid var(--border); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text); background: #ffffff; transition: all 0.2s; outline: none; }
+        .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,168,76,0.15); }
         .field textarea { resize: vertical; line-height: 1.5; min-height: 60px; }
         .items-table-wrap { overflow-x: auto; padding: 0 0 4px; }
         .items-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
         .items-table thead tr { background: #fafaf9; }
-        .items-table th {
-            padding: 9px 6px; text-align: left; font-family: 'Rajdhani', sans-serif;
-            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--muted);
-            border-bottom: 2px solid var(--border); white-space: nowrap;
-        }
+        .items-table th { padding: 9px 6px; text-align: left; font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); white-space: nowrap; }
         .items-table th.center, .items-table td.center { text-align: center; }
         .items-table th.right, .items-table td.right { text-align: right; }
         .items-table tbody tr { border-bottom: 1px solid var(--border-light); }
         .items-table td { padding: 6px 6px; vertical-align: middle; }
-        .items-table td input {
-            width: 100%; border: 1px solid transparent; border-radius: 5px;
-            padding: 4px 5px; font-size: 11px; font-family: 'DM Sans', sans-serif;
-            color: var(--text); background: transparent; outline: none; transition: all 0.18s;
-        }
+        .items-table td input { width: 100%; border: 1px solid transparent; border-radius: 5px; padding: 4px 5px; font-size: 11px; font-family: 'DM Sans', sans-serif; color: var(--text); background: transparent; outline: none; transition: all 0.18s; }
         .items-table td input:focus { border-color: var(--gold); background: #ffffff; box-shadow: 0 0 0 2px rgba(201,168,76,0.1); }
         .items-table td input.desc { min-width: 120px; }
         .items-table td input.code { width: 70px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
@@ -137,21 +68,12 @@
         .row-total { font-weight: 700; color: var(--near-black); font-size: 12px; white-space: nowrap; }
         .del-btn { background: none; border: none; cursor: pointer; padding: 3px 6px; color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1; }
         .del-btn:hover { background: #fef2f2; }
-        .add-row-btn {
-            display: flex; align-items: center; gap: 6px; margin: 10px 0 0;
-            padding: 8px 12px; background: none; border: 1.5px dashed var(--gold);
-            border-radius: 8px; color: var(--gold-dark);
-            font-family: 'DM Sans', sans-serif; font-size: 12px;
-            font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s;
-        }
+        .add-row-btn { display: flex; align-items: center; gap: 6px; margin: 10px 0 0; padding: 8px 12px; background: none; border: 1.5px dashed var(--gold); border-radius: 8px; color: var(--gold-dark); font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s; }
         .add-row-btn:hover { background: var(--gold-bg); }
         .totals-block { margin-top: 14px; }
         .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border-light); }
         .totals-row .val { font-weight: 700; color: var(--text); }
-        .grand-total-row {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 10px; padding: 13px 14px; background: #000000; border-radius: 10px;
-        }
+        .grand-total-row { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 13px 14px; background: #000000; border-radius: 10px; }
         .grand-total-row .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #cccccc; text-transform: uppercase; }
         .grand-total-row .val { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--gold); }
         .adj-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -161,65 +83,25 @@
         .adj-row .adj-label { font-size: 11px; color: var(--muted); }
         .divider { height: 1px; background: var(--border); margin: 12px 0; }
         .actions { padding: 4px 0; display: flex; flex-direction: column; gap: 10px; }
-        .btn-whatsapp, .btn-download {
-            display: flex; align-items: center; justify-content: center;
-            gap: 10px; border: none; border-radius: 10px;
-            font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            letter-spacing: 2px; cursor: pointer; transition: all 0.25s;
-            color: #ffffff; padding: 14px; font-size: 14px;
-        }
+        .btn-whatsapp, .btn-download { display: flex; align-items: center; justify-content: center; gap: 10px; border: none; border-radius: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s; color: #ffffff; padding: 14px; font-size: 14px; }
         .btn-whatsapp { background: var(--whatsapp); border: 2px solid var(--whatsapp); }
         .btn-whatsapp:hover { background: var(--whatsapp-dark); border-color: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
         .btn-download { background: #000000; }
         .btn-download:hover { background: var(--near-black); transform: translateY(-2px); }
-        .firm-info-bar {
-            background: #fafaf9; border: 1px solid var(--border);
-            border-radius: 8px; padding: 10px 14px; margin-bottom: 14px;
-            font-size: 10px; color: var(--muted);
-            display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 8px;
-        }
-        .toast {
-            position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-            background: #000000; color: #ffffff; padding: 10px 22px;
-            border-radius: 10px; font-size: 13px; font-weight: 500;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 9999;
-            border-left: 4px solid var(--gold);
-            animation: toastIn 0.3s ease; white-space: nowrap;
-        }
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
-        }
-        .loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.75); z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column; gap: 14px;
-        }
-        .loading-overlay .spinner {
-            width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.3);
-            border-top-color: var(--gold); border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
+        .firm-info-bar { background: #fafaf9; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: #000000; color: #ffffff; padding: 10px 22px; border-radius: 10px; font-size: 13px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 9999; border-left: 4px solid var(--gold); animation: toastIn 0.3s ease; white-space: nowrap; }
+        @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 10000; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
+        .loading-overlay .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-overlay .text { color: #ffffff; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2px; font-size: 13px; }
         .hidden { display: none !important; }
         .float-whatsapp { position: fixed; bottom: 22px; right: 16px; z-index: 999; }
-        .float-btn {
-            width: 56px; height: 56px; border-radius: 50%;
-            background: var(--whatsapp); border: 2px solid #ffffff;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform 0.2s;
-        }
+        .float-btn { width: 56px; height: 56px; border-radius: 50%; background: var(--whatsapp); border: 2px solid #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform 0.2s; }
         .float-btn:hover { transform: scale(1.08); }
         .float-btn svg { width: 26px; height: 26px; fill: #ffffff; }
         .sub-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
-        .sub-tab {
-            flex: 1; padding: 10px; font-family: 'Rajdhani', sans-serif;
-            font-weight: 700; letter-spacing: 1.5px; border: none;
-            cursor: pointer; border-radius: 8px; font-size: 11px; transition: all 0.2s;
-        }
+        .sub-tab { flex: 1; padding: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1.5px; border: none; cursor: pointer; border-radius: 8px; font-size: 11px; transition: all 0.2s; }
         .sub-tab.active { background: #000000; color: var(--gold); }
         .sub-tab:not(.active) { background: #f0f0f0; color: #666666; }
     </style>
@@ -247,11 +129,11 @@
 <div class="toast" id="toast" style="display:none"></div>
 <div class="loading-overlay hidden" id="loadingOverlay">
     <div class="spinner"></div>
-    <div class="text">GENERATING PDF…</div>
+    <div class="text">GENERATING ULTRA-PRO PDF…</div>
 </div>
 
 <div class="content" id="mainContent"></div>
-<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:700px;pointer-events:none;"></div>
+<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:800px;pointer-events:none;"></div>
 
 <div class="float-whatsapp">
     <button class="float-btn" onclick="quickShare()" aria-label="Quick Share">
@@ -260,7 +142,6 @@
 </div>
 
 <script>
-    // ─── LIBRARIES ────────────────────────────────────────────
     let libsReady = false;
     function loadLibs() {
         return new Promise((resolve, reject) => {
@@ -271,37 +152,31 @@
                 const s2 = document.createElement('script');
                 s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
                 s2.onload = () => { libsReady = true; resolve(); };
-                s2.onerror = reject;
-                document.head.appendChild(s2);
+                s2.onerror = reject; document.head.appendChild(s2);
             };
-            s1.onerror = reject;
-            document.head.appendChild(s1);
+            s1.onerror = reject; document.head.appendChild(s1);
         });
     }
 
-    // ─── STATE ─────────────────────────────────────────────────
     const FIRM = {
         name: 'MAUNCHOLAW ADVOCATES',
         address: 'Laipha House, Third Floor, Nanyuki',
         email: 'wakilimauncho@gmail.com',
-        phone: '+254 746 389 218',
+        phone: '+254 746 388 218',
         logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
         watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
     };
 
-    let mainTab = 'BILLING';
-    let billTab = 'INVOICE';
+    let mainTab = 'BILLING', billTab = 'INVOICE';
     let items = [
         { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
         { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
         { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
         { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
     ];
-    let nid = 5;
-    let disc = 0, vat = 16;
+    let nid = 5, disc = 0, vat = 16;
     let doc = {
-        no:'INV-2024-089', date:new Date().toISOString().slice(0,10),
-        due:'Within 30 Days', ref:'ELC Case No. 45/2024',
+        no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
         client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
         notes:'Professional fees as per Advocates Remuneration Order.',
         terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
@@ -322,104 +197,120 @@
     }
     function toast(m,d=2500){ const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d); }
 
-    // ─── CLEAN PDF TEMPLATE (matches reference design) ─────────
+    // ─── ULTRA-PRO PDF TEMPLATE ───────────────────────────────
     function pdfTemplate() {
         const c = calc();
         const rows = items.map(i=>`
             <tr class="service-row">
-                <td>${i.code||'—'}</td>
-                <td>${i.desc||'—'}</td>
-                <td>${i.hrs||0}</td>
-                <td>${FP(i.rate)}</td>
-                <td class="disbursement-col">${FP(i.disb||0)}</td>
-                <td class="amount-col total-cell"><strong>${FP(i.hrs*i.rate+(i.disb||0))}</strong></td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;vertical-align:top;">${i.code||'—'}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;vertical-align:top;">${i.desc||'—'}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:center;vertical-align:top;">${i.hrs||0}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;vertical-align:top;">${FP(i.rate)}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;vertical-align:top;">${FP(i.disb||0)}</td>
+                <td style="padding:10px 6px;border-bottom:1px solid #e5e7eb;color:#1f2937;font-size:13px;text-align:right;font-weight:700;vertical-align:top;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
             </tr>`).join('');
 
-        return `<div class="invoice-card">
-            <h1 class="invoice-title">TAX INVOICE</h1>
-            <div class="bill-to-section">
-                <div class="bill-to-label">BILL TO:</div>
-                <div class="client-name">${doc.client.name}</div>
-                <div class="case-ref">${doc.ref}</div>
-                <div class="location">${doc.client.addr}</div>
-            </div>
-            <div class="invoice-meta">
-                <div class="meta-item"><span class="meta-label">Invoice No:</span><span class="meta-value">${doc.no}</span></div>
-                <div class="meta-item"><span class="meta-label">Date:</span><span class="meta-value">${doc.date}</span></div>
-                <div class="meta-item"><span class="meta-label">Due:</span><span class="meta-value">${doc.due}</span></div>
-            </div>
-            <table>
-                <thead><tr><th>Code</th><th>Description</th><th>Hours</th><th>Rate</th><th class="disbursement-col">Disb.</th><th class="text-right-header">Total</th></tr></thead>
-                <tbody>${rows}</tbody>
-            </table>
-            <div class="totals-section">
-                <div class="total-row subtotal"><span class="label">Subtotal</span><span class="currency"><strong>KSH ${FP(c.s)}</strong></span></div>
-                <div class="total-row vat"><span class="label">VAT (${vat}%)</span><span class="currency"><strong>KSH ${FP(c.tx)}</strong></span></div>
-                <div class="total-row grand"><span class="label">GRAND TOTAL</span><span class="currency"><strong>KSH ${FP(c.gt)}</strong></span></div>
-            </div>
-            <div class="footer">
-                <div class="footer-company">${FIRM.name}</div>
-                <div class="footer-details"><span>${FIRM.address}</span><span>${FIRM.phone}</span><span>${FIRM.email}</span></div>
-            </div>
-        </div>`;
+        return `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#e5e7eb;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI','Roboto',system-ui,-apple-system,sans-serif;padding:2rem 1rem;margin:0;}
+    .invoice-card{max-width:700px;width:100%;background:#ffffff;box-shadow:0 20px 40px rgba(0,0,0,0.12);border-radius:8px;padding:2.2rem 2rem 1.8rem;margin:0 auto;}
+    .invoice-title{font-size:1.9rem;font-weight:600;letter-spacing:0.5px;color:#1e1e1e;margin-bottom:1.5rem;border-bottom:1px solid #d1d5db;padding-bottom:0.65rem;}
+    .bill-to-section{margin-bottom:1.6rem;}
+    .bill-to-label{font-weight:700;font-size:0.9rem;text-transform:uppercase;color:#2c3e50;margin-bottom:0.3rem;}
+    .client-name{font-weight:700;font-size:1.25rem;color:#0b1c2e;}
+    .case-ref{font-weight:500;color:#1f2937;margin-top:0.15rem;}
+    .location{font-weight:500;color:#1f2937;}
+    .invoice-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
+    .meta-item{display:flex;flex-direction:column;gap:0.2rem;}
+    .meta-label{font-weight:600;color:#374151;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
+    .meta-value{font-weight:600;color:#111827;font-size:1rem;}
+    table{width:100%;border-collapse:collapse;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
+    th{text-align:left;padding:0.7rem 0.3rem 0.5rem 0;font-weight:600;color:#1f2937;border-bottom:2px solid #d1d5db;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
+    th.th-right{text-align:right;}
+    th.th-center{text-align:center;}
+    .totals-section{display:flex;flex-direction:column;align-items:flex-end;margin-top:0.8rem;margin-bottom:1.6rem;font-size:0.95rem;}
+    .total-row{display:flex;justify-content:space-between;width:240px;padding:0.35rem 0;font-weight:500;color:#1f2937;}
+    .total-row.subtotal{color:#374151;}
+    .total-row.vat{color:#374151;border-bottom:1px solid #e5e7eb;padding-bottom:0.45rem;margin-bottom:0.3rem;}
+    .total-row.grand{font-weight:700;font-size:1.1rem;color:#0b1c2e;border-top:2px solid #1e293b;padding-top:0.5rem;margin-top:0.15rem;}
+    .label{font-weight:500;}
+    .grand .label{font-weight:700;}
+    .currency{font-family:inherit;}
+    .footer{margin-top:2rem;font-size:0.8rem;color:#4b5563;border-top:1px solid #d1d5db;padding-top:1.2rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;word-break:break-word;}
+    .footer-company{font-weight:600;color:#1f2937;}
+    .footer-details{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;color:#4b5563;}
+    .footer-details span{white-space:nowrap;}
+</style></head>
+<body>
+<div class="invoice-card">
+    <h1 class="invoice-title">TAX INVOICE</h1>
+    <div class="bill-to-section">
+        <div class="bill-to-label">BILL TO:</div>
+        <div class="client-name">${doc.client.name}</div>
+        <div class="case-ref">${doc.ref}</div>
+        <div class="location">${doc.client.addr}</div>
+    </div>
+    <div class="invoice-meta">
+        <div class="meta-item"><span class="meta-label">Invoice No:</span><span class="meta-value">${doc.no}</span></div>
+        <div class="meta-item"><span class="meta-label">Date:</span><span class="meta-value">${doc.date}</span></div>
+        <div class="meta-item"><span class="meta-label">Due:</span><span class="meta-value">${doc.due}</span></div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Code</th>
+                <th>Description</th>
+                <th class="th-center">Hours</th>
+                <th class="th-right">Rate</th>
+                <th class="th-right">Disb.</th>
+                <th class="th-right">Total</th>
+            </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+    </table>
+    <div class="totals-section">
+        <div class="total-row subtotal"><span class="label">Subtotal</span><span class="currency"><strong>KSH ${FP(c.s)}</strong></span></div>
+        <div class="total-row vat"><span class="label">VAT (${vat}%)</span><span class="currency"><strong>KSH ${FP(c.tx)}</strong></span></div>
+        <div class="total-row grand"><span class="label">GRAND TOTAL</span><span class="currency"><strong>KSH ${FP(c.gt)}</strong></span></div>
+    </div>
+    <div class="footer">
+        <div class="footer-company">${FIRM.name}</div>
+        <div class="footer-details">
+            <span>${FIRM.address}</span>
+            <span>${FIRM.phone}</span>
+            <span>${FIRM.email}</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>`;
     }
 
-    // ─── PDF GENERATION ───────────────────────────────────────
+    // ─── ULTRA-PRO PDF GENERATION ────────────────────────────
     async function makePDF() {
         await loadLibs();
         const el = document.getElementById('pdfTemplate');
-        // Inject the clean CSS into the template
-        const css = `
-            *{margin:0;padding:0;box-sizing:border-box;}
-            body{background:#e5e7eb;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI','Roboto',system-ui,-apple-system,sans-serif;padding:2rem 1rem;}
-            .invoice-card{max-width:700px;width:100%;background:white;box-shadow:0 20px 40px rgba(0,0,0,0.12);border-radius:8px;padding:2.2rem 2rem 1.8rem;margin:0 auto;}
-            .invoice-title{font-size:1.9rem;font-weight:600;letter-spacing:0.5px;color:#1e1e1e;margin-bottom:1.5rem;border-bottom:1px solid #d1d5db;padding-bottom:0.65rem;}
-            .bill-to-section{margin-bottom:1.6rem;}
-            .bill-to-label{font-weight:700;font-size:0.9rem;text-transform:uppercase;color:#2c3e50;margin-bottom:0.3rem;}
-            .client-name{font-weight:700;font-size:1.25rem;color:#0b1c2e;}
-            .case-ref{font-weight:500;color:#1f2937;margin-top:0.15rem;}
-            .location{font-weight:500;color:#1f2937;}
-            .invoice-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
-            .meta-item{display:flex;flex-direction:column;gap:0.2rem;}
-            .meta-label{font-weight:600;color:#374151;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
-            .meta-value{font-weight:600;color:#111827;font-size:1rem;}
-            table{width:100%;border-collapse:collapse;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
-            th{text-align:left;padding:0.7rem 0.3rem 0.5rem 0;font-weight:600;color:#1f2937;border-bottom:2px solid #d1d5db;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
-            td{padding:0.7rem 0.3rem 0.7rem 0;border-bottom:1px solid #e5e7eb;color:#1f2937;}
-            .text-right{text-align:right;}
-            .text-right-header{text-align:right;}
-            .total-cell{font-weight:700;}
-            .disbursement-col{text-align:right;}
-            .amount-col{text-align:right;}
-            .totals-section{display:flex;flex-direction:column;align-items:flex-end;margin-top:0.8rem;margin-bottom:1.6rem;font-size:0.95rem;}
-            .total-row{display:flex;justify-content:space-between;width:240px;padding:0.35rem 0;font-weight:500;color:#1f2937;}
-            .total-row.vat{border-bottom:1px solid #e5e7eb;padding-bottom:0.45rem;margin-bottom:0.3rem;}
-            .total-row.grand{font-weight:700;font-size:1.1rem;color:#0b1c2e;border-top:2px solid #1e293b;padding-top:0.5rem;margin-top:0.15rem;}
-            .footer{margin-top:2rem;font-size:0.8rem;color:#4b5563;border-top:1px solid #d1d5db;padding-top:1.2rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;}
-            .footer-company{font-weight:600;color:#1f2937;}
-            .footer-details{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;color:#4b5563;}
-            .footer-details span{white-space:nowrap;}
-        `;
-        el.innerHTML = `<style>${css}</style>` + pdfTemplate();
-        await new Promise(r=>setTimeout(r,400));
+        el.innerHTML = pdfTemplate();
+        await new Promise(r=>setTimeout(r,500));
         const canvas = await html2canvas(el,{
-            scale:2, useCORS:true, backgroundColor:'#ffffff', logging:false,
+            scale:2.5, useCORS:true, backgroundColor:'#e5e7eb', logging:false,
             width:el.scrollWidth, height:el.scrollHeight
         });
         const {jsPDF} = window.jspdf;
-        const img = canvas.toDataURL('image/jpeg',0.92);
+        const img = canvas.toDataURL('image/png');
         const pw=210, ph=(canvas.height*pw)/canvas.width;
         const pdf = new jsPDF('p','mm','a4');
-        pdf.addImage(img,'JPEG',0,0,pw,Math.min(ph,297));
-        if(ph>297){let rem=ph-297;while(rem>0){pdf.addPage();pdf.addImage(img,'JPEG',0,-(297*(pdf.getNumberOfPages()-1)),pw,ph);rem-=297;}}
+        pdf.addImage(img,'PNG',0,0,pw,Math.min(ph,297));
+        if(ph>297){let rem=ph-297;while(rem>0){pdf.addPage();pdf.addImage(img,'PNG',0,-(297*(pdf.getNumberOfPages()-1)),pw,ph);rem-=297;}}
         el.innerHTML = '';
         return pdf.output('blob');
     }
 
-    // ─── SHARE & DOWNLOAD ─────────────────────────────────────
     async function shareWA(){
         const lo=document.getElementById('loadingOverlay');lo.classList.remove('hidden');
-        toast('📄 Generating PDF…',4000);
+        toast('📄 Generating ultra-pro PDF…',4000);
         try{
             const blob=await makePDF();
             const fn=`Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
@@ -435,7 +326,7 @@
                 setTimeout(()=>{window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');URL.revokeObjectURL(u);},500);
                 toast('📥 Downloaded! Opening WhatsApp…',4000);
             }
-        }catch(e){console.error(e);toast('⚠️ Error. Retrying…',3000);}
+        }catch(e){toast('⚠️ Error. Retrying…',3000);}
         finally{lo.classList.add('hidden');}
     }
 
@@ -448,19 +339,16 @@
             const u=URL.createObjectURL(blob);const a=document.createElement('a');
             a.href=u;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);
             URL.revokeObjectURL(u);toast('✅ Downloaded!',2500);
-        }catch(e){console.error(e);toast('⚠️ Failed.',3000);}
+        }catch(e){toast('⚠️ Failed.',3000);}
         finally{lo.classList.add('hidden');}
     }
 
     function quickShare(){ if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');} render();setTimeout(()=>shareWA(),300); }
 
-    // ─── MATTERS ──────────────────────────────────────────────
     function addMatter(){
         const t=prompt('Title:');if(!t)return;
         const d=prompt('Date (YYYY-MM-DD):',new Date().toISOString().slice(0,10));if(!d)return;
-        const ti=prompt('Time:','9:00 AM');const c=prompt('Court:','Nanyuki Law Courts');
-        const cn=prompt('Case No:');const cl=prompt('Client:');const j=prompt('Judge:');
-        matters.push({id:nmid++,title:t,date:d,time:ti||'9:00 AM',court:c||'Nanyuki Law Courts',caseNo:cn||'',client:cl||'',judge:j||''});
+        matters.push({id:nmid++,title:t,date:d,time:prompt('Time:','9:00 AM')||'9:00 AM',court:prompt('Court:','Nanyuki Law Courts')||'Nanyuki Law Courts',caseNo:prompt('Case No:')||'',client:prompt('Client:')||'',judge:prompt('Judge:')||''});
         render();toast('✅ Matter added!',2000);
     }
     function editMatter(id){
@@ -472,12 +360,10 @@
     }
     function delMatter(id){if(confirm('Delete?')){matters=matters.filter(x=>x.id!==id);render();toast('🗑️ Deleted',2000);}}
 
-    // ─── ITEMS ────────────────────────────────────────────────
     function addItem(){items.push({id:nid++,code:'',desc:'',hrs:0,rate:0,disb:0});render();}
     function delItem(id){if(items.length<=1){toast('⚠️ Need at least 1 item');return;}items=items.filter(i=>i.id!==id);render();}
     function updItem(id,f,v){const i=items.find(x=>x.id===id);if(!i)return;if(f==='hrs'||f==='rate'||f==='disb')i[f]=parseFloat(v)||0;else i[f]=v;render();}
 
-    // ─── RENDER ───────────────────────────────────────────────
     function renderBilling(){
         const c=calc();
         const tabs=['FEE_NOTE','INVOICE','RECEIPT'];
@@ -497,8 +383,7 @@
             ${items.map(i=>`<tr><td><input class="code" value="${i.code||''}" oninput="updItem(${i.id},'code',this.value)"></td><td><input class="desc" value="${i.desc}" oninput="updItem(${i.id},'desc',this.value)"></td><td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" oninput="updItem(${i.id},'hrs',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" oninput="updItem(${i.id},'rate',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" oninput="updItem(${i.id},'disb',this.value)"></td><td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td><td><button class="del-btn" onclick="delItem(${i.id})">×</button></td></tr>`).join('')}
           </tbody></table></div>
           <div style="padding:4px 16px 16px"><button class="add-row-btn" onclick="addItem()">+ Add Service</button>
-          <div class="divider"></div>
-          <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" oninput="updDisc(this.value)"><span class="adj-label">%</span></div>
+          <div class="divider"></div><div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" oninput="updDisc(this.value)"><span class="adj-label">%</span></div>
           <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" oninput="updVat(this.value)"><span class="adj-label">%</span></div>
           <div class="totals-block"><div class="totals-row"><span>Subtotal</span><span class="val">${F(c.s)}</span></div><div class="totals-row"><span>VAT (${vat}%)</span><span class="val">${F(c.tx)}</span></div></div>
           <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val">${F(c.gt)}</span></div>
@@ -516,31 +401,18 @@
     function renderMatters(){
         const today=new Date().toISOString().slice(0,10);
         const sorted=[...matters].sort((a,b)=>a.date.localeCompare(b.date));
-        const up=sorted.filter(m=>m.date>=today);
-        const past=sorted.filter(m=>m.date<today);
+        const up=sorted.filter(m=>m.date>=today), past=sorted.filter(m=>m.date<today);
         return `<div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
         <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
-          ${up.length===0?'<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>':up.map(m=>{
-            const md=new Date(m.date+'T00:00:00');
-            const isToday=m.date===today;
-            const tom=new Date();tom.setDate(tom.getDate()+1);
-            const isTom=m.date===tom.toISOString().slice(0,10);
-            return `<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;">
-              <div style="display:flex;justify-content:space-between;align-items:start;"><div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div>
-              <div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div></div>
-              <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div>
-              <div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
-            </div>`;
-          }).join('')}
+          ${up.length===0?'<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>':up.map(m=>{const md=new Date(m.date+'T00:00:00'),isToday=m.date===today,tom=new Date();tom.setDate(tom.getDate()+1);const isTom=m.date===tom.toISOString().slice(0,10);return`<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;"><div style="display:flex;justify-content:space-between;align-items:start;"><div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div><div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div></div><div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div><div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div></div>`;}).join('')}
         </div></div>
         ${past.length>0?`<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m=>{const md=new Date(m.date+'T00:00:00');return`<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${m.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;}).join('')}</div></div>`:''}
         <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
     }
 
     function render(){ document.getElementById('mainContent').innerHTML=mainTab==='BILLING'?renderBilling():renderMatters();document.getElementById('docNumber').textContent=mainTab==='BILLING'?doc.no:'MATTERS'; }
-
     function switchMainTab(t,el){mainTab=t;document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
-    function switchBillTab(t){billTab=t;const p={FEE_NOTE:'FBN-',INVOICE:'INV-',RECEIPT:'RCT-'};const s={FEE_NOTE:'2024-001',INVOICE:'2024-089',RECEIPT:'2024-089'};doc.no=p[t]+s[t];render();}
+    function switchBillTab(t){billTab=t;const p={FEE_NOTE:'FBN-',INVOICE:'INV-',RECEIPT:'RCT-'},s={FEE_NOTE:'2024-001',INVOICE:'2024-089',RECEIPT:'2024-089'};doc.no=p[t]+s[t];render();}
     function updDoc(f,v){doc[f]=v;if(f==='no')document.getElementById('docNumber').textContent=v;render();}
     function updClient(f,v){doc.client[f]=v;render();}
     function updDisc(v){disc=parseFloat(v)||0;render();}
