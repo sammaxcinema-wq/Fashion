@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Mauncho Law Advocates — Legal Practice Management</title>
+    <title>Mauncho Law Advocates — Legal Practice Management System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
@@ -25,15 +25,26 @@
             --muted: #6b5e4a;
             --success: #2d5016;
             --danger: #8b2500;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
         body {
             font-family: 'DM Sans', sans-serif;
             background: #ffffff;
             color: var(--text);
             min-height: 100vh;
             padding-bottom: 100px;
+            -webkit-font-smoothing: antialiased;
         }
+        
+        /* Header Styles */
         .app-header {
             background: #000000;
             padding: 14px 16px 0;
@@ -43,12 +54,14 @@
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             border-bottom: 2px solid var(--gold);
         }
+        
         .logo-row {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 14px;
         }
+        
         .logo-icon {
             width: 52px;
             height: 52px;
@@ -63,13 +76,18 @@
             padding: 4px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
+        
         .logo-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
             border-radius: 4px;
         }
-        .logo-text { flex: 1; }
+        
+        .logo-text {
+            flex: 1;
+        }
+        
         .logo-text .brand {
             font-family: 'Playfair Display', serif;
             font-weight: 800;
@@ -78,6 +96,7 @@
             letter-spacing: 1.5px;
             line-height: 1.1;
         }
+        
         .logo-text .brand-sub {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
@@ -86,6 +105,7 @@
             letter-spacing: 3px;
             text-transform: uppercase;
         }
+        
         .logo-text .tagline {
             font-size: 8px;
             color: #a09070;
@@ -93,6 +113,7 @@
             text-transform: uppercase;
             font-weight: 500;
         }
+        
         .doc-number {
             background: rgba(201, 168, 76, 0.15);
             border: 1px solid rgba(201, 168, 76, 0.4);
@@ -104,8 +125,14 @@
             letter-spacing: 1.5px;
             font-family: 'Rajdhani', sans-serif;
         }
-        .tabs { display: flex; gap: 4px; }
-        .tab {
+        
+        /* Tab Navigation */
+        .main-tabs {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .main-tab {
             flex: 1;
             padding: 11px 8px;
             text-align: center;
@@ -122,13 +149,25 @@
             border-radius: 6px 6px 0 0;
             text-transform: uppercase;
         }
-        .tab.active {
+        
+        .main-tab.active {
             color: #ffffff;
             background: rgba(255,255,255,0.08);
             border-bottom: 3px solid var(--gold);
         }
-        .tab:hover:not(.active) { color: var(--gold-light); }
-        .content { padding: 16px; max-width: 700px; margin: 0 auto; }
+        
+        .main-tab:hover:not(.active) {
+            color: var(--gold-light);
+        }
+        
+        /* Content Area */
+        .content {
+            padding: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Card Styles */
         .section-card {
             background: var(--white);
             border-radius: 12px;
@@ -136,7 +175,13 @@
             margin-bottom: 14px;
             overflow: hidden;
             border: 1px solid var(--border);
+            transition: box-shadow 0.2s;
         }
+        
+        .section-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        
         .section-header {
             display: flex;
             align-items: center;
@@ -145,12 +190,14 @@
             background: #fafaf9;
             border-bottom: 1px solid var(--border);
         }
+        
         .section-dot {
             width: 8px;
             height: 8px;
             border-radius: 2px;
             background: var(--gold);
         }
+        
         .section-title {
             font-family: 'Rajdhani', sans-serif;
             font-weight: 700;
@@ -159,10 +206,26 @@
             text-transform: uppercase;
             color: var(--near-black);
         }
-        .form-body { padding: 14px 16px; }
-        .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
-        .field-row .field { flex: 1; }
-        .field { margin-bottom: 10px; }
+        
+        .form-body {
+            padding: 14px 16px;
+        }
+        
+        /* Form Elements */
+        .field-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .field-row .field {
+            flex: 1;
+        }
+        
+        .field {
+            margin-bottom: 10px;
+        }
+        
         .field label {
             display: block;
             font-size: 10px;
@@ -173,6 +236,7 @@
             margin-bottom: 4px;
             font-family: 'Rajdhani', sans-serif;
         }
+        
         .field input, .field select, .field textarea {
             width: 100%;
             padding: 9px 11px;
@@ -185,120 +249,491 @@
             transition: all 0.2s;
             outline: none;
         }
+        
         .field input:focus, .field select:focus, .field textarea:focus {
             border-color: var(--gold);
             box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
             background: #ffffff;
         }
-        .items-table-wrap { overflow-x: auto; padding: 0 0 4px; }
-        .items-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
-        .items-table thead tr { background: #fafaf9; }
+        
+        .field textarea {
+            resize: vertical;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+        
+        /* Table Styles */
+        .items-table-wrap {
+            overflow-x: auto;
+            padding: 0 0 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            min-width: 700px;
+        }
+        
+        .items-table thead tr {
+            background: #fafaf9;
+        }
+        
         .items-table th {
-            padding: 9px 6px; text-align: left; font-family: 'Rajdhani', sans-serif;
-            font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-            text-transform: uppercase; color: var(--muted); border-bottom: 2px solid var(--border); white-space: nowrap;
+            padding: 9px 6px;
+            text-align: left;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 2px solid var(--border);
+            white-space: nowrap;
         }
-        .items-table th.center, .items-table td.center { text-align: center; }
-        .items-table th.right, .items-table td.right { text-align: right; }
-        .items-table tbody tr { border-bottom: 1px solid var(--border-light); }
-        .items-table td { padding: 6px 6px; vertical-align: middle; }
+        
+        .items-table th.center, .items-table td.center {
+            text-align: center;
+        }
+        
+        .items-table th.right, .items-table td.right {
+            text-align: right;
+        }
+        
+        .items-table tbody tr {
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .items-table td {
+            padding: 6px 6px;
+            vertical-align: middle;
+        }
+        
         .items-table td input {
-            width: 100%; border: 1px solid transparent; border-radius: 5px;
-            padding: 4px 5px; font-size: 11px; font-family: 'DM Sans', sans-serif;
-            color: var(--text); background: transparent; outline: none; transition: all 0.18s;
+            width: 100%;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            padding: 4px 5px;
+            font-size: 11px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: transparent;
+            outline: none;
+            transition: all 0.18s;
         }
-        .items-table td input:focus { border-color: var(--gold); background: #ffffff; box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.1); }
-        .items-table td input.desc { min-width: 120px; }
-        .items-table td input.code { width: 70px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
-        .items-table td input.hours { width: 48px; text-align: center; }
-        .items-table td input.rate { text-align: right; width: 68px; }
-        .row-total { font-weight: 700; color: var(--near-black); font-size: 12px; white-space: nowrap; }
+        
+        .items-table td input:focus {
+            border-color: var(--gold);
+            background: #ffffff;
+            box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.1);
+        }
+        
+        .items-table td input.desc {
+            min-width: 120px;
+        }
+        
+        .items-table td input.code {
+            width: 70px;
+            text-align: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+        
+        .items-table td input.hours {
+            width: 48px;
+            text-align: center;
+        }
+        
+        .items-table td input.rate {
+            text-align: right;
+            width: 68px;
+        }
+        
+        .row-total {
+            font-weight: 700;
+            color: var(--near-black);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+        
         .del-btn {
-            background: none; border: none; cursor: pointer; padding: 3px 6px;
-            color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 3px 6px;
+            color: #b91c1c;
+            font-size: 20px;
+            border-radius: 5px;
+            transition: all 0.15s;
+            line-height: 1;
         }
-        .del-btn:hover { background: #fef2f2; }
+        
+        .del-btn:hover {
+            background: #fef2f2;
+        }
+        
         .add-row-btn {
-            display: flex; align-items: center; gap: 6px; margin: 10px 0 0;
-            padding: 8px 12px; background: none; border: 1.5px dashed var(--gold);
-            border-radius: 8px; color: var(--gold-dark); font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 600; cursor: pointer; width: 100%; transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 10px 0 0;
+            padding: 8px 12px;
+            background: none;
+            border: 1.5px dashed var(--gold);
+            border-radius: 8px;
+            color: var(--gold-dark);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s;
         }
-        .add-row-btn:hover { background: var(--gold-bg); }
-        .totals-block { margin-top: 14px; }
-        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border-light); }
-        .totals-row .label { font-weight: 500; }
-        .totals-row .val { font-weight: 700; color: var(--text); }
+        
+        .add-row-btn:hover {
+            background: var(--gold-bg);
+        }
+        
+        /* Totals Section */
+        .totals-block {
+            margin-top: 14px;
+        }
+        
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .totals-row .label {
+            font-weight: 500;
+        }
+        
+        .totals-row .val {
+            font-weight: 700;
+            color: var(--text);
+        }
+        
         .grand-total-row {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 10px; padding: 13px 14px; background: #000000; border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding: 13px 14px;
+            background: #000000;
+            border-radius: 10px;
         }
-        .grand-total-row .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #cccccc; text-transform: uppercase; }
-        .grand-total-row .val { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--gold); }
-        .adj-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
-        .adj-row label { font-size: 12px; color: var(--muted); min-width: 70px; font-weight: 500; }
-        .adj-row input { width: 65px; padding: 5px 7px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; font-family: 'DM Sans', sans-serif; text-align: right; outline: none; transition: border-color 0.2s; }
-        .adj-row input:focus { border-color: var(--gold); }
-        .adj-row .adj-label { font-size: 11px; color: var(--muted); }
-        .status-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+        
+        .grand-total-row .label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #cccccc;
+            text-transform: uppercase;
+        }
+        
+        .grand-total-row .val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .adj-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .adj-row label {
+            font-size: 12px;
+            color: var(--muted);
+            min-width: 70px;
+            font-weight: 500;
+        }
+        
+        .adj-row input {
+            width: 65px;
+            padding: 5px 7px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            text-align: right;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .adj-row input:focus {
+            border-color: var(--gold);
+        }
+        
+        .adj-row .adj-label {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 12px 0;
+        }
+        
+        /* Status Pills */
+        .status-pills {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        
         .status-pill {
-            padding: 5px 14px; border-radius: 20px; font-size: 10px; font-weight: 700;
-            border: 1.5px solid var(--border); cursor: pointer; transition: all 0.2s;
-            font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; background: #fafaf9; color: var(--muted);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Rajdhani', sans-serif;
+            letter-spacing: 1px;
+            background: #fafaf9;
+            color: var(--muted);
         }
-        .status-pill.active-paid { background: #e6f0dc; border-color: #2d5016; color: #2d5016; }
-        .status-pill.active-partial { background: #faf3d0; border-color: #8b6914; color: #8b6914; }
-        .status-pill.active-unpaid { background: #fde8e8; border-color: #8b2500; color: #8b2500; }
-        .field textarea { resize: none; line-height: 1.5; }
-        .divider { height: 1px; background: var(--border); margin: 12px 0; }
-        .actions { padding: 4px 0; display: flex; flex-direction: column; gap: 10px; }
+        
+        .status-pill.active-paid {
+            background: #e6f0dc;
+            border-color: #2d5016;
+            color: #2d5016;
+        }
+        
+        .status-pill.active-unpaid {
+            background: #fde8e8;
+            border-color: #8b2500;
+            color: #8b2500;
+        }
+        
+        /* Action Buttons */
+        .actions {
+            padding: 4px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
         .btn-whatsapp, .btn-download {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            border: none; border-radius: 10px; font-family: 'Rajdhani', sans-serif;
-            font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s;
-            color: #ffffff; padding: 14px; font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.25s;
+            color: #ffffff;
+            padding: 14px;
+            font-size: 14px;
         }
-        .btn-whatsapp { background: #25D366; border: 2px solid #25D366; color: #ffffff; }
-        .btn-whatsapp:hover { background: #128C7E; border-color: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); }
-        .btn-download { background: #000000; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
-        .btn-download:hover { background: var(--near-black); transform: translateY(-2px); }
-        .float-chat {
-            position: fixed; bottom: 22px; right: 16px; z-index: 999;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        
+        .btn-whatsapp {
+            background: var(--whatsapp);
+            border: 2px solid var(--whatsapp);
         }
-        .float-share-btn {
-            width: 58px; height: 58px; border-radius: 50%; background: #25D366;
-            border: 2px solid #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4); position: relative; transition: transform 0.2s;
+        
+        .btn-whatsapp:hover {
+            background: var(--whatsapp-dark);
+            border-color: var(--whatsapp-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
         }
-        .float-share-btn:hover { transform: scale(1.08); }
-        .float-share-btn svg { width: 28px; height: 28px; fill: #ffffff; }
-        .toast {
-            position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
-            background: #000000; color: #ffffff; padding: 10px 22px; border-radius: 10px;
-            font-size: 13px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            z-index: 9999; border-left: 4px solid var(--gold); animation: toastIn 0.3s ease; white-space: nowrap;
+        
+        .btn-download {
+            background: #000000;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
         }
-        @keyframes toastIn {
-            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        
+        .btn-download:hover {
+            background: var(--near-black);
+            transform: translateY(-2px);
         }
-        .loading-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.75); z-index: 10000;
-            display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 14px;
-        }
-        .loading-overlay .spinner {
-            width: 44px; height: 44px; border: 4px solid rgba(255,255,255,0.3);
-            border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-overlay .text { color: #ffffff; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2.5px; font-size: 14px; }
-        .hidden { display: none !important; }
+        
+        /* Firm Info Bar */
         .firm-info-bar {
-            background: #fafaf9; border: 1px solid var(--border); border-radius: 8px;
-            padding: 10px 14px; margin-bottom: 14px; font-size: 10px; color: var(--muted);
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+            background: #fafaf9;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            font-size: 10px;
+            color: var(--muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .firm-info-bar span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000;
+            color: #ffffff;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            z-index: 9999;
+            border-left: 4px solid var(--gold);
+            animation: toastIn 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 14px;
+        }
+        
+        .loading-overlay .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .loading-overlay .text {
+            color: #ffffff;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            font-size: 14px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        /* Floating WhatsApp Button */
+        .float-whatsapp {
+            position: fixed;
+            bottom: 22px;
+            right: 16px;
+            z-index: 999;
+        }
+        
+        .float-btn {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: var(--whatsapp);
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: transform 0.2s;
+        }
+        
+        .float-btn:hover {
+            transform: scale(1.08);
+        }
+        
+        .float-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: #ffffff;
+        }
+        
+        /* Sub-tabs for billing */
+        .sub-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+        
+        .sub-tab {
+            flex: 1;
+            padding: 10px;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            font-size: 11px;
+            transition: all 0.2s;
+        }
+        
+        .sub-tab.active {
+            background: #000000;
+            color: var(--gold);
+        }
+        
+        .sub-tab:not(.active) {
+            background: #f0f0f0;
+            color: #666666;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .logo-text .brand {
+                font-size: 16px;
+            }
+            .content {
+                padding: 12px;
+            }
+            .section-header {
+                padding: 10px 12px;
+            }
+            .form-body {
+                padding: 10px 12px;
+            }
         }
     </style>
 </head>
@@ -307,7 +742,7 @@
 <header class="app-header">
     <div class="logo-row">
         <div class="logo-icon">
-            <img src="https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg" alt="Mauncho Law Advocates Logo" crossorigin="anonymous">
+            <img src="https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg" alt="Mauncho Law Logo" crossorigin="anonymous">
         </div>
         <div class="logo-text">
             <div class="brand">MAUNCHO LAW</div>
@@ -316,274 +751,989 @@
         </div>
         <div class="doc-number" id="docNumber">INV-2024-089</div>
     </div>
-    <div class="tabs">
-        <button class="tab active" onclick="switchTab('FEE_NOTE', this)">Fee Note</button>
-        <button class="tab" onclick="switchTab('INVOICE', this)">Invoice</button>
-        <button class="tab" onclick="switchTab('RECEIPT', this)">Receipt</button>
+    <div class="main-tabs">
+        <button class="main-tab active" onclick="switchMainTab('BILLING', this)">💼 Billing</button>
+        <button class="main-tab" onclick="switchMainTab('MATTERS', this)">📋 Matters</button>
     </div>
 </header>
 
 <div class="toast" id="toast" style="display:none"></div>
 <div class="loading-overlay hidden" id="loadingOverlay">
     <div class="spinner"></div>
-    <div class="text">PREPARING DOCUMENT…</div>
+    <div class="text">GENERATING PDF DOCUMENT…</div>
 </div>
 
 <div class="content" id="mainContent"></div>
 
 <div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:794px;pointer-events:none;"></div>
 
-<div class="float-chat">
-    <button class="float-share-btn" onclick="handleFloatingShare()" aria-label="Share to WhatsApp">
+<div class="float-whatsapp">
+    <button class="float-btn" onclick="quickShare()" aria-label="Quick Share to WhatsApp">
         <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
     </button>
 </div>
 
 <script>
-    // ─── PDF LIBRARIES ─────────────────────────────────────────
-    let pdfLibsLoaded = false;
-    const watermarkURL = 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png';
+    // ────────────────────────────────────────────────────────────
+    // PDF LIBRARIES LOADER
+    // ────────────────────────────────────────────────────────────
+    let librariesReady = false;
     
-    function loadPdfLibs() {
+    function initLibraries() {
         return new Promise((resolve, reject) => {
-            if (pdfLibsLoaded || (window.html2canvas && window.jspdf)) {
-                pdfLibsLoaded = true;
+            if (librariesReady || (window.html2canvas && window.jspdf)) {
+                librariesReady = true;
                 return resolve();
             }
+            
             const script1 = document.createElement('script');
             script1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            
             script1.onload = () => {
                 const script2 = document.createElement('script');
                 script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                
                 script2.onload = () => {
-                    pdfLibsLoaded = true;
+                    librariesReady = true;
                     resolve();
                 };
-                script2.onerror = reject;
+                
+                script2.onerror = () => reject(new Error('Failed to load jsPDF'));
                 document.head.appendChild(script2);
             };
-            script1.onerror = reject;
+            
+            script1.onerror = () => reject(new Error('Failed to load html2canvas'));
             document.head.appendChild(script1);
         });
     }
-
-    // ─── APPLICATION STATE ─────────────────────────────────────
-    let currentTab = 'INVOICE';
-    let lineItems = [
-        { id:1, code:'ADV-001', description:'Legal Consultation & Advisory', hours: 3.5, rate: 12000, disbursement: 0 },
-        { id:2, code:'DRF-042', description:'Drafting & Filing Plaint', hours: 8.0, rate: 10000, disbursement: 3500 },
-        { id:3, code:'CRT-017', description:'Court Attendance', hours: 2.0, rate: 15000, disbursement: 1500 }
-    ];
-    let nextId = 4;
-    let discountPct = 0;
-    let taxPct = 16;
-    let formData = {
-        invoiceNo: 'INV-2024-089', date: new Date().toISOString().slice(0,10),
-        dueDate: 'Within 30 Days', matterRef: 'ELC Case No. 45/2024',
-        clientName: 'James Mwangi', clientPhone: '+254 722 890123',
-        clientEmail: 'j.mwangi@email.com', clientAddress: 'Nanyuki Town',
-        notes: 'Professional fees as per Advocates Remuneration Order.',
-        terms: 'Payment within 30 days.',
-        firmEmail: 'wakilimauncho@gmail.com', firmPhone: '+254 746 389 218',
-        firmAddress: 'Laipha House, Third Floor, Nanyuki'
+    
+    // ────────────────────────────────────────────────────────────
+    // APPLICATION STATE
+    // ────────────────────────────────────────────────────────────
+    const FIRM_INFO = {
+        name: 'MAUNCHO LAW ADVOCATES',
+        address: 'Laipha House, Third Floor, Nanyuki',
+        email: 'wakilimauncho@gmail.com',
+        phone: '+254 746 389 218',
+        logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
+        watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
     };
-    const logoURL = 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg';
-
-    // ─── HELPERS ───────────────────────────────────────────────
-    function fmt(n){ return 'KSH '+Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});}
-    function fmtPlain(n){ return Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2});}
-    function calcTotals(){
-        const feesSub = lineItems.reduce((s,it)=>s+(it.hours*it.rate),0);
-        const disbursements = lineItems.reduce((s,it)=>s+(it.disbursement||0),0);
-        const sub = feesSub + disbursements;
-        const disc = sub*(discountPct/100);
-        const afterDisc = sub-disc;
-        const tax = afterDisc*(taxPct/100);
-        const grand = afterDisc+tax;
-        return {feesSub, disbursements, sub, disc, afterDisc, tax, grand};
+    
+    let currentMainTab = 'BILLING';
+    let currentBillingTab = 'INVOICE';
+    let paymentStatus = 'unpaid';
+    
+    let lineItems = [
+        { id: 1, code: 'ADV-001', description: 'Legal Consultation & Advisory on Land Matter', hours: 3.5, rate: 12000, disbursement: 0 },
+        { id: 2, code: 'DRF-042', description: 'Drafting & Filing Plaint (ELC Case No. 45/2024)', hours: 8.0, rate: 10000, disbursement: 3500 },
+        { id: 3, code: 'CRT-017', description: 'Court Attendance (Nanyuki Law Courts)', hours: 2.0, rate: 15000, disbursement: 1500 },
+        { id: 4, code: 'SRV-003', description: 'Service of Process & Court Summons', hours: 0, rate: 0, disbursement: 5000 }
+    ];
+    
+    let nextItemId = 5;
+    let discountPercent = 0;
+    let vatPercent = 16;
+    
+    let documentInfo = {
+        number: 'INV-2024-089',
+        date: new Date().toISOString().slice(0, 10),
+        dueDate: 'Within 30 Days',
+        matterRef: 'ELC Case No. 45/2024',
+        client: {
+            name: 'James Mwangi',
+            phone: '+254 722 890123',
+            email: 'j.mwangi@corporation.co.ke',
+            address: 'Nanyuki Town'
+        },
+        notes: 'Professional fees as per Advocates Remuneration Order.',
+        terms: 'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
+    };
+    
+    let matters = [
+        { id: 101, title: 'Mention - ELC Case 45/2024', court: 'Nanyuki Law Courts', date: '2026-05-08', time: '9:00 AM', judge: 'Hon. Justice Mwangi', caseNo: 'ELC 45/2024', client: 'James Mwangi' },
+        { id: 102, title: 'Hearing - Succession Cause 12/2024', court: 'Nanyuki Law Courts', date: '2026-05-12', time: '10:30 AM', judge: 'Hon. Justice Wanjiku', caseNo: 'SUC 12/2024', client: 'Peter Njoroge' },
+        { id: 103, title: 'Ruling - Civil Appeal 08/2024', court: 'Nanyuki High Court', date: '2026-05-15', time: '2:15 PM', judge: 'Hon. Justice Kamau', caseNo: 'CVA 08/2024', client: 'Grace Wambui' },
+        { id: 104, title: 'Pre-Trial Conference', court: 'Milimani Law Courts', date: '2026-05-22', time: '11:00 AM', judge: 'Hon. Justice Ochieng', caseNo: 'HCCC 234/2024', client: 'David Kiprotich' }
+    ];
+    
+    let nextMatterId = 105;
+    
+    // ────────────────────────────────────────────────────────────
+    // UTILITY FUNCTIONS
+    // ────────────────────────────────────────────────────────────
+    function formatCurrency(amount) {
+        return 'KSH ' + Number(amount).toLocaleString('en-KE', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
     }
-    function showToast(msg,d=2500){
-        const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';
-        clearTimeout(window._toastTimer);window._toastTimer=setTimeout(()=>{t.style.display='none';},d);
+    
+    function formatPlain(amount) {
+        return Number(amount).toLocaleString('en-KE', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
     }
-    function updateField(k,v){ formData[k]=v; if(k==='invoiceNo') document.getElementById('docNumber').textContent=v; }
-
-    // ─── PDF GENERATION ────────────────────────────────────────
-    function renderPDFTemplate() {
-        const tot = calcTotals();
-        const logoImgBlock = `<img src="${logoURL}" style="width:56px;height:56px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;" crossorigin="anonymous">`;
-        const watermarkBlock = `
+    
+    function calculateTotals() {
+        const feesSubtotal = lineItems.reduce((sum, item) => sum + (item.hours * item.rate), 0);
+        const totalDisbursements = lineItems.reduce((sum, item) => sum + (item.disbursement || 0), 0);
+        const subtotal = feesSubtotal + totalDisbursements;
+        const discount = subtotal * (discountPercent / 100);
+        const afterDiscount = subtotal - discount;
+        const vat = afterDiscount * (vatPercent / 100);
+        const grandTotal = afterDiscount + vat;
+        
+        return {
+            feesSubtotal,
+            totalDisbursements,
+            subtotal,
+            discount,
+            afterDiscount,
+            vat,
+            grandTotal
+        };
+    }
+    
+    function showNotification(message, duration = 2500) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.display = 'block';
+        clearTimeout(window._notificationTimer);
+        window._notificationTimer = setTimeout(() => {
+            toast.style.display = 'none';
+        }, duration);
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // PDF GENERATION
+    // ────────────────────────────────────────────────────────────
+    function generatePDFTemplate() {
+        const totals = calculateTotals();
+        const tab = currentBillingTab;
+        
+        const logoImage = `<img src="${FIRM_INFO.logo}" style="width:56px;height:56px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;" crossorigin="anonymous">`;
+        
+        const watermarkImage = `
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0;">
-                <img src="${watermarkURL}" style="width:500px;height:500px;object-fit:contain;opacity:0.06;" crossorigin="anonymous">
+                <img src="${FIRM_INFO.watermark}" style="width:500px;height:500px;object-fit:contain;opacity:0.06;" crossorigin="anonymous">
             </div>`;
         
-        const itemsRows = lineItems.map(item => 
-            `<tr><td style="padding:10px;">${item.code||'—'}</td><td style="padding:10px;font-weight:600;">${item.description||'—'}</td><td style="text-align:center;padding:10px;">${item.hours||0}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.rate)}</td><td style="text-align:right;padding:10px;">${fmtPlain(item.disbursement||0)}</td><td style="text-align:right;font-weight:700;padding:10px;">${fmtPlain(item.hours*item.rate + (item.disbursement||0))}</td></tr>`
-        ).join('');
-
-        return `<div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
-            ${watermarkBlock}
-            <div style="position:relative;z-index:1;">
-                <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
-                    <div style="display:flex;align-items:center;gap:14px;">${logoImgBlock}<div><div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div><div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div></div></div>
-                    <div style="color:#fff;text-align:right;"><h2 style="font-size:22px;font-weight:900;">TAX INVOICE</h2><p style="color:#c9a84c;">#${formData.invoiceNo}</p></div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
-                    <div><h3 style="font-weight:900;">BILL TO:</h3><p style="font-size:18px;font-weight:700;">${formData.clientName}</p><p>${formData.matterRef}</p><p>${formData.clientAddress}</p></div>
-                    <div style="text-align:right;"><p>Date: ${formData.date}</p><p>Due: ${formData.dueDate}</p><p>📞 ${formData.firmPhone}</p></div>
-                </div>
-                <table style="width:100%;border-collapse:collapse;"><thead><tr style="background:#f5f0e8;border-top:2px solid #000;border-bottom:2px solid #000;"><th>Code</th><th>Description</th><th style="text-align:center;">Hours</th><th style="text-align:right;">Rate/hr</th><th style="text-align:right;">Disb.</th><th style="text-align:right;">Total</th></tr></thead><tbody>${itemsRows}</tbody></table>
-                <div style="display:flex;justify-content:flex-end;margin-top:20px;"><div style="width:300px;"><div style="display:flex;justify-content:space-between;padding:8px 0;">Subtotal<span>${fmtPlain(tot.sub)}</span></div><div style="display:flex;justify-content:space-between;padding:8px 0;">VAT (${taxPct}%)<span>${fmtPlain(tot.tax)}</span></div><div style="background:#000;color:#c9a84c;padding:14px;border-radius:6px;display:flex;justify-content:space-between;font-weight:900;margin-top:8px;">GRAND TOTAL<span>KSH ${fmtPlain(tot.grand)}</span></div></div></div>
-                <div style="margin-top:40px;text-align:center;font-size:9px;color:#888;">Thank you for choosing Mauncho Law Advocates • Laipha House, Third Floor, Nanyuki</div>
-            </div>
-        </div>`;
-    }
-
-    async function generatePDFBlob() {
-        await loadPdfLibs();
-        const templateHTML = renderPDFTemplate();
-        const templateEl = document.getElementById('pdfTemplate');
-        templateEl.innerHTML = templateHTML;
-        await new Promise(r => setTimeout(r, 800));
+        const itemsHTML = lineItems.map(item => `
+            <tr>
+                <td style="padding:10px;">${item.code || '—'}</td>
+                <td style="padding:10px;font-weight:600;">${item.description || '—'}</td>
+                <td style="text-align:center;padding:10px;">${item.hours || 0}</td>
+                <td style="text-align:right;padding:10px;">${formatPlain(item.rate)}</td>
+                <td style="text-align:right;padding:10px;">${formatPlain(item.disbursement || 0)}</td>
+                <td style="text-align:right;font-weight:700;padding:10px;">${formatPlain(item.hours * item.rate + (item.disbursement || 0))}</td>
+            </tr>
+        `).join('');
         
-        const canvas = await html2canvas(templateEl, {
-            scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false,
-            width: templateEl.scrollWidth, height: templateEl.scrollHeight
+        let documentHTML = '';
+        
+        if (tab === 'RECEIPT') {
+            documentHTML = `
+                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
+                    ${watermarkImage}
+                    <div style="position:relative;z-index:1;">
+                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                ${logoImage}
+                                <div>
+                                    <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div>
+                                    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div>
+                                </div>
+                            </div>
+                            <div style="color:#fff;text-align:right;">
+                                <h2 style="font-size:22px;font-weight:900;">OFFICIAL RECEIPT</h2>
+                                <p style="color:#c9a84c;">Payment Confirmed</p>
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
+                            <div>
+                                <h3 style="font-size:11px;font-weight:900;">RECEIVED FROM:</h3>
+                                <p style="font-size:20px;font-weight:700;">${documentInfo.client.name}</p>
+                                <p>${documentInfo.matterRef}</p>
+                            </div>
+                            <div style="text-align:right;">
+                                <p>Receipt No: ${documentInfo.number}</p>
+                                <p>Date: ${documentInfo.date}</p>
+                            </div>
+                        </div>
+                        <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
+                            <thead>
+                                <tr style="background:#f9fafb;border-top:2px solid #000;border-bottom:2px solid #000;">
+                                    <th style="padding:8px;">Description</th>
+                                    <th style="text-align:right;padding:8px;">Amount (KSH)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="padding:20px;">FULL SETTLEMENT FOR ${tab.replace('_',' ')} #${documentInfo.number}</td>
+                                    <td style="padding:20px;text-align:right;font-weight:900;font-size:20px;">${formatPlain(totals.grandTotal)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="background:#000;color:#c9a84c;padding:20px;border-radius:8px;text-align:right;">
+                            <p style="font-size:10px;">TOTAL PAID</p>
+                            <p style="font-size:26px;font-weight:900;">KSH ${formatPlain(totals.grandTotal)}</p>
+                        </div>
+                    </div>
+                </div>`;
+        } else if (tab === 'FEE_NOTE') {
+            documentHTML = `
+                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
+                    ${watermarkImage}
+                    <div style="position:relative;z-index:1;">
+                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
+                            <div style="display:flex;align-items:center;gap:14px;">
+                                ${logoImage}
+                                <div>
+                                    <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div>
+                                    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div>
+                                </div>
+                            </div>
+                            <div style="color:#fff;text-align:right;">
+                                <h2 style="font-size:22px;font-weight:900;">PROFESSIONAL FEE NOTE</h2>
+                                <p style="color:#c9a84c;">#${documentInfo.number}</p>
+                            </div>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
+                            <div>
+                                <h3 style="font-weight:900;">TO:</h3>
+                                <p style="font-size:18px;font-weight:700;">${documentInfo.client.name}</p>
+                                <p>${documentInfo.matterRef}</p>
+                            </div>
+                            <div style="text-align:right;">
+                                <p>Date: ${documentInfo.date}</p>
+                                <p>📞 ${FIRM_INFO.phone}</p>
+                                <p>✉️ ${FIRM_INFO.email}</p>
+                            </div>
+                        </div>
+                        <table style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:#f5f0e8;border-top:2px solid #000;">
+                                    <th style="padding:8px;">Code</th>
+                                    <th style="padding:8px;">Service</th>
+                                    <th style="text-align:center;padding:8px;">Hours</th>
+                                    <th style="text-align:right;padding:8px;">Rate/hr</th>
+                                    <th style="text-align:right;padding:8px;">Disb.</th>
+                                    <th style="text-align:right;padding:8px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>${itemsHTML}</tbody>
+                        </table>
+                        <div style="display:flex;justify-content:flex-end;margin-top:20px;">
+                            <div style="width:300px;">
+                                <div style="display:flex;justify-content:space-between;padding:8px 0;">Professional Fees<span>${formatPlain(totals.feesSubtotal)}</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:8px 0;">Disbursements<span>${formatPlain(totals.totalDisbursements)}</span></div>
+                                <div style="display:flex;justify-content:space-between;padding:8px 0;">VAT (${vatPercent}%)<span>${formatPlain(totals.vat)}</span></div>
+                                <div style="background:#000;color:#c9a84c;padding:14px;border-radius:6px;display:flex;justify-content:space-between;font-weight:900;margin-top:8px;">
+                                    <span>TOTAL DUE</span>
+                                    <span>KSH ${formatPlain(totals.grandTotal)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        } else {
+            documentHTML = `
+                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
+                    ${watermarkImage}
+                    <div style="position:relative;z-index:1;">
+                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;text-align:center;">
+                            ${logoImage}
+                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:#fff;margin-top:8px;">MAUNCHO LAW ADVOCATES</div>
+                            <div style="color:#c9a84c;font-size:10px;">${FIRM_INFO.address}</div>
+                        </div>
+                        <div style="text-align:center;margin-bottom:28px;">
+                            <h1 style="font-size:26px;font-weight:900;border-bottom:2px solid #000;display:inline-block;padding-bottom:4px;">TAX INVOICE</h1>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;margin-bottom:32px;">
+                            <div>
+                                <h3 style="font-weight:700;">BILL TO:</h3>
+                                <p style="font-size:18px;font-weight:700;">${documentInfo.client.name}</p>
+                                <p>${documentInfo.matterRef}</p>
+                                <p>${documentInfo.client.address}</p>
+                            </div>
+                            <div style="text-align:right;">
+                                <p>Invoice No: ${documentInfo.number}</p>
+                                <p>Date: ${documentInfo.date}</p>
+                                <p>Due: ${documentInfo.dueDate}</p>
+                            </div>
+                        </div>
+                        <table style="width:100%;border-collapse:collapse;">
+                            <thead>
+                                <tr style="border-top:2px solid #000;border-bottom:2px solid #000;">
+                                    <th style="padding:8px;">Code</th>
+                                    <th style="padding:8px;">Description</th>
+                                    <th style="text-align:center;padding:8px;">Hours</th>
+                                    <th style="text-align:right;padding:8px;">Rate</th>
+                                    <th style="text-align:right;padding:8px;">Disb.</th>
+                                    <th style="text-align:right;padding:8px;">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>${itemsHTML}</tbody>
+                        </table>
+                        <div style="display:flex;justify-content:flex-end;margin-top:20px;border-top:2px solid #000;padding-top:16px;">
+                            <div style="text-align:right;width:300px;">
+                                <div style="display:flex;justify-content:space-between;">Subtotal<span>KSH ${formatPlain(totals.subtotal)}</span></div>
+                                <div style="display:flex;justify-content:space-between;">VAT (${vatPercent}%)<span>KSH ${formatPlain(totals.vat)}</span></div>
+                                <div style="display:flex;justify-content:space-between;border-top:2px solid #000;margin-top:6px;padding-top:8px;font-weight:900;">GRAND TOTAL<span>KSH ${formatPlain(totals.grandTotal)}</span></div>
+                            </div>
+                        </div>
+                        <div style="margin-top:40px;text-align:center;font-size:9px;color:#888;">
+                            ${FIRM_INFO.name} • ${FIRM_INFO.address} • ${FIRM_INFO.phone} • ${FIRM_INFO.email}
+                        </div>
+                    </div>
+                </div>`;
+        }
+        
+        return documentHTML;
+    }
+    
+    async function createPDFBlob() {
+        await initLibraries();
+        
+        const templateHTML = generatePDFTemplate();
+        const templateElement = document.getElementById('pdfTemplate');
+        templateElement.innerHTML = templateHTML;
+        
+        // Wait for images to load
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        const canvas = await html2canvas(templateElement, {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff',
+            logging: false,
+            width: templateElement.scrollWidth,
+            height: templateElement.scrollHeight
         });
         
         const { jsPDF } = window.jspdf;
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imageData = canvas.toDataURL('image/png');
         const pdfWidth = 210;
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+        const pdf = new jsPDF('p', 'mm', 'a4');
         
-        templateEl.innerHTML = '';
+        pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
+        
+        // Handle multi-page documents
+        if (pdfHeight > 297) {
+            let remaining = pdfHeight - 297;
+            while (remaining > 0) {
+                pdf.addPage();
+                pdf.addImage(imageData, 'PNG', 0, -(297 * (pdf.getNumberOfPages() - 1)), pdfWidth, pdfHeight);
+                remaining -= 297;
+            }
+        }
+        
+        templateElement.innerHTML = '';
         return pdf.output('blob');
     }
-
-    // ─── WHATSAPP SHARING ──────────────────────────────────────
+    
+    // ────────────────────────────────────────────────────────────
+    // WHATSAPP SHARING
+    // ────────────────────────────────────────────────────────────
     async function shareToWhatsApp() {
-        const loadingEl = document.getElementById('loadingOverlay');
-        loadingEl.classList.remove('hidden');
-        showToast('📄 Generating PDF for WhatsApp…', 4000);
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.classList.remove('hidden');
+        showNotification('📄 Generating PDF for WhatsApp…', 4000);
         
         try {
-            const pdfBlob = await generatePDFBlob();
-            const pdfName = `Mauncho_Law_${currentTab}_${formData.invoiceNo.replace(/[/#]/g,'_')}.pdf`;
-            const file = new File([pdfBlob], pdfName, { type: 'application/pdf' });
-            const { grand } = calcTotals();
-            const shareText = `*MAUNCHO LAW ADVOCATES*\n⚖️ Laipha House, Third Floor, Nanyuki\n📄 ${currentTab}: ${formData.invoiceNo}\n👤 ${formData.clientName}\n📋 ${formData.matterRef}\n💰 Grand Total: ${fmt(grand)}\n📅 ${formData.date}`;
+            const pdfBlob = await createPDFBlob();
+            const fileName = `Mauncho_Law_${currentBillingTab}_${documentInfo.number.replace(/[/#]/g,'_')}.pdf`;
+            const file = new File([pdfBlob], fileName, { type: 'application/pdf' });
+            const totals = calculateTotals();
             
+            const messageText = `*${FIRM_INFO.name}*\n⚖️ ${FIRM_INFO.address}\n📄 ${currentBillingTab.replace('_',' ')}: ${documentInfo.number}\n👤 ${documentInfo.client.name}\n📋 ${documentInfo.matterRef}\n💰 Grand Total: ${formatCurrency(totals.grandTotal)}\n📅 ${documentInfo.date}\n📞 ${FIRM_INFO.phone}`;
+            
+            // Try native sharing first (mobile devices)
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({ title: `Mauncho Law — ${formData.invoiceNo}`, text: shareText, files: [file] });
-                showToast('✅ Document shared!', 3000);
+                await navigator.share({
+                    title: `Mauncho Law — ${documentInfo.number}`,
+                    text: messageText,
+                    files: [file]
+                });
+                showNotification('✅ Document shared successfully!', 3000);
             } else {
-                const url = URL.createObjectURL(pdfBlob);
-                const a = document.createElement('a'); a.href = url; a.download = pdfName;
-                document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                setTimeout(() => { window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank'); URL.revokeObjectURL(url); }, 500);
-                showToast('📥 PDF downloaded! Opening WhatsApp…', 4000);
+                // Fallback: Download and open WhatsApp
+                const downloadUrl = URL.createObjectURL(pdfBlob);
+                const downloadLink = document.createElement('a');
+                downloadLink.href = downloadUrl;
+                downloadLink.download = fileName;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+                
+                setTimeout(() => {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(messageText)}`, '_blank');
+                    URL.revokeObjectURL(downloadUrl);
+                }, 500);
+                
+                showNotification('📥 PDF downloaded! Opening WhatsApp…', 4000);
             }
-        } catch (err) {
-            const { grand } = calcTotals();
-            window.open(`https://wa.me/?text=${encodeURIComponent(`*MAUNCHO LAW ADVOCATES*\n📄 ${currentTab}: ${formData.invoiceNo}\n💰 Grand Total: ${fmt(grand)}`)}`, '_blank');
+        } catch (error) {
+            console.error('Sharing error:', error);
+            const totals = calculateTotals();
+            const fallbackMessage = `*${FIRM_INFO.name}*\n📄 ${currentBillingTab.replace('_',' ')}: ${documentInfo.number}\n💰 Grand Total: ${formatCurrency(totals.grandTotal)}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(fallbackMessage)}`, '_blank');
         } finally {
-            loadingEl.classList.add('hidden');
+            loadingOverlay.classList.add('hidden');
         }
     }
-
+    
     async function downloadPDF() {
-        const loadingEl = document.getElementById('loadingOverlay');
-        loadingEl.classList.remove('hidden');
-        showToast('📄 Preparing PDF…', 3000);
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        loadingOverlay.classList.remove('hidden');
+        showNotification('📄 Preparing PDF download…', 3000);
+        
         try {
-            const pdfBlob = await generatePDFBlob();
-            const url = URL.createObjectURL(pdfBlob);
-            const a = document.createElement('a'); a.href = url; a.download = `Mauncho_Law_${currentTab}_${formData.invoiceNo.replace(/[/#]/g,'_')}.pdf`;
-            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-            showToast('✅ PDF downloaded!', 2500);
-        } catch (err) { showToast('⚠️ Download failed.', 3000); }
-        finally { loadingEl.classList.add('hidden'); }
+            const pdfBlob = await createPDFBlob();
+            const fileName = `Mauncho_Law_${currentBillingTab}_${documentInfo.number.replace(/[/#]/g,'_')}.pdf`;
+            
+            const downloadUrl = URL.createObjectURL(pdfBlob);
+            const downloadLink = document.createElement('a');
+            downloadLink.href = downloadUrl;
+            downloadLink.download = fileName;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(downloadUrl);
+            
+            showNotification('✅ PDF downloaded successfully!', 2500);
+        } catch (error) {
+            console.error('Download error:', error);
+            showNotification('⚠️ Download failed. Please try again.', 3000);
+        } finally {
+            loadingOverlay.classList.add('hidden');
+        }
     }
-
-    function handleFloatingShare() { shareToWhatsApp(); }
-
-    // ─── ITEMS MANAGEMENT ──────────────────────────────────────
-    function addItem(){ lineItems.push({id:nextId++,code:'',description:'',hours:0,rate:0,disbursement:0}); render(); }
-    function removeItem(id){ if(lineItems.length<=1){showToast('⚠️ At least one item required');return;} lineItems=lineItems.filter(i=>i.id!==id); render(); }
-    function updateItem(id,field,val){
-        const item=lineItems.find(i=>i.id===id); if(!item)return;
-        if(field==='hours'||field==='rate'||field==='disbursement') item[field]=parseFloat(val)||0;
-        else item[field]=val;
+    
+    function quickShare() {
+        // Switch to billing if not already there
+        if (currentMainTab !== 'BILLING') {
+            currentMainTab = 'BILLING';
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+            document.querySelector('.main-tab:first-child').classList.add('active');
+        }
+        render();
+        setTimeout(() => shareToWhatsApp(), 300);
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // MATTERS MANAGEMENT
+    // ────────────────────────────────────────────────────────────
+    function addMatter() {
+        const title = prompt('Enter matter title:');
+        if (!title) return;
+        
+        const date = prompt('Enter date (YYYY-MM-DD):', new Date().toISOString().slice(0, 10));
+        if (!date) return;
+        
+        const time = prompt('Enter time:', '9:00 AM');
+        const court = prompt('Enter court:', 'Nanyuki Law Courts');
+        const caseNo = prompt('Enter case number:');
+        const client = prompt('Enter client name:');
+        const judge = prompt('Enter judge/officer:');
+        
+        matters.push({
+            id: nextMatterId++,
+            title,
+            date,
+            time: time || '9:00 AM',
+            court: court || 'Nanyuki Law Courts',
+            caseNo: caseNo || '',
+            client: client || '',
+            judge: judge || ''
+        });
+        
+        render();
+        showNotification('✅ Matter added successfully!', 2000);
+    }
+    
+    function editMatter(id) {
+        const matter = matters.find(m => m.id === id);
+        if (!matter) return;
+        
+        const title = prompt('Edit title:', matter.title);
+        if (title === null) return;
+        
+        const date = prompt('Edit date (YYYY-MM-DD):', matter.date);
+        if (date === null) return;
+        
+        const time = prompt('Edit time:', matter.time);
+        const court = prompt('Edit court:', matter.court);
+        const caseNo = prompt('Edit case number:', matter.caseNo);
+        const client = prompt('Edit client:', matter.client);
+        const judge = prompt('Edit judge:', matter.judge);
+        
+        Object.assign(matter, {
+            title: title || matter.title,
+            date: date || matter.date,
+            time: time || matter.time,
+            court: court || matter.court,
+            caseNo: caseNo || matter.caseNo,
+            client: client || matter.client,
+            judge: judge || matter.judge
+        });
+        
+        render();
+        showNotification('✅ Matter updated!', 2000);
+    }
+    
+    function deleteMatter(id) {
+        if (confirm('Are you sure you want to delete this matter?')) {
+            matters = matters.filter(m => m.id !== id);
+            render();
+            showNotification('🗑️ Matter deleted', 2000);
+        }
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // LINE ITEMS MANAGEMENT
+    // ────────────────────────────────────────────────────────────
+    function addLineItem() {
+        lineItems.push({
+            id: nextItemId++,
+            code: '',
+            description: '',
+            hours: 0,
+            rate: 0,
+            disbursement: 0
+        });
         render();
     }
-    function updateDiscount(v){ discountPct=parseFloat(v)||0; render(); }
-    function updateTax(v){ taxPct=parseFloat(v)||0; render(); }
-
-    // ─── RENDER ────────────────────────────────────────────────
-    function render(){
-        const tot = calcTotals();
-        const docType = currentTab === 'FEE_NOTE' ? 'Fee Note' : currentTab === 'INVOICE' ? 'Tax Invoice' : 'Official Receipt';
-        document.getElementById('mainContent').innerHTML = `
-        <div class="firm-info-bar">
-            <span>📍 ${formData.firmAddress}</span>
-            <span>📧 ${formData.firmEmail}</span>
-            <span>📞 ${formData.firmPhone}</span>
-        </div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${docType} Details</span></div><div class="form-body">
-          <div class="field-row"><div class="field"><label>Document Number</label><input value="${formData.invoiceNo}" oninput="updateField('invoiceNo',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${formData.date}" oninput="updateField('date',this.value)"></div></div>
-          <div class="field-row"><div class="field"><label>Matter Reference</label><input value="${formData.matterRef}" oninput="updateField('matterRef',this.value)"></div><div class="field"><label>Due Date</label><input value="${formData.dueDate}" oninput="updateField('dueDate',this.value)"></div></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client Information</span></div><div class="form-body">
-          <div class="field"><label>Client Name</label><input value="${formData.clientName}" oninput="updateField('clientName',this.value)"></div>
-          <div class="field-row"><div class="field"><label>Phone</label><input value="${formData.clientPhone}" oninput="updateField('clientPhone',this.value)"></div><div class="field"><label>Email</label><input value="${formData.clientEmail}" oninput="updateField('clientEmail',this.value)"></div></div>
-          <div class="field"><label>Address</label><input value="${formData.clientAddress}" oninput="updateField('clientAddress',this.value)"></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Professional Services</span></div>
-          <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hours</th><th class="right">Rate/hr</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
-            ${lineItems.map(item=>`<tr><td><input class="code" value="${item.code||''}" oninput="updateItem(${item.id},'code',this.value)"></td><td><input class="desc" value="${item.description}" oninput="updateItem(${item.id},'description',this.value)"></td><td class="center"><input class="hours" type="number" min="0" step="0.5" value="${item.hours}" oninput="updateItem(${item.id},'hours',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="500" value="${item.rate}" oninput="updateItem(${item.id},'rate',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="100" value="${item.disbursement||0}" oninput="updateItem(${item.id},'disbursement',this.value)"></td><td class="right"><span class="row-total">${fmt(item.hours*item.rate + (item.disbursement||0))}</span></td><td><button class="del-btn" onclick="removeItem(${item.id})">×</button></td></tr>`).join('')}
-          </tbody></table></div>
-          <div style="padding:4px 16px 16px"><button class="add-row-btn" onclick="addItem()">+ Add Service Line</button>
-          <div class="divider"></div>
-          <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${discountPct}" oninput="updateDiscount(this.value)"><span class="adj-label">%</span></div>
-          <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${taxPct}" oninput="updateTax(this.value)"><span class="adj-label">%</span></div>
-          <div class="totals-block"><div class="totals-row"><span>Subtotal</span><span class="val">${fmt(tot.sub)}</span></div><div class="totals-row"><span>VAT (${taxPct}%)</span><span class="val">${fmt(tot.tax)}</span></div></div>
-          <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val">${fmt(tot.grand)}</span></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
-          <div class="field"><label>Notes</label><textarea rows="2" oninput="updateField('notes',this.value)">${formData.notes}</textarea></div>
-          <div class="field"><label>Terms</label><textarea rows="2" oninput="updateField('terms',this.value)">${formData.terms}</textarea></div>
-        </div></div>
-        <div class="section-card"><div class="form-body actions">
-          <button class="btn-whatsapp" onclick="shareToWhatsApp()">📤 SHARE TO WHATSAPP (PDF)</button>
-          <button class="btn-download" onclick="downloadPDF()">⬇ DOWNLOAD PDF</button>
-        </div></div>`;
-    }
-
-    function switchTab(tab, el){
-        currentTab = tab;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
-        const prefixes = { FEE_NOTE:'FBN-', INVOICE:'INV-', RECEIPT:'RCT-' };
-        const suffixes = { FEE_NOTE:'2024-001', INVOICE:'2024-089', RECEIPT:'2024-089' };
-        formData.invoiceNo = prefixes[tab] + suffixes[tab];
-        document.getElementById('docNumber').textContent = formData.invoiceNo;
+    
+    function removeLineItem(id) {
+        if (lineItems.length <= 1) {
+            showNotification('⚠️ At least one line item is required', 2500);
+            return;
+        }
+        lineItems = lineItems.filter(item => item.id !== id);
         render();
     }
-
-    // ─── INIT ──────────────────────────────────────────────────
-    window.switchTab = switchTab;
-    window.addItem = addItem;
-    window.removeItem = removeItem;
-    window.updateItem = updateItem;
+    
+    function updateLineItem(id, field, value) {
+        const item = lineItems.find(item => item.id === id);
+        if (!item) return;
+        
+        if (field === 'hours' || field === 'rate' || field === 'disbursement') {
+            item[field] = parseFloat(value) || 0;
+        } else {
+            item[field] = value;
+        }
+        render();
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // RENDERING
+    // ────────────────────────────────────────────────────────────
+    function renderBillingView() {
+        const totals = calculateTotals();
+        const tabs = ['FEE_NOTE', 'INVOICE', 'RECEIPT'];
+        
+        return `
+            <div class="firm-info-bar">
+                <span>📍 ${FIRM_INFO.address}</span>
+                <span>📧 ${FIRM_INFO.email}</span>
+                <span>📞 ${FIRM_INFO.phone}</span>
+            </div>
+            
+            <div class="sub-tabs">
+                ${tabs.map(tab => `
+                    <button class="sub-tab ${tab === currentBillingTab ? 'active' : ''}" 
+                            onclick="switchBillingTab('${tab}')">
+                        ${tab.replace('_', ' ')}
+                    </button>
+                `).join('')}
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-dot"></span>
+                    <span class="section-title">${currentBillingTab.replace('_', ' ')} Details</span>
+                </div>
+                <div class="form-body">
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Document Number</label>
+                            <input value="${documentInfo.number}" 
+                                   oninput="updateDocumentField('number', this.value)">
+                        </div>
+                        <div class="field">
+                            <label>Date</label>
+                            <input type="date" value="${documentInfo.date}" 
+                                   oninput="updateDocumentField('date', this.value)">
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Matter Reference</label>
+                            <input value="${documentInfo.matterRef}" 
+                                   oninput="updateDocumentField('matterRef', this.value)">
+                        </div>
+                        <div class="field">
+                            <label>Due Date</label>
+                            <input value="${documentInfo.dueDate}" 
+                                   oninput="updateDocumentField('dueDate', this.value)">
+                        </div>
+                    </div>
+                    ${currentBillingTab === 'RECEIPT' ? `
+                        <div class="status-pills">
+                            <button class="status-pill ${paymentStatus === 'paid' ? 'active-paid' : ''}" 
+                                    onclick="updatePaymentStatus('paid')">PAID</button>
+                            <button class="status-pill ${paymentStatus === 'unpaid' ? 'active-unpaid' : ''}" 
+                                    onclick="updatePaymentStatus('unpaid')">UNPAID</button>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-dot"></span>
+                    <span class="section-title">Client Information</span>
+                </div>
+                <div class="form-body">
+                    <div class="field">
+                        <label>Client Name</label>
+                        <input value="${documentInfo.client.name}" 
+                               oninput="updateClientField('name', this.value)">
+                    </div>
+                    <div class="field-row">
+                        <div class="field">
+                            <label>Phone</label>
+                            <input value="${documentInfo.client.phone}" 
+                                   oninput="updateClientField('phone', this.value)">
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <input value="${documentInfo.client.email}" 
+                                   oninput="updateClientField('email', this.value)">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Address</label>
+                        <input value="${documentInfo.client.address}" 
+                               oninput="updateClientField('address', this.value)">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-dot"></span>
+                    <span class="section-title">Professional Services & Disbursements</span>
+                </div>
+                <div class="items-table-wrap">
+                    <table class="items-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th class="center">Hours</th>
+                                <th class="right">Rate/hr</th>
+                                <th class="right">Disb.</th>
+                                <th class="right">Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${lineItems.map(item => `
+                                <tr>
+                                    <td><input class="code" value="${item.code || ''}" 
+                                               oninput="updateLineItem(${item.id}, 'code', this.value)"></td>
+                                    <td><input class="desc" value="${item.description}" 
+                                               oninput="updateLineItem(${item.id}, 'description', this.value)"></td>
+                                    <td class="center"><input class="hours" type="number" min="0" step="0.5" 
+                                               value="${item.hours}" 
+                                               oninput="updateLineItem(${item.id}, 'hours', this.value)"></td>
+                                    <td class="right"><input class="rate" type="number" min="0" step="500" 
+                                               value="${item.rate}" 
+                                               oninput="updateLineItem(${item.id}, 'rate', this.value)"></td>
+                                    <td class="right"><input class="rate" type="number" min="0" step="100" 
+                                               value="${item.disbursement || 0}" 
+                                               oninput="updateLineItem(${item.id}, 'disbursement', this.value)"></td>
+                                    <td class="right"><span class="row-total">${formatCurrency(item.hours * item.rate + (item.disbursement || 0))}</span></td>
+                                    <td><button class="del-btn" onclick="removeLineItem(${item.id})">×</button></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding:4px 16px 16px">
+                    <button class="add-row-btn" onclick="addLineItem()">+ Add Service / Disbursement</button>
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="adj-row">
+                        <label>Discount</label>
+                        <input type="number" min="0" max="100" value="${discountPercent}" 
+                               oninput="updateDiscount(this.value)">
+                        <span class="adj-label">%</span>
+                    </div>
+                    <div class="adj-row">
+                        <label>VAT</label>
+                        <input type="number" min="0" max="100" value="${vatPercent}" 
+                               oninput="updateVAT(this.value)">
+                        <span class="adj-label">%</span>
+                    </div>
+                    
+                    <div class="totals-block">
+                        <div class="totals-row">
+                            <span>Professional Fees</span>
+                            <span class="val">${formatCurrency(totals.feesSubtotal)}</span>
+                        </div>
+                        <div class="totals-row">
+                            <span>Disbursements</span>
+                            <span class="val">${formatCurrency(totals.totalDisbursements)}</span>
+                        </div>
+                        <div class="totals-row">
+                            <span>Subtotal</span>
+                            <span class="val">${formatCurrency(totals.subtotal)}</span>
+                        </div>
+                        ${discountPercent > 0 ? `
+                            <div class="totals-row">
+                                <span>Discount (${discountPercent}%)</span>
+                                <span class="val">-${formatCurrency(totals.discount)}</span>
+                            </div>
+                        ` : ''}
+                        <div class="totals-row">
+                            <span>VAT (${vatPercent}%)</span>
+                            <span class="val">${formatCurrency(totals.vat)}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grand-total-row">
+                        <span class="label">GRAND TOTAL</span>
+                        <span class="val">${formatCurrency(totals.grandTotal)}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-dot"></span>
+                    <span class="section-title">Notes & Terms</span>
+                </div>
+                <div class="form-body">
+                    <div class="field">
+                        <label>Notes</label>
+                        <textarea rows="2" oninput="updateDocumentField('notes', this.value)">${documentInfo.notes}</textarea>
+                    </div>
+                    <div class="field">
+                        <label>Terms</label>
+                        <textarea rows="2" oninput="updateDocumentField('terms', this.value)">${documentInfo.terms}</textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="form-body actions">
+                    <button class="btn-whatsapp" onclick="shareToWhatsApp()">
+                        📤 SHARE TO WHATSAPP (PDF)
+                    </button>
+                    <button class="btn-download" onclick="downloadPDF()">
+                        ⬇ DOWNLOAD PDF
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    function renderMattersView() {
+        const today = new Date().toISOString().slice(0, 10);
+        
+        // Sort matters by date
+        const sortedMatters = [...matters].sort((a, b) => a.date.localeCompare(b.date));
+        
+        const upcomingMatters = sortedMatters.filter(m => m.date >= today);
+        const pastMatters = sortedMatters.filter(m => m.date < today);
+        
+        return `
+            <div class="firm-info-bar">
+                <span>📍 ${FIRM_INFO.address}</span>
+                <span>📧 ${FIRM_INFO.email}</span>
+                <span>📞 ${FIRM_INFO.phone}</span>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <span class="section-dot"></span>
+                    <span class="section-title">📅 Upcoming Matters (${upcomingMatters.length})</span>
+                </div>
+                <div class="form-body">
+                    ${upcomingMatters.length === 0 ? 
+                        '<p style="text-align:center;color:var(--muted);padding:20px;">No upcoming matters scheduled.</p>' :
+                        upcomingMatters.map(matter => {
+                            const matterDate = new Date(matter.date + 'T00:00:00');
+                            const isToday = matter.date === today;
+                            const isTomorrow = (() => {
+                                const tomorrow = new Date();
+                                tomorrow.setDate(tomorrow.getDate() + 1);
+                                return matter.date === tomorrow.toISOString().slice(0, 10);
+                            })();
+                            
+                            return `
+                                <div style="background:#fafaf9;border-left:3px solid var(--gold);padding:12px;margin-bottom:10px;border-radius:6px;">
+                                    <div style="display:flex;justify-content:space-between;align-items:start;">
+                                        <div style="flex:1;">
+                                            <strong style="font-size:14px;">${matter.title}</strong>
+                                            ${isToday ? '<span style="background:#fef9f0;color:var(--gold-dark);padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;margin-left:8px;">TODAY</span>' : ''}
+                                            ${isTomorrow ? '<span style="background:#fef9f0;color:var(--gold-dark);padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;margin-left:8px;">TOMORROW</span>' : ''}
+                                        </div>
+                                        <div style="display:flex;gap:6px;">
+                                            <button onclick="editMatter(${matter.id})" 
+                                                    style="background:#f0f0f0;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">
+                                                ✏️ Edit
+                                            </button>
+                                            <button onclick="deleteMatter(${matter.id})" 
+                                                    style="background:#fde8e8;color:#8b2500;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">
+                                                🗑️ Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:6px;">
+                                        📅 ${matterDate.toLocaleDateString('en-KE', {weekday:'long', day:'numeric', month:'long', year:'numeric'})} | 🕐 ${matter.time}
+                                    </div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">
+                                        🏛️ ${matter.court} | 👨‍⚖️ ${matter.judge || 'TBA'}
+                                    </div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">
+                                        📁 ${matter.caseNo || 'N/A'} | 👤 ${matter.client || 'N/A'}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')
+                    }
+                </div>
+            </div>
+            
+            ${pastMatters.length > 0 ? `
+                <div class="section-card">
+                    <div class="section-header">
+                        <span class="section-dot"></span>
+                        <span class="section-title">📂 Past Matters (${pastMatters.length})</span>
+                    </div>
+                    <div class="form-body">
+                        ${pastMatters.slice(-5).reverse().map(matter => {
+                            const matterDate = new Date(matter.date + 'T00:00:00');
+                            return `
+                                <div style="background:#fafaf9;border-left:3px solid #ccc;padding:10px;margin-bottom:8px;border-radius:6px;opacity:0.7;">
+                                    <strong style="font-size:13px;">${matter.title}</strong>
+                                    <div style="font-size:10px;color:var(--muted);margin-top:4px;">
+                                        📅 ${matterDate.toLocaleDateString('en-KE', {day:'numeric', month:'short', year:'numeric'})} | 🏛️ ${matter.court}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            ` : ''}
+            
+            <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">
+                📅 + Schedule New Matter
+            </button>
+        `;
+    }
+    
+    function render() {
+        const content = document.getElementById('mainContent');
+        
+        if (currentMainTab === 'BILLING') {
+            document.getElementById('docNumber').textContent = documentInfo.number;
+            content.innerHTML = renderBillingView();
+        } else {
+            document.getElementById('docNumber').textContent = 'MATTERS';
+            content.innerHTML = renderMattersView();
+        }
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // EVENT HANDLERS
+    // ────────────────────────────────────────────────────────────
+    function switchMainTab(tab, element) {
+        currentMainTab = tab;
+        document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+        element.classList.add('active');
+        render();
+    }
+    
+    function switchBillingTab(tab) {
+        currentBillingTab = tab;
+        const prefixes = { FEE_NOTE: 'FBN-', INVOICE: 'INV-', RECEIPT: 'RCT-' };
+        const suffixes = { FEE_NOTE: '2024-001', INVOICE: '2024-089', RECEIPT: '2024-089' };
+        documentInfo.number = prefixes[tab] + suffixes[tab];
+        render();
+    }
+    
+    function updateDocumentField(field, value) {
+        documentInfo[field] = value;
+        if (field === 'number') {
+            document.getElementById('docNumber').textContent = value;
+        }
+        render();
+    }
+    
+    function updateClientField(field, value) {
+        documentInfo.client[field] = value;
+        render();
+    }
+    
+    function updatePaymentStatus(status) {
+        paymentStatus = status;
+        render();
+    }
+    
+    function updateDiscount(value) {
+        discountPercent = parseFloat(value) || 0;
+        render();
+    }
+    
+    function updateVAT(value) {
+        vatPercent = parseFloat(value) || 0;
+        render();
+    }
+    
+    // ────────────────────────────────────────────────────────────
+    // INITIALIZATION
+    // ────────────────────────────────────────────────────────────
+    window.switchMainTab = switchMainTab;
+    window.switchBillingTab = switchBillingTab;
+    window.updateDocumentField = updateDocumentField;
+    window.updateClientField = updateClientField;
+    window.updatePaymentStatus = updatePaymentStatus;
     window.updateDiscount = updateDiscount;
-    window.updateTax = updateTax;
-    window.updateField = updateField;
+    window.updateVAT = updateVAT;
+    window.addLineItem = addLineItem;
+    window.removeLineItem = removeLineItem;
+    window.updateLineItem = updateLineItem;
     window.shareToWhatsApp = shareToWhatsApp;
     window.downloadPDF = downloadPDF;
-    window.handleFloatingShare = handleFloatingShare;
+    window.quickShare = quickShare;
+    window.addMatter = addMatter;
+    window.editMatter = editMatter;
+    window.deleteMatter = deleteMatter;
+    
+    // Pre-load libraries
+    initLibraries().catch(() => {});
+    
+    // Initial render
     render();
+    
+    // Check for upcoming matters every hour
+    setInterval(() => {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowStr = tomorrow.toISOString().slice(0, 10);
+        const tomorrowMatters = matters.filter(m => m.date === tomorrowStr);
+        if (tomorrowMatters.length > 0 && currentMainTab !== 'MATTERS') {
+            showNotification(`🔔 ${tomorrowMatters.length} matter(s) scheduled for tomorrow!`, 4000);
+        }
+    }, 3600000);
 </script>
 </body>
 </html>
