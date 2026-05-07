@@ -44,7 +44,6 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* Header Styles */
         .app-header {
             background: #000000;
             padding: 14px 16px 0;
@@ -84,9 +83,7 @@
             border-radius: 4px;
         }
         
-        .logo-text {
-            flex: 1;
-        }
+        .logo-text { flex: 1; }
         
         .logo-text .brand {
             font-family: 'Playfair Display', serif;
@@ -126,11 +123,7 @@
             font-family: 'Rajdhani', sans-serif;
         }
         
-        /* Tab Navigation */
-        .main-tabs {
-            display: flex;
-            gap: 4px;
-        }
+        .main-tabs { display: flex; gap: 4px; }
         
         .main-tab {
             flex: 1;
@@ -156,18 +149,10 @@
             border-bottom: 3px solid var(--gold);
         }
         
-        .main-tab:hover:not(.active) {
-            color: var(--gold-light);
-        }
+        .main-tab:hover:not(.active) { color: var(--gold-light); }
         
-        /* Content Area */
-        .content {
-            padding: 16px;
-            max-width: 700px;
-            margin: 0 auto;
-        }
+        .content { padding: 16px; max-width: 700px; margin: 0 auto; }
         
-        /* Card Styles */
         .section-card {
             background: var(--white);
             border-radius: 12px;
@@ -178,9 +163,7 @@
             transition: box-shadow 0.2s;
         }
         
-        .section-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-        }
+        .section-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
         
         .section-header {
             display: flex;
@@ -207,24 +190,11 @@
             color: var(--near-black);
         }
         
-        .form-body {
-            padding: 14px 16px;
-        }
+        .form-body { padding: 14px 16px; }
         
-        /* Form Elements */
-        .field-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .field-row .field {
-            flex: 1;
-        }
-        
-        .field {
-            margin-bottom: 10px;
-        }
+        .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .field-row .field { flex: 1; }
+        .field { margin-bottom: 10px; }
         
         .field label {
             display: block;
@@ -256,29 +226,12 @@
             background: #ffffff;
         }
         
-        .field textarea {
-            resize: vertical;
-            line-height: 1.5;
-            min-height: 60px;
-        }
+        .field textarea { resize: vertical; line-height: 1.5; min-height: 60px; }
         
-        /* Table Styles */
-        .items-table-wrap {
-            overflow-x: auto;
-            padding: 0 0 4px;
-            -webkit-overflow-scrolling: touch;
-        }
+        .items-table-wrap { overflow-x: auto; padding: 0 0 4px; -webkit-overflow-scrolling: touch; }
         
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            min-width: 700px;
-        }
-        
-        .items-table thead tr {
-            background: #fafaf9;
-        }
+        .items-table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+        .items-table thead tr { background: #fafaf9; }
         
         .items-table th {
             padding: 9px 6px;
@@ -293,22 +246,10 @@
             white-space: nowrap;
         }
         
-        .items-table th.center, .items-table td.center {
-            text-align: center;
-        }
-        
-        .items-table th.right, .items-table td.right {
-            text-align: right;
-        }
-        
-        .items-table tbody tr {
-            border-bottom: 1px solid var(--border-light);
-        }
-        
-        .items-table td {
-            padding: 6px 6px;
-            vertical-align: middle;
-        }
+        .items-table th.center, .items-table td.center { text-align: center; }
+        .items-table th.right, .items-table td.right { text-align: right; }
+        .items-table tbody tr { border-bottom: 1px solid var(--border-light); }
+        .items-table td { padding: 6px 6px; vertical-align: middle; }
         
         .items-table td input {
             width: 100%;
@@ -329,26 +270,10 @@
             box-shadow: 0 0 0 2px rgba(201, 168, 76, 0.1);
         }
         
-        .items-table td input.desc {
-            min-width: 120px;
-        }
-        
-        .items-table td input.code {
-            width: 70px;
-            text-align: center;
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 600;
-        }
-        
-        .items-table td input.hours {
-            width: 48px;
-            text-align: center;
-        }
-        
-        .items-table td input.rate {
-            text-align: right;
-            width: 68px;
-        }
+        .items-table td input.desc { min-width: 120px; }
+        .items-table td input.code { width: 70px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
+        .items-table td input.hours { width: 48px; text-align: center; }
+        .items-table td input.rate { text-align: right; width: 68px; }
         
         .row-total {
             font-weight: 700;
@@ -369,9 +294,7 @@
             line-height: 1;
         }
         
-        .del-btn:hover {
-            background: #fef2f2;
-        }
+        .del-btn:hover { background: #fef2f2; }
         
         .add-row-btn {
             display: flex;
@@ -391,14 +314,9 @@
             transition: all 0.2s;
         }
         
-        .add-row-btn:hover {
-            background: var(--gold-bg);
-        }
+        .add-row-btn:hover { background: var(--gold-bg); }
         
-        /* Totals Section */
-        .totals-block {
-            margin-top: 14px;
-        }
+        .totals-block { margin-top: 14px; }
         
         .totals-row {
             display: flex;
@@ -409,14 +327,8 @@
             border-bottom: 1px solid var(--border-light);
         }
         
-        .totals-row .label {
-            font-weight: 500;
-        }
-        
-        .totals-row .val {
-            font-weight: 700;
-            color: var(--text);
-        }
+        .totals-row .label { font-weight: 500; }
+        .totals-row .val { font-weight: 700; color: var(--text); }
         
         .grand-total-row {
             display: flex;
@@ -444,19 +356,8 @@
             color: var(--gold);
         }
         
-        .adj-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-        
-        .adj-row label {
-            font-size: 12px;
-            color: var(--muted);
-            min-width: 70px;
-            font-weight: 500;
-        }
+        .adj-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .adj-row label { font-size: 12px; color: var(--muted); min-width: 70px; font-weight: 500; }
         
         .adj-row input {
             width: 65px;
@@ -469,28 +370,12 @@
             transition: border-color 0.2s;
         }
         
-        .adj-row input:focus {
-            border-color: var(--gold);
-        }
+        .adj-row input:focus { border-color: var(--gold); }
+        .adj-row .adj-label { font-size: 11px; color: var(--muted); }
         
-        .adj-row .adj-label {
-            font-size: 11px;
-            color: var(--muted);
-        }
+        .divider { height: 1px; background: var(--border); margin: 12px 0; }
         
-        .divider {
-            height: 1px;
-            background: var(--border);
-            margin: 12px 0;
-        }
-        
-        /* Status Pills */
-        .status-pills {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-            margin-top: 4px;
-        }
+        .status-pills { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
         
         .status-pill {
             padding: 5px 14px;
@@ -506,25 +391,10 @@
             color: var(--muted);
         }
         
-        .status-pill.active-paid {
-            background: #e6f0dc;
-            border-color: #2d5016;
-            color: #2d5016;
-        }
+        .status-pill.active-paid { background: #e6f0dc; border-color: #2d5016; color: #2d5016; }
+        .status-pill.active-unpaid { background: #fde8e8; border-color: #8b2500; color: #8b2500; }
         
-        .status-pill.active-unpaid {
-            background: #fde8e8;
-            border-color: #8b2500;
-            color: #8b2500;
-        }
-        
-        /* Action Buttons */
-        .actions {
-            padding: 4px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .actions { padding: 4px 0; display: flex; flex-direction: column; gap: 10px; }
         
         .btn-whatsapp, .btn-download {
             display: flex;
@@ -543,29 +413,11 @@
             font-size: 14px;
         }
         
-        .btn-whatsapp {
-            background: var(--whatsapp);
-            border: 2px solid var(--whatsapp);
-        }
+        .btn-whatsapp { background: var(--whatsapp); border: 2px solid var(--whatsapp); }
+        .btn-whatsapp:hover { background: var(--whatsapp-dark); border-color: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3); }
+        .btn-download { background: #000000; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+        .btn-download:hover { background: var(--near-black); transform: translateY(-2px); }
         
-        .btn-whatsapp:hover {
-            background: var(--whatsapp-dark);
-            border-color: var(--whatsapp-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
-        }
-        
-        .btn-download {
-            background: #000000;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-        }
-        
-        .btn-download:hover {
-            background: var(--near-black);
-            transform: translateY(-2px);
-        }
-        
-        /* Firm Info Bar */
         .firm-info-bar {
             background: #fafaf9;
             border: 1px solid var(--border);
@@ -581,13 +433,8 @@
             gap: 8px;
         }
         
-        .firm-info-bar span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
+        .firm-info-bar span { display: flex; align-items: center; gap: 4px; }
         
-        /* Toast Notification */
         .toast {
             position: fixed;
             top: 80px;
@@ -607,17 +454,10 @@
         }
         
         @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
+            from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
         }
         
-        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -642,9 +482,7 @@
             animation: spin 0.8s linear infinite;
         }
         
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
         
         .loading-overlay .text {
             color: #ffffff;
@@ -654,11 +492,8 @@
             font-size: 14px;
         }
         
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
         
-        /* Floating WhatsApp Button */
         .float-whatsapp {
             position: fixed;
             bottom: 22px;
@@ -680,22 +515,10 @@
             transition: transform 0.2s;
         }
         
-        .float-btn:hover {
-            transform: scale(1.08);
-        }
+        .float-btn:hover { transform: scale(1.08); }
+        .float-btn svg { width: 28px; height: 28px; fill: #ffffff; }
         
-        .float-btn svg {
-            width: 28px;
-            height: 28px;
-            fill: #ffffff;
-        }
-        
-        /* Sub-tabs for billing */
-        .sub-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 12px;
-        }
+        .sub-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
         
         .sub-tab {
             flex: 1;
@@ -710,30 +533,14 @@
             transition: all 0.2s;
         }
         
-        .sub-tab.active {
-            background: #000000;
-            color: var(--gold);
-        }
+        .sub-tab.active { background: #000000; color: var(--gold); }
+        .sub-tab:not(.active) { background: #f0f0f0; color: #666666; }
         
-        .sub-tab:not(.active) {
-            background: #f0f0f0;
-            color: #666666;
-        }
-        
-        /* Responsive adjustments */
         @media (max-width: 480px) {
-            .logo-text .brand {
-                font-size: 16px;
-            }
-            .content {
-                padding: 12px;
-            }
-            .section-header {
-                padding: 10px 12px;
-            }
-            .form-body {
-                padding: 10px 12px;
-            }
+            .logo-text .brand { font-size: 16px; }
+            .content { padding: 12px; }
+            .section-header { padding: 10px 12px; }
+            .form-body { padding: 10px 12px; }
         }
     </style>
 </head>
@@ -884,15 +691,7 @@
         const vat = afterDiscount * (vatPercent / 100);
         const grandTotal = afterDiscount + vat;
         
-        return {
-            feesSubtotal,
-            totalDisbursements,
-            subtotal,
-            discount,
-            afterDiscount,
-            vat,
-            grandTotal
-        };
+        return { feesSubtotal, totalDisbursements, subtotal, discount, afterDiscount, vat, grandTotal };
     }
     
     function showNotification(message, duration = 2500) {
@@ -906,191 +705,120 @@
     }
     
     // ────────────────────────────────────────────────────────────
-    // PDF GENERATION
+    // ADVANCED PDF GENERATION WITH PROFESSIONAL DESIGN
     // ────────────────────────────────────────────────────────────
     function generatePDFTemplate() {
         const totals = calculateTotals();
         const tab = currentBillingTab;
         
-        const logoImage = `<img src="${FIRM_INFO.logo}" style="width:56px;height:56px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;" crossorigin="anonymous">`;
-        
-        const watermarkImage = `
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0;">
-                <img src="${FIRM_INFO.watermark}" style="width:500px;height:500px;object-fit:contain;opacity:0.06;" crossorigin="anonymous">
-            </div>`;
-        
         const itemsHTML = lineItems.map(item => `
             <tr>
-                <td style="padding:10px;">${item.code || '—'}</td>
-                <td style="padding:10px;font-weight:600;">${item.description || '—'}</td>
-                <td style="text-align:center;padding:10px;">${item.hours || 0}</td>
-                <td style="text-align:right;padding:10px;">${formatPlain(item.rate)}</td>
-                <td style="text-align:right;padding:10px;">${formatPlain(item.disbursement || 0)}</td>
-                <td style="text-align:right;font-weight:700;padding:10px;">${formatPlain(item.hours * item.rate + (item.disbursement || 0))}</td>
+                <td style="padding:14px 16px;border-bottom:1px solid #e8e0d0;">${item.code || '—'}</td>
+                <td style="padding:14px 16px;border-bottom:1px solid #e8e0d0;font-weight:600;">${item.description || '—'}</td>
+                <td style="text-align:center;padding:14px 16px;border-bottom:1px solid #e8e0d0;">${item.hours || 0}</td>
+                <td style="text-align:right;padding:14px 16px;border-bottom:1px solid #e8e0d0;">${formatPlain(item.rate)}</td>
+                <td style="text-align:right;padding:14px 16px;border-bottom:1px solid #e8e0d0;">${formatPlain(item.disbursement || 0)}</td>
+                <td style="text-align:right;padding:14px 16px;border-bottom:1px solid #e8e0d0;font-weight:700;">${formatPlain(item.hours * item.rate + (item.disbursement || 0))}</td>
             </tr>
         `).join('');
         
-        let documentHTML = '';
-        
-        if (tab === 'RECEIPT') {
-            documentHTML = `
-                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
-                    ${watermarkImage}
-                    <div style="position:relative;z-index:1;">
-                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
-                            <div style="display:flex;align-items:center;gap:14px;">
-                                ${logoImage}
-                                <div>
-                                    <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div>
-                                    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div>
-                                </div>
-                            </div>
-                            <div style="color:#fff;text-align:right;">
-                                <h2 style="font-size:22px;font-weight:900;">OFFICIAL RECEIPT</h2>
-                                <p style="color:#c9a84c;">Payment Confirmed</p>
-                            </div>
-                        </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
-                            <div>
-                                <h3 style="font-size:11px;font-weight:900;">RECEIVED FROM:</h3>
-                                <p style="font-size:20px;font-weight:700;">${documentInfo.client.name}</p>
-                                <p>${documentInfo.matterRef}</p>
-                            </div>
-                            <div style="text-align:right;">
-                                <p>Receipt No: ${documentInfo.number}</p>
-                                <p>Date: ${documentInfo.date}</p>
-                            </div>
-                        </div>
-                        <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
-                            <thead>
-                                <tr style="background:#f9fafb;border-top:2px solid #000;border-bottom:2px solid #000;">
-                                    <th style="padding:8px;">Description</th>
-                                    <th style="text-align:right;padding:8px;">Amount (KSH)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding:20px;">FULL SETTLEMENT FOR ${tab.replace('_',' ')} #${documentInfo.number}</td>
-                                    <td style="padding:20px;text-align:right;font-weight:900;font-size:20px;">${formatPlain(totals.grandTotal)}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div style="background:#000;color:#c9a84c;padding:20px;border-radius:8px;text-align:right;">
-                            <p style="font-size:10px;">TOTAL PAID</p>
-                            <p style="font-size:26px;font-weight:900;">KSH ${formatPlain(totals.grandTotal)}</p>
+        // Professional document template matching the reference image
+        return `
+        <div style="width:794px;min-height:1123px;background:#fdfcf9;padding:60px 65px;font-family:'Inter','DM Sans',sans-serif;color:#1a1a1a;position:relative;overflow:hidden;">
+            
+            <!-- Brown geometric gradient overlay - top and left edges -->
+            <div style="position:absolute;top:0;left:0;right:0;height:8px;background:linear-gradient(90deg, #8b6914 0%, #c9a84c 30%, #d4b96a 60%, #8b6914 100%);z-index:2;"></div>
+            <div style="position:absolute;top:0;left:0;bottom:0;width:8px;background:linear-gradient(180deg, #8b6914 0%, #c9a84c 40%, #d4b96a 70%, #8b6914 100%);z-index:2;"></div>
+            
+            <!-- Gold decorative line top-right -->
+            <div style="position:absolute;top:0;right:0;width:200px;height:2px;background:#c9a84c;z-index:2;"></div>
+            
+            <!-- Lady Justice Watermark -->
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0;">
+                <img src="${FIRM_INFO.watermark}" style="width:450px;height:450px;object-fit:contain;opacity:0.05;" crossorigin="anonymous">
+            </div>
+            
+            <!-- Main Content -->
+            <div style="position:relative;z-index:1;">
+                
+                <!-- Header with Logo -->
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:50px;padding-bottom:30px;border-bottom:2px solid #c9a84c;">
+                    <div style="display:flex;align-items:center;gap:16px;">
+                        <img src="${FIRM_INFO.logo}" style="width:60px;height:60px;object-fit:contain;border-radius:8px;border:2px solid #c9a84c;" crossorigin="anonymous">
+                        <div>
+                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:24px;color:#1a1a1a;letter-spacing:1px;">MAUNCHO LAW</div>
+                            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:12px;color:#8b6914;letter-spacing:3px;margin-top:2px;">ADVOCATES</div>
                         </div>
                     </div>
-                </div>`;
-        } else if (tab === 'FEE_NOTE') {
-            documentHTML = `
-                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
-                    ${watermarkImage}
-                    <div style="position:relative;z-index:1;">
-                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;display:flex;justify-content:space-between;align-items:center;border-bottom:4px solid #c9a84c;">
-                            <div style="display:flex;align-items:center;gap:14px;">
-                                ${logoImage}
-                                <div>
-                                    <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:#fff;">MAUNCHO LAW</div>
-                                    <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:11px;color:#c9a84c;">ADVOCATES</div>
-                                </div>
-                            </div>
-                            <div style="color:#fff;text-align:right;">
-                                <h2 style="font-size:22px;font-weight:900;">PROFESSIONAL FEE NOTE</h2>
-                                <p style="color:#c9a84c;">#${documentInfo.number}</p>
-                            </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:10px;color:#6b5e4a;letter-spacing:1px;">${FIRM_INFO.address}</div>
+                        <div style="font-size:10px;color:#6b5e4a;margin-top:2px;">${FIRM_INFO.phone} • ${FIRM_INFO.email}</div>
+                    </div>
+                </div>
+                
+                <!-- Document Title -->
+                <div style="text-align:center;margin-bottom:40px;">
+                    <h1 style="font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:900;letter-spacing:4px;color:#1a1a1a;text-transform:uppercase;margin:0;">TAX INVOICE</h1>
+                    <div style="width:80px;height:3px;background:#c9a84c;margin:10px auto 0;"></div>
+                </div>
+                
+                <!-- Bill To / Invoice Details -->
+                <div style="display:flex;justify-content:space-between;margin-bottom:40px;">
+                    <div>
+                        <div style="font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;color:#8b6914;text-transform:uppercase;margin-bottom:8px;">BILL TO:</div>
+                        <div style="font-size:18px;font-weight:700;color:#1a1a1a;">${documentInfo.client.name}</div>
+                        <div style="font-size:13px;color:#4a4a4a;margin-top:4px;">${documentInfo.matterRef}</div>
+                        <div style="font-size:12px;color:#6b5e4a;margin-top:2px;">${documentInfo.client.address}</div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:12px;color:#4a4a4a;margin-bottom:4px;"><strong>Invoice No:</strong> ${documentInfo.number}</div>
+                        <div style="font-size:12px;color:#4a4a4a;margin-bottom:4px;"><strong>Date:</strong> ${documentInfo.date}</div>
+                        <div style="font-size:12px;color:#4a4a4a;"><strong>Due:</strong> ${documentInfo.dueDate}</div>
+                    </div>
+                </div>
+                
+                <!-- Items Table -->
+                <table style="width:100%;border-collapse:collapse;margin-bottom:30px;">
+                    <thead>
+                        <tr style="background:#f5f0e8;">
+                            <th style="padding:12px 16px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Code</th>
+                            <th style="padding:12px 16px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Description</th>
+                            <th style="padding:12px 16px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Hours</th>
+                            <th style="padding:12px 16px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Rate</th>
+                            <th style="padding:12px 16px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Disb.</th>
+                            <th style="padding:12px 16px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${itemsHTML}
+                    </tbody>
+                </table>
+                
+                <!-- Totals Section -->
+                <div style="display:flex;justify-content:flex-end;">
+                    <div style="width:320px;border-top:2px solid #c9a84c;padding-top:20px;">
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#4a4a4a;">
+                            <span>Subtotal</span>
+                            <span style="font-weight:600;">KSH ${formatPlain(totals.subtotal)}</span>
                         </div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px;">
-                            <div>
-                                <h3 style="font-weight:900;">TO:</h3>
-                                <p style="font-size:18px;font-weight:700;">${documentInfo.client.name}</p>
-                                <p>${documentInfo.matterRef}</p>
-                            </div>
-                            <div style="text-align:right;">
-                                <p>Date: ${documentInfo.date}</p>
-                                <p>📞 ${FIRM_INFO.phone}</p>
-                                <p>✉️ ${FIRM_INFO.email}</p>
-                            </div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:13px;color:#4a4a4a;">
+                            <span>VAT (${vatPercent}%)</span>
+                            <span style="font-weight:600;">KSH ${formatPlain(totals.vat)}</span>
                         </div>
-                        <table style="width:100%;border-collapse:collapse;">
-                            <thead>
-                                <tr style="background:#f5f0e8;border-top:2px solid #000;">
-                                    <th style="padding:8px;">Code</th>
-                                    <th style="padding:8px;">Service</th>
-                                    <th style="text-align:center;padding:8px;">Hours</th>
-                                    <th style="text-align:right;padding:8px;">Rate/hr</th>
-                                    <th style="text-align:right;padding:8px;">Disb.</th>
-                                    <th style="text-align:right;padding:8px;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>${itemsHTML}</tbody>
-                        </table>
-                        <div style="display:flex;justify-content:flex-end;margin-top:20px;">
-                            <div style="width:300px;">
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;">Professional Fees<span>${formatPlain(totals.feesSubtotal)}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;">Disbursements<span>${formatPlain(totals.totalDisbursements)}</span></div>
-                                <div style="display:flex;justify-content:space-between;padding:8px 0;">VAT (${vatPercent}%)<span>${formatPlain(totals.vat)}</span></div>
-                                <div style="background:#000;color:#c9a84c;padding:14px;border-radius:6px;display:flex;justify-content:space-between;font-weight:900;margin-top:8px;">
-                                    <span>TOTAL DUE</span>
-                                    <span>KSH ${formatPlain(totals.grandTotal)}</span>
-                                </div>
-                            </div>
+                        <div style="display:flex;justify-content:space-between;padding:16px 0;margin-top:8px;border-top:2px solid #1a1a1a;font-weight:900;font-size:16px;color:#1a1a1a;">
+                            <span style="font-family:'Rajdhani',sans-serif;letter-spacing:2px;">GRAND TOTAL</span>
+                            <span>KSH ${formatPlain(totals.grandTotal)}</span>
                         </div>
                     </div>
-                </div>`;
-        } else {
-            documentHTML = `
-                <div style="width:794px;min-height:1123px;background:#fff;padding:48px;font-family:'Inter','DM Sans',sans-serif;color:#1f2937;position:relative;overflow:hidden;">
-                    ${watermarkImage}
-                    <div style="position:relative;z-index:1;">
-                        <div style="background:#000;margin:-48px -48px 40px;padding:32px 48px;text-align:center;">
-                            ${logoImage}
-                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:#fff;margin-top:8px;">MAUNCHO LAW ADVOCATES</div>
-                            <div style="color:#c9a84c;font-size:10px;">${FIRM_INFO.address}</div>
-                        </div>
-                        <div style="text-align:center;margin-bottom:28px;">
-                            <h1 style="font-size:26px;font-weight:900;border-bottom:2px solid #000;display:inline-block;padding-bottom:4px;">TAX INVOICE</h1>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;margin-bottom:32px;">
-                            <div>
-                                <h3 style="font-weight:700;">BILL TO:</h3>
-                                <p style="font-size:18px;font-weight:700;">${documentInfo.client.name}</p>
-                                <p>${documentInfo.matterRef}</p>
-                                <p>${documentInfo.client.address}</p>
-                            </div>
-                            <div style="text-align:right;">
-                                <p>Invoice No: ${documentInfo.number}</p>
-                                <p>Date: ${documentInfo.date}</p>
-                                <p>Due: ${documentInfo.dueDate}</p>
-                            </div>
-                        </div>
-                        <table style="width:100%;border-collapse:collapse;">
-                            <thead>
-                                <tr style="border-top:2px solid #000;border-bottom:2px solid #000;">
-                                    <th style="padding:8px;">Code</th>
-                                    <th style="padding:8px;">Description</th>
-                                    <th style="text-align:center;padding:8px;">Hours</th>
-                                    <th style="text-align:right;padding:8px;">Rate</th>
-                                    <th style="text-align:right;padding:8px;">Disb.</th>
-                                    <th style="text-align:right;padding:8px;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>${itemsHTML}</tbody>
-                        </table>
-                        <div style="display:flex;justify-content:flex-end;margin-top:20px;border-top:2px solid #000;padding-top:16px;">
-                            <div style="text-align:right;width:300px;">
-                                <div style="display:flex;justify-content:space-between;">Subtotal<span>KSH ${formatPlain(totals.subtotal)}</span></div>
-                                <div style="display:flex;justify-content:space-between;">VAT (${vatPercent}%)<span>KSH ${formatPlain(totals.vat)}</span></div>
-                                <div style="display:flex;justify-content:space-between;border-top:2px solid #000;margin-top:6px;padding-top:8px;font-weight:900;">GRAND TOTAL<span>KSH ${formatPlain(totals.grandTotal)}</span></div>
-                            </div>
-                        </div>
-                        <div style="margin-top:40px;text-align:center;font-size:9px;color:#888;">
-                            ${FIRM_INFO.name} • ${FIRM_INFO.address} • ${FIRM_INFO.phone} • ${FIRM_INFO.email}
-                        </div>
-                    </div>
-                </div>`;
-        }
-        
-        return documentHTML;
+                </div>
+                
+                <!-- Footer -->
+                <div style="margin-top:60px;padding-top:20px;border-top:1px solid #e8e0d0;text-align:center;font-size:9px;color:#8b8b8b;letter-spacing:1px;">
+                    ${FIRM_INFO.name} • ${FIRM_INFO.address} • ${FIRM_INFO.phone} • ${FIRM_INFO.email}
+                </div>
+                
+            </div>
+        </div>`;
     }
     
     async function createPDFBlob() {
@@ -1101,12 +829,12 @@
         templateElement.innerHTML = templateHTML;
         
         // Wait for images to load
-        await new Promise(resolve => setTimeout(resolve, 800));
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
         const canvas = await html2canvas(templateElement, {
             scale: 2,
             useCORS: true,
-            backgroundColor: '#ffffff',
+            backgroundColor: '#fdfcf9',
             logging: false,
             width: templateElement.scrollWidth,
             height: templateElement.scrollHeight
@@ -1120,7 +848,6 @@
         
         pdf.addImage(imageData, 'PNG', 0, 0, pdfWidth, Math.min(pdfHeight, 297));
         
-        // Handle multi-page documents
         if (pdfHeight > 297) {
             let remaining = pdfHeight - 297;
             while (remaining > 0) {
@@ -1135,12 +862,12 @@
     }
     
     // ────────────────────────────────────────────────────────────
-    // WHATSAPP SHARING
+    // WHATSAPP SHARING & DOWNLOAD
     // ────────────────────────────────────────────────────────────
     async function shareToWhatsApp() {
         const loadingOverlay = document.getElementById('loadingOverlay');
         loadingOverlay.classList.remove('hidden');
-        showNotification('📄 Generating PDF for WhatsApp…', 4000);
+        showNotification('📄 Generating professional PDF…', 4000);
         
         try {
             const pdfBlob = await createPDFBlob();
@@ -1150,7 +877,7 @@
             
             const messageText = `*${FIRM_INFO.name}*\n⚖️ ${FIRM_INFO.address}\n📄 ${currentBillingTab.replace('_',' ')}: ${documentInfo.number}\n👤 ${documentInfo.client.name}\n📋 ${documentInfo.matterRef}\n💰 Grand Total: ${formatCurrency(totals.grandTotal)}\n📅 ${documentInfo.date}\n📞 ${FIRM_INFO.phone}`;
             
-            // Try native sharing first (mobile devices)
+            // Try native sharing first
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({
                     title: `Mauncho Law — ${documentInfo.number}`,
@@ -1188,7 +915,7 @@
     async function downloadPDF() {
         const loadingOverlay = document.getElementById('loadingOverlay');
         loadingOverlay.classList.remove('hidden');
-        showNotification('📄 Preparing PDF download…', 3000);
+        showNotification('📄 Preparing professional PDF…', 3000);
         
         try {
             const pdfBlob = await createPDFBlob();
@@ -1213,7 +940,6 @@
     }
     
     function quickShare() {
-        // Switch to billing if not already there
         if (currentMainTab !== 'BILLING') {
             currentMainTab = 'BILLING';
             document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
@@ -1229,10 +955,8 @@
     function addMatter() {
         const title = prompt('Enter matter title:');
         if (!title) return;
-        
         const date = prompt('Enter date (YYYY-MM-DD):', new Date().toISOString().slice(0, 10));
         if (!date) return;
-        
         const time = prompt('Enter time:', '9:00 AM');
         const court = prompt('Enter court:', 'Nanyuki Law Courts');
         const caseNo = prompt('Enter case number:');
@@ -1241,8 +965,7 @@
         
         matters.push({
             id: nextMatterId++,
-            title,
-            date,
+            title, date,
             time: time || '9:00 AM',
             court: court || 'Nanyuki Law Courts',
             caseNo: caseNo || '',
@@ -1260,10 +983,8 @@
         
         const title = prompt('Edit title:', matter.title);
         if (title === null) return;
-        
         const date = prompt('Edit date (YYYY-MM-DD):', matter.date);
         if (date === null) return;
-        
         const time = prompt('Edit time:', matter.time);
         const court = prompt('Edit court:', matter.court);
         const caseNo = prompt('Edit case number:', matter.caseNo);
@@ -1296,14 +1017,7 @@
     // LINE ITEMS MANAGEMENT
     // ────────────────────────────────────────────────────────────
     function addLineItem() {
-        lineItems.push({
-            id: nextItemId++,
-            code: '',
-            description: '',
-            hours: 0,
-            rate: 0,
-            disbursement: 0
-        });
+        lineItems.push({ id: nextItemId++, code: '', description: '', hours: 0, rate: 0, disbursement: 0 });
         render();
     }
     
@@ -1319,7 +1033,6 @@
     function updateLineItem(id, field, value) {
         const item = lineItems.find(item => item.id === id);
         if (!item) return;
-        
         if (field === 'hours' || field === 'rate' || field === 'disbursement') {
             item[field] = parseFloat(value) || 0;
         } else {
@@ -1360,35 +1073,23 @@
                     <div class="field-row">
                         <div class="field">
                             <label>Document Number</label>
-                            <input value="${documentInfo.number}" 
-                                   oninput="updateDocumentField('number', this.value)">
+                            <input value="${documentInfo.number}" oninput="updateDocumentField('number', this.value)">
                         </div>
                         <div class="field">
                             <label>Date</label>
-                            <input type="date" value="${documentInfo.date}" 
-                                   oninput="updateDocumentField('date', this.value)">
+                            <input type="date" value="${documentInfo.date}" oninput="updateDocumentField('date', this.value)">
                         </div>
                     </div>
                     <div class="field-row">
                         <div class="field">
                             <label>Matter Reference</label>
-                            <input value="${documentInfo.matterRef}" 
-                                   oninput="updateDocumentField('matterRef', this.value)">
+                            <input value="${documentInfo.matterRef}" oninput="updateDocumentField('matterRef', this.value)">
                         </div>
                         <div class="field">
                             <label>Due Date</label>
-                            <input value="${documentInfo.dueDate}" 
-                                   oninput="updateDocumentField('dueDate', this.value)">
+                            <input value="${documentInfo.dueDate}" oninput="updateDocumentField('dueDate', this.value)">
                         </div>
                     </div>
-                    ${currentBillingTab === 'RECEIPT' ? `
-                        <div class="status-pills">
-                            <button class="status-pill ${paymentStatus === 'paid' ? 'active-paid' : ''}" 
-                                    onclick="updatePaymentStatus('paid')">PAID</button>
-                            <button class="status-pill ${paymentStatus === 'unpaid' ? 'active-unpaid' : ''}" 
-                                    onclick="updatePaymentStatus('unpaid')">UNPAID</button>
-                        </div>
-                    ` : ''}
                 </div>
             </div>
             
@@ -1400,25 +1101,21 @@
                 <div class="form-body">
                     <div class="field">
                         <label>Client Name</label>
-                        <input value="${documentInfo.client.name}" 
-                               oninput="updateClientField('name', this.value)">
+                        <input value="${documentInfo.client.name}" oninput="updateClientField('name', this.value)">
                     </div>
                     <div class="field-row">
                         <div class="field">
                             <label>Phone</label>
-                            <input value="${documentInfo.client.phone}" 
-                                   oninput="updateClientField('phone', this.value)">
+                            <input value="${documentInfo.client.phone}" oninput="updateClientField('phone', this.value)">
                         </div>
                         <div class="field">
                             <label>Email</label>
-                            <input value="${documentInfo.client.email}" 
-                                   oninput="updateClientField('email', this.value)">
+                            <input value="${documentInfo.client.email}" oninput="updateClientField('email', this.value)">
                         </div>
                     </div>
                     <div class="field">
                         <label>Address</label>
-                        <input value="${documentInfo.client.address}" 
-                               oninput="updateClientField('address', this.value)">
+                        <input value="${documentInfo.client.address}" oninput="updateClientField('address', this.value)">
                     </div>
                 </div>
             </div>
@@ -1444,19 +1141,11 @@
                         <tbody>
                             ${lineItems.map(item => `
                                 <tr>
-                                    <td><input class="code" value="${item.code || ''}" 
-                                               oninput="updateLineItem(${item.id}, 'code', this.value)"></td>
-                                    <td><input class="desc" value="${item.description}" 
-                                               oninput="updateLineItem(${item.id}, 'description', this.value)"></td>
-                                    <td class="center"><input class="hours" type="number" min="0" step="0.5" 
-                                               value="${item.hours}" 
-                                               oninput="updateLineItem(${item.id}, 'hours', this.value)"></td>
-                                    <td class="right"><input class="rate" type="number" min="0" step="500" 
-                                               value="${item.rate}" 
-                                               oninput="updateLineItem(${item.id}, 'rate', this.value)"></td>
-                                    <td class="right"><input class="rate" type="number" min="0" step="100" 
-                                               value="${item.disbursement || 0}" 
-                                               oninput="updateLineItem(${item.id}, 'disbursement', this.value)"></td>
+                                    <td><input class="code" value="${item.code || ''}" oninput="updateLineItem(${item.id}, 'code', this.value)"></td>
+                                    <td><input class="desc" value="${item.description}" oninput="updateLineItem(${item.id}, 'description', this.value)"></td>
+                                    <td class="center"><input class="hours" type="number" min="0" step="0.5" value="${item.hours}" oninput="updateLineItem(${item.id}, 'hours', this.value)"></td>
+                                    <td class="right"><input class="rate" type="number" min="0" step="500" value="${item.rate}" oninput="updateLineItem(${item.id}, 'rate', this.value)"></td>
+                                    <td class="right"><input class="rate" type="number" min="0" step="100" value="${item.disbursement || 0}" oninput="updateLineItem(${item.id}, 'disbursement', this.value)"></td>
                                     <td class="right"><span class="row-total">${formatCurrency(item.hours * item.rate + (item.disbursement || 0))}</span></td>
                                     <td><button class="del-btn" onclick="removeLineItem(${item.id})">×</button></td>
                                 </tr>
@@ -1466,47 +1155,21 @@
                 </div>
                 <div style="padding:4px 16px 16px">
                     <button class="add-row-btn" onclick="addLineItem()">+ Add Service / Disbursement</button>
-                    
                     <div class="divider"></div>
-                    
                     <div class="adj-row">
                         <label>Discount</label>
-                        <input type="number" min="0" max="100" value="${discountPercent}" 
-                               oninput="updateDiscount(this.value)">
+                        <input type="number" min="0" max="100" value="${discountPercent}" oninput="updateDiscount(this.value)">
                         <span class="adj-label">%</span>
                     </div>
                     <div class="adj-row">
                         <label>VAT</label>
-                        <input type="number" min="0" max="100" value="${vatPercent}" 
-                               oninput="updateVAT(this.value)">
+                        <input type="number" min="0" max="100" value="${vatPercent}" oninput="updateVAT(this.value)">
                         <span class="adj-label">%</span>
                     </div>
-                    
                     <div class="totals-block">
-                        <div class="totals-row">
-                            <span>Professional Fees</span>
-                            <span class="val">${formatCurrency(totals.feesSubtotal)}</span>
-                        </div>
-                        <div class="totals-row">
-                            <span>Disbursements</span>
-                            <span class="val">${formatCurrency(totals.totalDisbursements)}</span>
-                        </div>
-                        <div class="totals-row">
-                            <span>Subtotal</span>
-                            <span class="val">${formatCurrency(totals.subtotal)}</span>
-                        </div>
-                        ${discountPercent > 0 ? `
-                            <div class="totals-row">
-                                <span>Discount (${discountPercent}%)</span>
-                                <span class="val">-${formatCurrency(totals.discount)}</span>
-                            </div>
-                        ` : ''}
-                        <div class="totals-row">
-                            <span>VAT (${vatPercent}%)</span>
-                            <span class="val">${formatCurrency(totals.vat)}</span>
-                        </div>
+                        <div class="totals-row"><span>Subtotal</span><span class="val">${formatCurrency(totals.subtotal)}</span></div>
+                        <div class="totals-row"><span>VAT (${vatPercent}%)</span><span class="val">${formatCurrency(totals.vat)}</span></div>
                     </div>
-                    
                     <div class="grand-total-row">
                         <span class="label">GRAND TOTAL</span>
                         <span class="val">${formatCurrency(totals.grandTotal)}</span>
@@ -1533,12 +1196,8 @@
             
             <div class="section-card">
                 <div class="form-body actions">
-                    <button class="btn-whatsapp" onclick="shareToWhatsApp()">
-                        📤 SHARE TO WHATSAPP (PDF)
-                    </button>
-                    <button class="btn-download" onclick="downloadPDF()">
-                        ⬇ DOWNLOAD PDF
-                    </button>
+                    <button class="btn-whatsapp" onclick="shareToWhatsApp()">📤 SHARE TO WHATSAPP (PDF)</button>
+                    <button class="btn-download" onclick="downloadPDF()">⬇ DOWNLOAD PDF</button>
                 </div>
             </div>
         `;
@@ -1546,10 +1205,7 @@
     
     function renderMattersView() {
         const today = new Date().toISOString().slice(0, 10);
-        
-        // Sort matters by date
         const sortedMatters = [...matters].sort((a, b) => a.date.localeCompare(b.date));
-        
         const upcomingMatters = sortedMatters.filter(m => m.date >= today);
         const pastMatters = sortedMatters.filter(m => m.date < today);
         
@@ -1571,11 +1227,9 @@
                         upcomingMatters.map(matter => {
                             const matterDate = new Date(matter.date + 'T00:00:00');
                             const isToday = matter.date === today;
-                            const isTomorrow = (() => {
-                                const tomorrow = new Date();
-                                tomorrow.setDate(tomorrow.getDate() + 1);
-                                return matter.date === tomorrow.toISOString().slice(0, 10);
-                            })();
+                            const tomorrow = new Date();
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            const isTomorrow = matter.date === tomorrow.toISOString().slice(0, 10);
                             
                             return `
                                 <div style="background:#fafaf9;border-left:3px solid var(--gold);padding:12px;margin-bottom:10px;border-radius:6px;">
@@ -1586,25 +1240,13 @@
                                             ${isTomorrow ? '<span style="background:#fef9f0;color:var(--gold-dark);padding:2px 8px;border-radius:10px;font-size:9px;font-weight:700;margin-left:8px;">TOMORROW</span>' : ''}
                                         </div>
                                         <div style="display:flex;gap:6px;">
-                                            <button onclick="editMatter(${matter.id})" 
-                                                    style="background:#f0f0f0;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">
-                                                ✏️ Edit
-                                            </button>
-                                            <button onclick="deleteMatter(${matter.id})" 
-                                                    style="background:#fde8e8;color:#8b2500;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">
-                                                🗑️ Delete
-                                            </button>
+                                            <button onclick="editMatter(${matter.id})" style="background:#f0f0f0;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">✏️ Edit</button>
+                                            <button onclick="deleteMatter(${matter.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;">🗑️ Delete</button>
                                         </div>
                                     </div>
-                                    <div style="font-size:11px;color:var(--muted);margin-top:6px;">
-                                        📅 ${matterDate.toLocaleDateString('en-KE', {weekday:'long', day:'numeric', month:'long', year:'numeric'})} | 🕐 ${matter.time}
-                                    </div>
-                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">
-                                        🏛️ ${matter.court} | 👨‍⚖️ ${matter.judge || 'TBA'}
-                                    </div>
-                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">
-                                        📁 ${matter.caseNo || 'N/A'} | 👤 ${matter.client || 'N/A'}
-                                    </div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:6px;">📅 ${matterDate.toLocaleDateString('en-KE', {weekday:'long', day:'numeric', month:'long', year:'numeric'})} | 🕐 ${matter.time}</div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">🏛️ ${matter.court} | 👨‍⚖️ ${matter.judge || 'TBA'}</div>
+                                    <div style="font-size:11px;color:var(--muted);margin-top:2px;">📁 ${matter.caseNo || 'N/A'} | 👤 ${matter.client || 'N/A'}</div>
                                 </div>
                             `;
                         }).join('')
@@ -1624,9 +1266,7 @@
                             return `
                                 <div style="background:#fafaf9;border-left:3px solid #ccc;padding:10px;margin-bottom:8px;border-radius:6px;opacity:0.7;">
                                     <strong style="font-size:13px;">${matter.title}</strong>
-                                    <div style="font-size:10px;color:var(--muted);margin-top:4px;">
-                                        📅 ${matterDate.toLocaleDateString('en-KE', {day:'numeric', month:'short', year:'numeric'})} | 🏛️ ${matter.court}
-                                    </div>
+                                    <div style="font-size:10px;color:var(--muted);margin-top:4px;">📅 ${matterDate.toLocaleDateString('en-KE', {day:'numeric', month:'short', year:'numeric'})} | 🏛️ ${matter.court}</div>
                                 </div>
                             `;
                         }).join('')}
@@ -1634,15 +1274,12 @@
                 </div>
             ` : ''}
             
-            <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">
-                📅 + Schedule New Matter
-            </button>
+            <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>
         `;
     }
     
     function render() {
         const content = document.getElementById('mainContent');
-        
         if (currentMainTab === 'BILLING') {
             document.getElementById('docNumber').textContent = documentInfo.number;
             content.innerHTML = renderBillingView();
@@ -1672,31 +1309,14 @@
     
     function updateDocumentField(field, value) {
         documentInfo[field] = value;
-        if (field === 'number') {
-            document.getElementById('docNumber').textContent = value;
-        }
+        if (field === 'number') document.getElementById('docNumber').textContent = value;
         render();
     }
     
-    function updateClientField(field, value) {
-        documentInfo.client[field] = value;
-        render();
-    }
-    
-    function updatePaymentStatus(status) {
-        paymentStatus = status;
-        render();
-    }
-    
-    function updateDiscount(value) {
-        discountPercent = parseFloat(value) || 0;
-        render();
-    }
-    
-    function updateVAT(value) {
-        vatPercent = parseFloat(value) || 0;
-        render();
-    }
+    function updateClientField(field, value) { documentInfo.client[field] = value; render(); }
+    function updatePaymentStatus(status) { paymentStatus = status; render(); }
+    function updateDiscount(value) { discountPercent = parseFloat(value) || 0; render(); }
+    function updateVAT(value) { vatPercent = parseFloat(value) || 0; render(); }
     
     // ────────────────────────────────────────────────────────────
     // INITIALIZATION
@@ -1718,13 +1338,10 @@
     window.editMatter = editMatter;
     window.deleteMatter = deleteMatter;
     
-    // Pre-load libraries
     initLibraries().catch(() => {});
-    
-    // Initial render
     render();
     
-    // Check for upcoming matters every hour
+    // Reminder check
     setInterval(() => {
         const tomorrow = new Date();
         tomorrow.setDate(tomorrow.getDate() + 1);
