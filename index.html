@@ -97,8 +97,7 @@
         .section-dot { width: 8px; height: 8px; border-radius: 2px; background: var(--gold); }
         .section-title {
             font-family: 'Rajdhani', sans-serif; font-weight: 700;
-            font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
-            color: var(--near-black);
+            font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--near-black);
         }
         .form-body { padding: 14px 16px; }
         .field-row { display: flex; gap: 10px; margin-bottom: 10px; }
@@ -107,8 +106,7 @@
         .field label {
             display: block; font-size: 10px; font-weight: 700;
             text-transform: uppercase; letter-spacing: 1.2px;
-            color: var(--muted); margin-bottom: 4px;
-            font-family: 'Rajdhani', sans-serif;
+            color: var(--muted); margin-bottom: 4px; font-family: 'Rajdhani', sans-serif;
         }
         .field input, .field select, .field textarea {
             width: 100%; padding: 9px 11px; border: 1.5px solid var(--border);
@@ -136,19 +134,20 @@
         .items-table td input {
             width: 100%; border: 1px solid transparent; border-radius: 5px;
             padding: 4px 5px; font-size: 11px; font-family: 'DM Sans', sans-serif;
-            color: var(--text); background: transparent; outline: none;
-            transition: all 0.18s;
+            color: var(--text); background: transparent; outline: none; transition: all 0.18s;
         }
         .items-table td input:focus {
-            border-color: var(--gold); background: #ffffff;
-            box-shadow: 0 0 0 2px rgba(201,168,76,0.1);
+            border-color: var(--gold); background: #ffffff; box-shadow: 0 0 0 2px rgba(201,168,76,0.1);
         }
         .items-table td input.desc { min-width: 120px; }
         .items-table td input.code { width: 70px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
         .items-table td input.hours { width: 48px; text-align: center; }
         .items-table td input.rate { text-align: right; width: 68px; }
         .row-total { font-weight: 700; color: var(--near-black); font-size: 12px; white-space: nowrap; }
-        .del-btn { background: none; border: none; cursor: pointer; padding: 3px 6px; color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1; }
+        .del-btn {
+            background: none; border: none; cursor: pointer; padding: 3px 6px;
+            color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1;
+        }
         .del-btn:hover { background: #fef2f2; }
         .add-row-btn {
             display: flex; align-items: center; gap: 6px; margin: 10px 0 0;
@@ -178,7 +177,10 @@
         }
         .adj-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .adj-row label { font-size: 12px; color: var(--muted); min-width: 70px; font-weight: 500; }
-        .adj-row input { width: 65px; padding: 5px 7px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; text-align: right; outline: none; transition: border-color 0.2s; }
+        .adj-row input {
+            width: 65px; padding: 5px 7px; border: 1.5px solid var(--border);
+            border-radius: 6px; font-size: 12px; text-align: right; outline: none; transition: border-color 0.2s;
+        }
         .adj-row input:focus { border-color: var(--gold); }
         .adj-row .adj-label { font-size: 11px; color: var(--muted); }
         .divider { height: 1px; background: var(--border); margin: 12px 0; }
@@ -234,10 +236,8 @@
         .float-btn {
             width: 58px; height: 58px; border-radius: 50%;
             background: var(--whatsapp); border: 2px solid #ffffff;
-            cursor: pointer; display: flex; align-items: center;
-            justify-content: center;
-            box-shadow: 0 6px 20px rgba(37,211,102,0.4);
-            transition: transform 0.2s;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform 0.2s;
         }
         .float-btn:hover { transform: scale(1.08); }
         .float-btn svg { width: 28px; height: 28px; fill: #ffffff; }
@@ -278,7 +278,7 @@
 </div>
 
 <div class="content" id="mainContent"></div>
-<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:720px;pointer-events:none;"></div>
+<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:680px;pointer-events:none;"></div>
 
 <div class="float-whatsapp">
     <button class="float-btn" onclick="quickShare()" aria-label="Quick Share">
@@ -315,7 +315,6 @@
         logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
         watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
     };
-    const refImg = 'https://i.ibb.co/NdR77shH/1778141636284.png';
 
     let mainTab = 'BILLING';
     let billTab = 'INVOICE';
@@ -337,10 +336,9 @@
     let matters = [
         { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
         { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' },
-        { id:103, title:'Ruling - Civil Appeal 08/2024', court:'Nanyuki High Court', date:'2026-05-15', time:'2:15 PM', judge:'Hon. Justice Kamau', caseNo:'CVA 08/2024', client:'Grace Wambui' },
-        { id:104, title:'Pre-Trial Conference', court:'Milimani Law Courts', date:'2026-05-22', time:'11:00 AM', judge:'Hon. Justice Ochieng', caseNo:'HCCC 234/2024', client:'David Kiprotich' }
+        { id:103, title:'Ruling - Civil Appeal 08/2024', court:'Nanyuki High Court', date:'2026-05-15', time:'2:15 PM', judge:'Hon. Justice Kamau', caseNo:'CVA 08/2024', client:'Grace Wambui' }
     ];
-    let nmid = 105;
+    let nmid = 106;
 
     function F(n){ return 'KSH '+Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
     function FP(n){ return Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
@@ -355,92 +353,106 @@
         clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d);
     }
 
-    // ─── OPTIMIZED PDF TEMPLATE ──────────────────────────────
+    // ─── COMPACT PDF TEMPLATE ─────────────────────────────────
     function pdfTemplate() {
         const c = calc();
         const rows = items.map(i=>`
             <tr>
-                <td style="padding:10px 12px;border-bottom:1px solid #e8e0d0;font-size:11px;">${i.code||'—'}</td>
-                <td style="padding:10px 12px;border-bottom:1px solid #e8e0d0;font-size:11px;font-weight:500;">${i.desc||'—'}</td>
-                <td style="text-align:center;padding:10px 8px;border-bottom:1px solid #e8e0d0;font-size:11px;">${i.hrs||0}</td>
-                <td style="text-align:right;padding:10px 8px;border-bottom:1px solid #e8e0d0;font-size:11px;">${FP(i.rate)}</td>
-                <td style="text-align:right;padding:10px 8px;border-bottom:1px solid #e8e0d0;font-size:11px;">${FP(i.disb||0)}</td>
-                <td style="text-align:right;padding:10px 12px;border-bottom:1px solid #e8e0d0;font-weight:700;font-size:11px;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+                <td style="padding:7px 10px;border-bottom:1px solid #ddd;font-size:10px;">${i.code||'—'}</td>
+                <td style="padding:7px 10px;border-bottom:1px solid #ddd;font-size:10px;">${i.desc||'—'}</td>
+                <td style="text-align:center;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${i.hrs||0}</td>
+                <td style="text-align:right;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${FP(i.rate)}</td>
+                <td style="text-align:right;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${FP(i.disb||0)}</td>
+                <td style="text-align:right;padding:7px 10px;border-bottom:1px solid #ddd;font-weight:700;font-size:10px;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
             </tr>`).join('');
 
-        return `<div style="width:720px;min-height:960px;background:#fdfcf9;padding:50px 55px;font-family:'Inter',sans-serif;color:#1a1a1a;position:relative;overflow:hidden;">
-            <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
-            <div style="position:absolute;top:0;left:0;bottom:0;width:6px;background:linear-gradient(180deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
+        return `<div style="width:680px;min-height:900px;background:#fdfcf9;padding:40px 45px;font-family:'Inter',sans-serif;color:#1a1a1a;position:relative;overflow:hidden;">
+            <!-- Gold gradient top bar -->
+            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
+            <!-- Gold gradient left bar -->
+            <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:linear-gradient(180deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
+            <!-- Watermark -->
             <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0;">
-                <img src="${FIRM.watermark}" style="width:380px;height:380px;object-fit:contain;opacity:0.04;" crossorigin="anonymous">
+                <img src="${FIRM.watermark}" style="width:340px;height:340px;object-fit:contain;opacity:0.04;" crossorigin="anonymous">
             </div>
+            <!-- Content -->
             <div style="position:relative;z-index:1;">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:35px;padding-bottom:20px;border-bottom:2px solid #c9a84c;">
-                    <div style="display:flex;align-items:center;gap:14px;">
-                        <img src="${FIRM.logo}" style="width:52px;height:52px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;" crossorigin="anonymous">
+                <!-- Header -->
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid #c9a84c;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <img src="${FIRM.logo}" style="width:46px;height:46px;object-fit:contain;border-radius:5px;border:2px solid #c9a84c;" crossorigin="anonymous">
                         <div>
-                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;letter-spacing:1px;">MAUNCHO LAW</div>
-                            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;color:#8b6914;letter-spacing:2px;">ADVOCATES</div>
+                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:18px;letter-spacing:1px;">MAUNCHO LAW</div>
+                            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:9px;color:#8b6914;letter-spacing:2px;">ADVOCATES</div>
                         </div>
                     </div>
-                    <div style="text-align:right;font-size:9px;color:#6b5e4a;">${FIRM.address}<br>${FIRM.phone} • ${FIRM.email}</div>
+                    <div style="text-align:right;font-size:8px;color:#6b5e4a;line-height:1.4;">${FIRM.address}<br>${FIRM.phone} • ${FIRM.email}</div>
                 </div>
-                <div style="text-align:center;margin-bottom:30px;">
-                    <h1 style="font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin:0;">TAX INVOICE</h1>
-                    <div style="width:60px;height:2px;background:#c9a84c;margin:8px auto 0;"></div>
+                <!-- Title -->
+                <div style="text-align:center;margin-bottom:24px;">
+                    <h1 style="font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin:0;">TAX INVOICE</h1>
+                    <div style="width:50px;height:2px;background:#c9a84c;margin:6px auto 0;"></div>
                 </div>
-                <div style="display:flex;justify-content:space-between;margin-bottom:30px;">
+                <!-- Bill To / Details -->
+                <div style="display:flex;justify-content:space-between;margin-bottom:24px;">
                     <div>
-                        <div style="font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:#8b6914;text-transform:uppercase;margin-bottom:6px;">BILL TO:</div>
-                        <div style="font-size:16px;font-weight:700;">${doc.client.name}</div>
-                        <div style="font-size:11px;color:#4a4a4a;margin-top:2px;">${doc.ref}</div>
-                        <div style="font-size:10px;color:#6b5e4a;">${doc.client.addr}</div>
+                        <div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#8b6914;text-transform:uppercase;margin-bottom:4px;">BILL TO:</div>
+                        <div style="font-size:14px;font-weight:700;">${doc.client.name}</div>
+                        <div style="font-size:10px;color:#4a4a4a;">${doc.ref}</div>
+                        <div style="font-size:9px;color:#6b5e4a;">${doc.client.addr}</div>
                     </div>
-                    <div style="text-align:right;font-size:10px;color:#4a4a4a;">
-                        <div style="margin-bottom:3px;"><strong>Invoice No:</strong> ${doc.no}</div>
-                        <div style="margin-bottom:3px;"><strong>Date:</strong> ${doc.date}</div>
+                    <div style="text-align:right;font-size:9px;color:#4a4a4a;line-height:1.6;">
+                        <div><strong>Invoice No:</strong> ${doc.no}</div>
+                        <div><strong>Date:</strong> ${doc.date}</div>
                         <div><strong>Due:</strong> ${doc.due}</div>
                     </div>
                 </div>
-                <table style="width:100%;border-collapse:collapse;margin-bottom:25px;">
+                <!-- Table -->
+                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
                     <thead>
                         <tr style="background:#f5f0e8;">
-                            <th style="padding:10px 12px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Code</th>
-                            <th style="padding:10px 12px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Description</th>
-                            <th style="padding:10px 8px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Hrs</th>
-                            <th style="padding:10px 8px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Rate</th>
-                            <th style="padding:10px 8px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Disb.</th>
-                            <th style="padding:10px 12px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Total</th>
+                            <th style="padding:7px 10px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Code</th>
+                            <th style="padding:7px 10px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Description</th>
+                            <th style="padding:7px 6px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Hrs</th>
+                            <th style="padding:7px 6px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Rate</th>
+                            <th style="padding:7px 6px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Disb.</th>
+                            <th style="padding:7px 10px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Total</th>
                         </tr>
                     </thead>
                     <tbody>${rows}</tbody>
                 </table>
+                <!-- Totals -->
                 <div style="display:flex;justify-content:flex-end;">
-                    <div style="width:280px;border-top:2px solid #c9a84c;padding-top:16px;">
-                        <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:11px;color:#4a4a4a;"><span>Subtotal</span><span style="font-weight:600;">KSH ${FP(c.s)}</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:11px;color:#4a4a4a;"><span>VAT (${vat}%)</span><span style="font-weight:600;">KSH ${FP(c.tx)}</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:12px 0;margin-top:6px;border-top:2px solid #1a1a1a;font-weight:900;font-size:14px;"><span style="font-family:'Rajdhani',sans-serif;letter-spacing:2px;">GRAND TOTAL</span><span>KSH ${FP(c.gt)}</span></div>
+                    <div style="width:240px;border-top:2px solid #c9a84c;padding-top:12px;">
+                        <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:10px;color:#4a4a4a;"><span>Subtotal</span><span style="font-weight:600;">KSH ${FP(c.s)}</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:10px;color:#4a4a4a;"><span>VAT (${vat}%)</span><span style="font-weight:600;">KSH ${FP(c.tx)}</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:8px 0;margin-top:4px;border-top:2px solid #1a1a1a;font-weight:900;font-size:12px;">
+                            <span style="font-family:'Rajdhani',sans-serif;letter-spacing:1.5px;">GRAND TOTAL</span>
+                            <span>KSH ${FP(c.gt)}</span>
+                        </div>
                     </div>
                 </div>
-                <div style="margin-top:45px;padding-top:14px;border-top:1px solid #e8e0d0;text-align:center;font-size:8px;color:#8b8b8b;letter-spacing:0.5px;">
+                <!-- Footer -->
+                <div style="margin-top:35px;padding-top:10px;border-top:1px solid #e8e0d0;text-align:center;font-size:7px;color:#8b8b8b;">
                     ${FIRM.name} • ${FIRM.address} • ${FIRM.phone} • ${FIRM.email}
                 </div>
             </div>
         </div>`;
     }
 
-    // ─── PDF GENERATION (OPTIMIZED) ───────────────────────────
+    // ─── OPTIMIZED PDF GENERATION ─────────────────────────────
     async function makePDF() {
         await loadLibs();
         const el = document.getElementById('pdfTemplate');
         el.innerHTML = pdfTemplate();
-        await new Promise(r=>setTimeout(r,600));
+        await new Promise(r=>setTimeout(r,500));
         const canvas = await html2canvas(el,{
-            scale:1.8, useCORS:true, backgroundColor:'#fdfcf9', logging:false,
-            width:el.scrollWidth, height:el.scrollHeight, imageTimeout:0
+            scale:1.7, useCORS:true, backgroundColor:'#fdfcf9', logging:false,
+            width:el.scrollWidth, height:el.scrollHeight, imageTimeout:0,
+            allowTaint:false
         });
         const {jsPDF} = window.jspdf;
-        const img = canvas.toDataURL('image/jpeg',0.92);
+        const img = canvas.toDataURL('image/jpeg',0.9);
         const pw=210, ph=(canvas.height*pw)/canvas.width;
         const pdf = new jsPDF('p','mm','a4');
         pdf.addImage(img,'JPEG',0,0,pw,Math.min(ph,297));
@@ -485,7 +497,10 @@
         finally{lo.classList.add('hidden');}
     }
 
-    function quickShare(){ if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');} render();setTimeout(()=>shareWA(),300); }
+    function quickShare(){
+        if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');}
+        render();setTimeout(()=>shareWA(),300);
+    }
 
     // ─── MATTERS ──────────────────────────────────────────────
     function addMatter(){
@@ -570,7 +585,10 @@
         <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
     }
 
-    function render(){document.getElementById('mainContent').innerHTML=mainTab==='BILLING'?renderBilling():renderMatters();document.getElementById('docNumber').textContent=mainTab==='BILLING'?doc.no:'MATTERS';}
+    function render(){
+        document.getElementById('mainContent').innerHTML = mainTab==='BILLING' ? renderBilling() : renderMatters();
+        document.getElementById('docNumber').textContent = mainTab==='BILLING' ? doc.no : 'MATTERS';
+    }
 
     // ─── HANDLERS ─────────────────────────────────────────────
     function switchMainTab(t,el){mainTab=t;document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
@@ -588,7 +606,6 @@
     window.addMatter=addMatter;window.editMatter=editMatter;window.delMatter=delMatter;
     loadLibs().catch(()=>{});
     render();
-    setInterval(()=>{const tom=new Date();tom.setDate(tom.getDate()+1);const ts=tom.toISOString().slice(0,10);if(matters.filter(m=>m.date===ts).length>0&&mainTab!=='MATTERS')toast('🔔 Matters tomorrow!',4000);},3600000);
 </script>
 </body>
 </html>
