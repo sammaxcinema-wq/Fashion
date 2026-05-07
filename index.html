@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Mauncho Law Advocates — Legal Practice Management System</title>
+    <title>Mauncho Law Advocates — Legal Practice Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
@@ -31,7 +31,6 @@
             color: var(--text);
             min-height: 100vh;
             padding-bottom: 100px;
-            -webkit-font-smoothing: antialiased;
         }
         .app-header {
             background: #000000;
@@ -60,10 +59,7 @@
             font-family: 'Rajdhani', sans-serif; font-weight: 700;
             font-size: 11px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase;
         }
-        .logo-text .tagline {
-            font-size: 8px; color: #a09070; letter-spacing: 2px;
-            text-transform: uppercase; font-weight: 500;
-        }
+        .logo-text .tagline { font-size: 8px; color: #a09070; letter-spacing: 2px; text-transform: uppercase; font-weight: 500; }
         .doc-number {
             background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
             border-radius: 6px; padding: 5px 12px; font-size: 11px;
@@ -79,10 +75,7 @@
             border-bottom: 3px solid transparent; transition: all 0.25s;
             border-radius: 6px 6px 0 0; text-transform: uppercase;
         }
-        .main-tab.active {
-            color: #ffffff; background: rgba(255,255,255,0.08);
-            border-bottom: 3px solid var(--gold);
-        }
+        .main-tab.active { color: #ffffff; background: rgba(255,255,255,0.08); border-bottom: 3px solid var(--gold); }
         .main-tab:hover:not(.active) { color: var(--gold-light); }
         .content { padding: 16px; max-width: 700px; margin: 0 auto; }
         .section-card {
@@ -136,18 +129,13 @@
             padding: 4px 5px; font-size: 11px; font-family: 'DM Sans', sans-serif;
             color: var(--text); background: transparent; outline: none; transition: all 0.18s;
         }
-        .items-table td input:focus {
-            border-color: var(--gold); background: #ffffff; box-shadow: 0 0 0 2px rgba(201,168,76,0.1);
-        }
+        .items-table td input:focus { border-color: var(--gold); background: #ffffff; box-shadow: 0 0 0 2px rgba(201,168,76,0.1); }
         .items-table td input.desc { min-width: 120px; }
         .items-table td input.code { width: 70px; text-align: center; font-family: 'Rajdhani', sans-serif; font-weight: 600; }
         .items-table td input.hours { width: 48px; text-align: center; }
         .items-table td input.rate { text-align: right; width: 68px; }
         .row-total { font-weight: 700; color: var(--near-black); font-size: 12px; white-space: nowrap; }
-        .del-btn {
-            background: none; border: none; cursor: pointer; padding: 3px 6px;
-            color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1;
-        }
+        .del-btn { background: none; border: none; cursor: pointer; padding: 3px 6px; color: #b91c1c; font-size: 20px; border-radius: 5px; transition: all 0.15s; line-height: 1; }
         .del-btn:hover { background: #fef2f2; }
         .add-row-btn {
             display: flex; align-items: center; gap: 6px; margin: 10px 0 0;
@@ -158,29 +146,17 @@
         }
         .add-row-btn:hover { background: var(--gold-bg); }
         .totals-block { margin-top: 14px; }
-        .totals-row {
-            display: flex; justify-content: space-between; padding: 6px 0;
-            font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border-light);
-        }
+        .totals-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--border-light); }
         .totals-row .val { font-weight: 700; color: var(--text); }
         .grand-total-row {
             display: flex; justify-content: space-between; align-items: center;
             margin-top: 10px; padding: 13px 14px; background: #000000; border-radius: 10px;
         }
-        .grand-total-row .label {
-            font-family: 'Rajdhani', sans-serif; font-size: 14px;
-            font-weight: 700; letter-spacing: 2px; color: #cccccc; text-transform: uppercase;
-        }
-        .grand-total-row .val {
-            font-family: 'Rajdhani', sans-serif; font-size: 20px;
-            font-weight: 700; color: var(--gold);
-        }
+        .grand-total-row .label { font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: #cccccc; text-transform: uppercase; }
+        .grand-total-row .val { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--gold); }
         .adj-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
         .adj-row label { font-size: 12px; color: var(--muted); min-width: 70px; font-weight: 500; }
-        .adj-row input {
-            width: 65px; padding: 5px 7px; border: 1.5px solid var(--border);
-            border-radius: 6px; font-size: 12px; text-align: right; outline: none; transition: border-color 0.2s;
-        }
+        .adj-row input { width: 65px; padding: 5px 7px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 12px; text-align: right; outline: none; transition: border-color 0.2s; }
         .adj-row input:focus { border-color: var(--gold); }
         .adj-row .adj-label { font-size: 11px; color: var(--muted); }
         .divider { height: 1px; background: var(--border); margin: 12px 0; }
@@ -222,25 +198,22 @@
             flex-direction: column; gap: 14px;
         }
         .loading-overlay .spinner {
-            width: 44px; height: 44px; border: 4px solid rgba(255,255,255,0.3);
+            width: 36px; height: 36px; border: 3px solid rgba(255,255,255,0.3);
             border-top-color: var(--gold); border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 0.7s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-overlay .text {
-            color: #ffffff; font-family: 'Rajdhani', sans-serif;
-            font-weight: 700; letter-spacing: 2.5px; font-size: 14px;
-        }
+        .loading-overlay .text { color: #ffffff; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2px; font-size: 13px; }
         .hidden { display: none !important; }
         .float-whatsapp { position: fixed; bottom: 22px; right: 16px; z-index: 999; }
         .float-btn {
-            width: 58px; height: 58px; border-radius: 50%;
+            width: 56px; height: 56px; border-radius: 50%;
             background: var(--whatsapp); border: 2px solid #ffffff;
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             box-shadow: 0 6px 20px rgba(37,211,102,0.4); transition: transform 0.2s;
         }
         .float-btn:hover { transform: scale(1.08); }
-        .float-btn svg { width: 28px; height: 28px; fill: #ffffff; }
+        .float-btn svg { width: 26px; height: 26px; fill: #ffffff; }
         .sub-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
         .sub-tab {
             flex: 1; padding: 10px; font-family: 'Rajdhani', sans-serif;
@@ -278,7 +251,7 @@
 </div>
 
 <div class="content" id="mainContent"></div>
-<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:680px;pointer-events:none;"></div>
+<div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:700px;pointer-events:none;"></div>
 
 <div class="float-whatsapp">
     <button class="float-btn" onclick="quickShare()" aria-label="Quick Share">
@@ -308,7 +281,7 @@
 
     // ─── STATE ─────────────────────────────────────────────────
     const FIRM = {
-        name: 'MAUNCHO LAW ADVOCATES',
+        name: 'MAUNCHOLAW ADVOCATES',
         address: 'Laipha House, Third Floor, Nanyuki',
         email: 'wakilimauncho@gmail.com',
         phone: '+254 746 389 218',
@@ -335,8 +308,7 @@
     };
     let matters = [
         { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
-        { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' },
-        { id:103, title:'Ruling - Civil Appeal 08/2024', court:'Nanyuki High Court', date:'2026-05-15', time:'2:15 PM', judge:'Hon. Justice Kamau', caseNo:'CVA 08/2024', client:'Grace Wambui' }
+        { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
     ];
     let nmid = 106;
 
@@ -348,111 +320,94 @@
         const s = f+d, di = s*(disc/100), ad = s-di, tx = ad*(vat/100), gt = ad+tx;
         return {f,d,s,di,ad,tx,gt};
     }
-    function toast(m,d=2500){
-        const t=document.getElementById('toast');t.textContent=m;t.style.display='block';
-        clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d);
-    }
+    function toast(m,d=2500){ const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d); }
 
-    // ─── COMPACT PDF TEMPLATE ─────────────────────────────────
+    // ─── CLEAN PDF TEMPLATE (matches reference design) ─────────
     function pdfTemplate() {
         const c = calc();
         const rows = items.map(i=>`
-            <tr>
-                <td style="padding:7px 10px;border-bottom:1px solid #ddd;font-size:10px;">${i.code||'—'}</td>
-                <td style="padding:7px 10px;border-bottom:1px solid #ddd;font-size:10px;">${i.desc||'—'}</td>
-                <td style="text-align:center;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${i.hrs||0}</td>
-                <td style="text-align:right;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${FP(i.rate)}</td>
-                <td style="text-align:right;padding:7px 6px;border-bottom:1px solid #ddd;font-size:10px;">${FP(i.disb||0)}</td>
-                <td style="text-align:right;padding:7px 10px;border-bottom:1px solid #ddd;font-weight:700;font-size:10px;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+            <tr class="service-row">
+                <td>${i.code||'—'}</td>
+                <td>${i.desc||'—'}</td>
+                <td>${i.hrs||0}</td>
+                <td>${FP(i.rate)}</td>
+                <td class="disbursement-col">${FP(i.disb||0)}</td>
+                <td class="amount-col total-cell"><strong>${FP(i.hrs*i.rate+(i.disb||0))}</strong></td>
             </tr>`).join('');
 
-        return `<div style="width:680px;min-height:900px;background:#fdfcf9;padding:40px 45px;font-family:'Inter',sans-serif;color:#1a1a1a;position:relative;overflow:hidden;">
-            <!-- Gold gradient top bar -->
-            <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
-            <!-- Gold gradient left bar -->
-            <div style="position:absolute;top:0;left:0;bottom:0;width:5px;background:linear-gradient(180deg,#8b6914,#c9a84c,#d4b96a,#8b6914);z-index:2;"></div>
-            <!-- Watermark -->
-            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0;">
-                <img src="${FIRM.watermark}" style="width:340px;height:340px;object-fit:contain;opacity:0.04;" crossorigin="anonymous">
+        return `<div class="invoice-card">
+            <h1 class="invoice-title">TAX INVOICE</h1>
+            <div class="bill-to-section">
+                <div class="bill-to-label">BILL TO:</div>
+                <div class="client-name">${doc.client.name}</div>
+                <div class="case-ref">${doc.ref}</div>
+                <div class="location">${doc.client.addr}</div>
             </div>
-            <!-- Content -->
-            <div style="position:relative;z-index:1;">
-                <!-- Header -->
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid #c9a84c;">
-                    <div style="display:flex;align-items:center;gap:12px;">
-                        <img src="${FIRM.logo}" style="width:46px;height:46px;object-fit:contain;border-radius:5px;border:2px solid #c9a84c;" crossorigin="anonymous">
-                        <div>
-                            <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:18px;letter-spacing:1px;">MAUNCHO LAW</div>
-                            <div style="font-family:'Rajdhani',sans-serif;font-weight:700;font-size:9px;color:#8b6914;letter-spacing:2px;">ADVOCATES</div>
-                        </div>
-                    </div>
-                    <div style="text-align:right;font-size:8px;color:#6b5e4a;line-height:1.4;">${FIRM.address}<br>${FIRM.phone} • ${FIRM.email}</div>
-                </div>
-                <!-- Title -->
-                <div style="text-align:center;margin-bottom:24px;">
-                    <h1 style="font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:900;letter-spacing:3px;text-transform:uppercase;margin:0;">TAX INVOICE</h1>
-                    <div style="width:50px;height:2px;background:#c9a84c;margin:6px auto 0;"></div>
-                </div>
-                <!-- Bill To / Details -->
-                <div style="display:flex;justify-content:space-between;margin-bottom:24px;">
-                    <div>
-                        <div style="font-family:'Rajdhani',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;color:#8b6914;text-transform:uppercase;margin-bottom:4px;">BILL TO:</div>
-                        <div style="font-size:14px;font-weight:700;">${doc.client.name}</div>
-                        <div style="font-size:10px;color:#4a4a4a;">${doc.ref}</div>
-                        <div style="font-size:9px;color:#6b5e4a;">${doc.client.addr}</div>
-                    </div>
-                    <div style="text-align:right;font-size:9px;color:#4a4a4a;line-height:1.6;">
-                        <div><strong>Invoice No:</strong> ${doc.no}</div>
-                        <div><strong>Date:</strong> ${doc.date}</div>
-                        <div><strong>Due:</strong> ${doc.due}</div>
-                    </div>
-                </div>
-                <!-- Table -->
-                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
-                    <thead>
-                        <tr style="background:#f5f0e8;">
-                            <th style="padding:7px 10px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Code</th>
-                            <th style="padding:7px 10px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Description</th>
-                            <th style="padding:7px 6px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Hrs</th>
-                            <th style="padding:7px 6px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Rate</th>
-                            <th style="padding:7px 6px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Disb.</th>
-                            <th style="padding:7px 10px;text-align:right;font-family:'Rajdhani',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;color:#6b5e4a;text-transform:uppercase;border-bottom:2px solid #c9a84c;">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>${rows}</tbody>
-                </table>
-                <!-- Totals -->
-                <div style="display:flex;justify-content:flex-end;">
-                    <div style="width:240px;border-top:2px solid #c9a84c;padding-top:12px;">
-                        <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:10px;color:#4a4a4a;"><span>Subtotal</span><span style="font-weight:600;">KSH ${FP(c.s)}</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:3px 0;font-size:10px;color:#4a4a4a;"><span>VAT (${vat}%)</span><span style="font-weight:600;">KSH ${FP(c.tx)}</span></div>
-                        <div style="display:flex;justify-content:space-between;padding:8px 0;margin-top:4px;border-top:2px solid #1a1a1a;font-weight:900;font-size:12px;">
-                            <span style="font-family:'Rajdhani',sans-serif;letter-spacing:1.5px;">GRAND TOTAL</span>
-                            <span>KSH ${FP(c.gt)}</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Footer -->
-                <div style="margin-top:35px;padding-top:10px;border-top:1px solid #e8e0d0;text-align:center;font-size:7px;color:#8b8b8b;">
-                    ${FIRM.name} • ${FIRM.address} • ${FIRM.phone} • ${FIRM.email}
-                </div>
+            <div class="invoice-meta">
+                <div class="meta-item"><span class="meta-label">Invoice No:</span><span class="meta-value">${doc.no}</span></div>
+                <div class="meta-item"><span class="meta-label">Date:</span><span class="meta-value">${doc.date}</span></div>
+                <div class="meta-item"><span class="meta-label">Due:</span><span class="meta-value">${doc.due}</span></div>
+            </div>
+            <table>
+                <thead><tr><th>Code</th><th>Description</th><th>Hours</th><th>Rate</th><th class="disbursement-col">Disb.</th><th class="text-right-header">Total</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table>
+            <div class="totals-section">
+                <div class="total-row subtotal"><span class="label">Subtotal</span><span class="currency"><strong>KSH ${FP(c.s)}</strong></span></div>
+                <div class="total-row vat"><span class="label">VAT (${vat}%)</span><span class="currency"><strong>KSH ${FP(c.tx)}</strong></span></div>
+                <div class="total-row grand"><span class="label">GRAND TOTAL</span><span class="currency"><strong>KSH ${FP(c.gt)}</strong></span></div>
+            </div>
+            <div class="footer">
+                <div class="footer-company">${FIRM.name}</div>
+                <div class="footer-details"><span>${FIRM.address}</span><span>${FIRM.phone}</span><span>${FIRM.email}</span></div>
             </div>
         </div>`;
     }
 
-    // ─── OPTIMIZED PDF GENERATION ─────────────────────────────
+    // ─── PDF GENERATION ───────────────────────────────────────
     async function makePDF() {
         await loadLibs();
         const el = document.getElementById('pdfTemplate');
-        el.innerHTML = pdfTemplate();
-        await new Promise(r=>setTimeout(r,500));
+        // Inject the clean CSS into the template
+        const css = `
+            *{margin:0;padding:0;box-sizing:border-box;}
+            body{background:#e5e7eb;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI','Roboto',system-ui,-apple-system,sans-serif;padding:2rem 1rem;}
+            .invoice-card{max-width:700px;width:100%;background:white;box-shadow:0 20px 40px rgba(0,0,0,0.12);border-radius:8px;padding:2.2rem 2rem 1.8rem;margin:0 auto;}
+            .invoice-title{font-size:1.9rem;font-weight:600;letter-spacing:0.5px;color:#1e1e1e;margin-bottom:1.5rem;border-bottom:1px solid #d1d5db;padding-bottom:0.65rem;}
+            .bill-to-section{margin-bottom:1.6rem;}
+            .bill-to-label{font-weight:700;font-size:0.9rem;text-transform:uppercase;color:#2c3e50;margin-bottom:0.3rem;}
+            .client-name{font-weight:700;font-size:1.25rem;color:#0b1c2e;}
+            .case-ref{font-weight:500;color:#1f2937;margin-top:0.15rem;}
+            .location{font-weight:500;color:#1f2937;}
+            .invoice-meta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
+            .meta-item{display:flex;flex-direction:column;gap:0.2rem;}
+            .meta-label{font-weight:600;color:#374151;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
+            .meta-value{font-weight:600;color:#111827;font-size:1rem;}
+            table{width:100%;border-collapse:collapse;margin:1.4rem 0 1.8rem;font-size:0.9rem;}
+            th{text-align:left;padding:0.7rem 0.3rem 0.5rem 0;font-weight:600;color:#1f2937;border-bottom:2px solid #d1d5db;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.3px;}
+            td{padding:0.7rem 0.3rem 0.7rem 0;border-bottom:1px solid #e5e7eb;color:#1f2937;}
+            .text-right{text-align:right;}
+            .text-right-header{text-align:right;}
+            .total-cell{font-weight:700;}
+            .disbursement-col{text-align:right;}
+            .amount-col{text-align:right;}
+            .totals-section{display:flex;flex-direction:column;align-items:flex-end;margin-top:0.8rem;margin-bottom:1.6rem;font-size:0.95rem;}
+            .total-row{display:flex;justify-content:space-between;width:240px;padding:0.35rem 0;font-weight:500;color:#1f2937;}
+            .total-row.vat{border-bottom:1px solid #e5e7eb;padding-bottom:0.45rem;margin-bottom:0.3rem;}
+            .total-row.grand{font-weight:700;font-size:1.1rem;color:#0b1c2e;border-top:2px solid #1e293b;padding-top:0.5rem;margin-top:0.15rem;}
+            .footer{margin-top:2rem;font-size:0.8rem;color:#4b5563;border-top:1px solid #d1d5db;padding-top:1.2rem;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;}
+            .footer-company{font-weight:600;color:#1f2937;}
+            .footer-details{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;color:#4b5563;}
+            .footer-details span{white-space:nowrap;}
+        `;
+        el.innerHTML = `<style>${css}</style>` + pdfTemplate();
+        await new Promise(r=>setTimeout(r,400));
         const canvas = await html2canvas(el,{
-            scale:1.7, useCORS:true, backgroundColor:'#fdfcf9', logging:false,
-            width:el.scrollWidth, height:el.scrollHeight, imageTimeout:0,
-            allowTaint:false
+            scale:2, useCORS:true, backgroundColor:'#ffffff', logging:false,
+            width:el.scrollWidth, height:el.scrollHeight
         });
         const {jsPDF} = window.jspdf;
-        const img = canvas.toDataURL('image/jpeg',0.9);
+        const img = canvas.toDataURL('image/jpeg',0.92);
         const pw=210, ph=(canvas.height*pw)/canvas.width;
         const pdf = new jsPDF('p','mm','a4');
         pdf.addImage(img,'JPEG',0,0,pw,Math.min(ph,297));
@@ -497,10 +452,7 @@
         finally{lo.classList.add('hidden');}
     }
 
-    function quickShare(){
-        if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');}
-        render();setTimeout(()=>shareWA(),300);
-    }
+    function quickShare(){ if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');} render();setTimeout(()=>shareWA(),300); }
 
     // ─── MATTERS ──────────────────────────────────────────────
     function addMatter(){
@@ -585,12 +537,8 @@
         <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
     }
 
-    function render(){
-        document.getElementById('mainContent').innerHTML = mainTab==='BILLING' ? renderBilling() : renderMatters();
-        document.getElementById('docNumber').textContent = mainTab==='BILLING' ? doc.no : 'MATTERS';
-    }
+    function render(){ document.getElementById('mainContent').innerHTML=mainTab==='BILLING'?renderBilling():renderMatters();document.getElementById('docNumber').textContent=mainTab==='BILLING'?doc.no:'MATTERS'; }
 
-    // ─── HANDLERS ─────────────────────────────────────────────
     function switchMainTab(t,el){mainTab=t;document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
     function switchBillTab(t){billTab=t;const p={FEE_NOTE:'FBN-',INVOICE:'INV-',RECEIPT:'RCT-'};const s={FEE_NOTE:'2024-001',INVOICE:'2024-089',RECEIPT:'2024-089'};doc.no=p[t]+s[t];render();}
     function updDoc(f,v){doc[f]=v;if(f==='no')document.getElementById('docNumber').textContent=v;render();}
@@ -598,7 +546,6 @@
     function updDisc(v){disc=parseFloat(v)||0;render();}
     function updVat(v){vat=parseFloat(v)||0;render();}
 
-    // ─── INIT ─────────────────────────────────────────────────
     window.switchMainTab=switchMainTab;window.switchBillTab=switchBillTab;
     window.updDoc=updDoc;window.updClient=updClient;window.updDisc=updDisc;window.updVat=updVat;
     window.addItem=addItem;window.delItem=delItem;window.updItem=updItem;
