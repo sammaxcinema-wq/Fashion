@@ -106,8 +106,20 @@
         .sub-tab { flex: 1; padding: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1.5px; border: none; cursor: pointer; border-radius: 8px; font-size: 11px; transition: all 0.2s; }
         .sub-tab.active { background: #000000; color: var(--gold); }
         .sub-tab:not(.active) { background: #f0f0f0; color: #666666; }
-        .reminder-card { background: #fafaf9; border-left: 3px solid var(--gold); padding: 10px; margin-bottom: 8px; border-radius: 6px; }
-        .reminder-card.today { border-left-color: var(--gold-dark); background: var(--gold-bg); }
+
+        /* Calendar specific styles */
+        .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .calendar-nav button { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; cursor: pointer; color: var(--text); }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 4px; }
+        .calendar-day-header { font-size: 10px; font-weight: 700; color: var(--muted); padding: 5px 0; }
+        .calendar-day { background: #f9fafb; border-radius: 6px; padding: 6px 2px; cursor: pointer; min-height: 60px; display: flex; flex-direction: column; align-items: center; transition: all 0.2s; border: 1px solid transparent; }
+        .calendar-day:hover { border-color: var(--gold); background: var(--gold-bg); }
+        .calendar-day.today { background: var(--gold-bg); border-color: var(--gold); }
+        .calendar-day .day-num { font-weight: 700; font-size: 13px; margin-bottom: 2px; }
+        .calendar-day .badge { background: var(--gold); color: white; border-radius: 10px; padding: 0 6px; font-size: 9px; font-weight: 700; margin-top: 2px; }
+        .day-matters-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); z-index: 10001; width: 90%; max-width: 400px; max-height: 70vh; overflow-y: auto; padding: 16px; }
+        .day-matters-popup h4 { margin-bottom: 12px; }
+        .popup-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10000; }
     </style>
 </head>
 <body>
@@ -147,111 +159,114 @@
 </div>
 
 <script>
-    (function() {
-        // ─── STATE ───────────────────────────────────
-        let libsReady = false;
-        let mainTab = 'BILLING', billTab = 'INVOICE';
-        let items = [
-            { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
-            { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
-            { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
-            { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
-        ];
-        let nid = 5, disc = 0, vat = 16;
-        let doc = {
-            no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
-            client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
-            notes:'Professional fees as per Advocates Remuneration Order.',
-            terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
-        };
-        let matters = [
-            { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
-            { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
-        ];
-        let nmid = 106;
-        let reminders = [
-            { id:1, title:'Follow up fees payment', dueDate:'2026-05-15', note:'Send reminder email to James Mwangi', type:'payment' },
-            { id:2, title:'File list of documents', dueDate:'2026-05-09', note:'Submit to court registry', type:'task' }
-        ];
-        let nrid = 3;
+(function() {
+    // ─── STATE ───────────────────────────────────
+    let libsReady = false;
+    let mainTab = 'BILLING', billTab = 'INVOICE';
+    let items = [
+        { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
+        { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
+        { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
+        { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
+    ];
+    let nid = 5, disc = 0, vat = 16;
+    let doc = {
+        no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
+        client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
+        notes:'Professional fees as per Advocates Remuneration Order.',
+        terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
+    };
+    let matters = [
+        { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
+        { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
+    ];
+    let nmid = 106;
+    let reminders = [
+        { id:1, title:'Follow up fees payment', dueDate:'2026-05-15', note:'Send reminder email to James Mwangi', type:'payment' },
+        { id:2, title:'File list of documents', dueDate:'2026-05-09', note:'Submit to court registry', type:'task' }
+    ];
+    let nrid = 3;
 
-        const FIRM = {
-            name: 'MAUNCHOLAW ADVOCATES',
-            address: 'Laipha House, Third Floor, Nanyuki',
-            email: 'wakilimauncho@gmail.com',
-            phone: '+254 746 388 218',
-            logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
-            watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
-        };
+    // Calendar state
+    let calYear, calMonth;
+    let matterViewMode = 'calendar'; // 'list' or 'calendar'
 
-        // ─── HELPERS ─────────────────────────────────
-        const F = n => 'KSH ' + Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
-        const FP = n => Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
-        const calc = () => {
-            const f = items.reduce((s,i) => s + (i.hrs * i.rate), 0);
-            const d = items.reduce((s,i) => s + (i.disb || 0), 0);
-            const s = f + d, di = s * (disc/100), ad = s - di, tx = ad * (vat/100), gt = ad + tx;
-            return {f, d, s, di, ad, tx, gt};
-        };
-        const toast = (m, d=2500) => {
-            const t = document.getElementById('toast');
-            t.textContent = m; t.style.display = 'block';
-            clearTimeout(window._tt);
-            window._tt = setTimeout(() => { t.style.display = 'none'; }, d);
-        };
+    const FIRM = {
+        name: 'MAUNCHOLAW ADVOCATES',
+        address: 'Laipha House, Third Floor, Nanyuki',
+        email: 'wakilimauncho@gmail.com',
+        phone: '+254 746 388 218',
+        logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
+        watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
+    };
 
-        // ─── PERSISTENCE ────────────────────────────
-        const saveState = () => {
-            const state = { items, nid, disc, vat, doc, matters, nmid, reminders, nrid, billTab, mainTab };
-            localStorage.setItem('mauncho_pro_state', JSON.stringify(state));
-        };
-        const loadState = () => {
-            const saved = localStorage.getItem('mauncho_pro_state');
-            if (saved) {
-                try {
-                    const s = JSON.parse(saved);
-                    items = s.items || items; nid = s.nid || nid; disc = s.disc || 0; vat = s.vat || 16;
-                    doc = s.doc || doc; matters = s.matters || matters; nmid = s.nmid || nmid;
-                    reminders = s.reminders || reminders; nrid = s.nrid || nrid;
-                    billTab = s.billTab || 'INVOICE'; mainTab = s.mainTab || 'BILLING';
-                } catch(e) { /* ignore */ }
-            }
-        };
-        // Auto-save after any data change
-        window.addEventListener('beforeunload', saveState);
-        // Save periodically
-        setInterval(saveState, 3000);
+    // ─── HELPERS ─────────────────────────────────
+    const F = n => 'KSH ' + Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const FP = n => Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+    const calc = () => {
+        const f = items.reduce((s,i) => s + (i.hrs * i.rate), 0);
+        const d = items.reduce((s,i) => s + (i.disb || 0), 0);
+        const s = f + d, di = s * (disc/100), ad = s - di, tx = ad * (vat/100), gt = ad + tx;
+        return {f, d, s, di, ad, tx, gt};
+    };
+    const toast = (m, d=2500) => {
+        const t = document.getElementById('toast');
+        t.textContent = m; t.style.display = 'block';
+        clearTimeout(window._tt);
+        window._tt = setTimeout(() => { t.style.display = 'none'; }, d);
+    };
 
-        // ─── LIBRARY LOADING ────────────────────────
-        const loadLibs = () => {
-            return new Promise((resolve, reject) => {
-                if (libsReady || (window.html2canvas && window.jspdf)) { libsReady = true; return resolve(); }
-                const s1 = document.createElement('script');
-                s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                s1.onload = () => {
-                    const s2 = document.createElement('script');
-                    s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                    s2.onload = () => { libsReady = true; resolve(); };
-                    s2.onerror = reject; document.head.appendChild(s2);
-                };
-                s1.onerror = reject; document.head.appendChild(s1);
-            });
-        };
+    // ─── PERSISTENCE ────────────────────────────
+    const saveState = () => {
+        const state = { items, nid, disc, vat, doc, matters, nmid, reminders, nrid, billTab, mainTab, matterViewMode };
+        localStorage.setItem('mauncho_pro_state', JSON.stringify(state));
+    };
+    const loadState = () => {
+        const saved = localStorage.getItem('mauncho_pro_state');
+        if (saved) {
+            try {
+                const s = JSON.parse(saved);
+                items = s.items || items; nid = s.nid || nid; disc = s.disc || 0; vat = s.vat || 16;
+                doc = s.doc || doc; matters = s.matters || matters; nmid = s.nmid || nmid;
+                reminders = s.reminders || reminders; nrid = s.nrid || nrid;
+                billTab = s.billTab || 'INVOICE'; mainTab = s.mainTab || 'BILLING';
+                matterViewMode = s.matterViewMode || 'calendar';
+            } catch(e) { /* ignore */ }
+        }
+    };
+    window.addEventListener('beforeunload', saveState);
+    setInterval(saveState, 3000);
 
-        // ─── ADVANCED PDF TEMPLATE WITH DISCOUNT ────
-        const pdfTemplate = () => {
-            const c = calc();
-            const rows = items.map(i => `
-                <tr>
-                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.code||'—'}</td>
-                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.desc||'—'}</td>
-                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:center;">${i.hrs||0}</td>
-                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.rate)}</td>
-                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.disb||0)}</td>
-                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;font-weight:600;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
-                </tr>`).join('');
+    // ─── LIBRARY LOADING ────────────────────────
+    const loadLibs = () => {
+        return new Promise((resolve, reject) => {
+            if (libsReady || (window.html2canvas && window.jspdf)) { libsReady = true; return resolve(); }
+            const s1 = document.createElement('script');
+            s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            s1.onload = () => {
+                const s2 = document.createElement('script');
+                s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                s2.onload = () => { libsReady = true; resolve(); };
+                s2.onerror = reject; document.head.appendChild(s2);
+            };
+            s1.onerror = reject; document.head.appendChild(s1);
+        });
+    };
 
-            return `<!DOCTYPE html>
+    // ─── ADVANCED PDF TEMPLATE WITH DISCOUNT ────
+    const pdfTemplate = () => {
+        const c = calc();
+        const rows = items.map(i => `
+            <tr>
+                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.code||'—'}</td>
+                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.desc||'—'}</td>
+                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:center;">${i.hrs||0}</td>
+                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.rate)}</td>
+                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.disb||0)}</td>
+                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;font-weight:600;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+            </tr>`).join('');
+
+        return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><style>
     *{margin:0;padding:0;box-sizing:border-box;}
@@ -348,390 +363,492 @@
 </div>
 </body>
 </html>`;
-        };
+    };
 
-        // ─── MULTI‑PAGE PDF RENDERING ────────────────
-        const makePDF = async () => {
-            await loadLibs();
-            const el = document.getElementById('pdfTemplate');
-            el.innerHTML = pdfTemplate();
-            await new Promise(r => setTimeout(r, 700));
-            const canvas = await html2canvas(el, {
-                scale: 2.8, useCORS: true, backgroundColor: '#f0f2f5', logging: false,
-                width: el.scrollWidth, height: el.scrollHeight
-            });
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'mm', 'a4');
-            const pageWidth = 210;
-            const pageHeight = 297;
-            const pdfWidth = pageWidth;
-            const totalHeightPx = canvas.height;
-            const scale = pdfWidth / canvas.width; // mm per px
-            const pageHeightPx = pageHeight / scale;
+    // ─── MULTI‑PAGE PDF RENDERING ────────────────
+    const makePDF = async () => {
+        await loadLibs();
+        const el = document.getElementById('pdfTemplate');
+        el.innerHTML = pdfTemplate();
+        await new Promise(r => setTimeout(r, 700));
+        const canvas = await html2canvas(el, {
+            scale: 2.8, useCORS: true, backgroundColor: '#f0f2f5', logging: false,
+            width: el.scrollWidth, height: el.scrollHeight
+        });
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pageWidth = 210;
+        const pageHeight = 297;
+        const pdfWidth = pageWidth;
+        const totalHeightPx = canvas.height;
+        const scale = pdfWidth / canvas.width;
+        const pageHeightPx = pageHeight / scale;
 
-            let srcY = 0;
-            while (srcY < totalHeightPx) {
-                const sliceHeight = Math.min(pageHeightPx, totalHeightPx - srcY);
-                const sliceCanvas = document.createElement('canvas');
-                sliceCanvas.width = canvas.width;
-                sliceCanvas.height = sliceHeight;
-                const ctx = sliceCanvas.getContext('2d');
-                ctx.drawImage(canvas, 0, srcY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
-                const imgData = sliceCanvas.toDataURL('image/png');
-                if (srcY === 0) {
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
-                } else {
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
-                }
-                srcY += sliceHeight;
+        let srcY = 0;
+        while (srcY < totalHeightPx) {
+            const sliceHeight = Math.min(pageHeightPx, totalHeightPx - srcY);
+            const sliceCanvas = document.createElement('canvas');
+            sliceCanvas.width = canvas.width;
+            sliceCanvas.height = sliceHeight;
+            const ctx = sliceCanvas.getContext('2d');
+            ctx.drawImage(canvas, 0, srcY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+            const imgData = sliceCanvas.toDataURL('image/png');
+            if (srcY === 0) {
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
+            } else {
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
             }
-            el.innerHTML = '';
-            return pdf.output('blob');
-        };
+            srcY += sliceHeight;
+        }
+        el.innerHTML = '';
+        return pdf.output('blob');
+    };
 
-        // ─── SHARE & DOWNLOAD ────────────────────────
-        const shareWA = async () => {
-            const lo = document.getElementById('loadingOverlay');
-            lo.classList.remove('hidden');
-            toast('📄 Generating professional PDF…', 4000);
-            try {
-                const blob = await makePDF();
-                const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
-                const file = new File([blob], fn, {type: 'application/pdf'});
-                const c = calc();
-                const msg = `*${FIRM.name}*\n⚖️ ${FIRM.address}\n📄 ${billTab.replace('_',' ')}: ${doc.no}\n👤 ${doc.client.name}\n📋 ${doc.ref}\n💰 ${F(c.gt)}\n📅 ${doc.date}`;
-                if (navigator.canShare && navigator.canShare({files: [file]})) {
-                    await navigator.share({title: `Mauncho Law — ${doc.no}`, text: msg, files: [file]});
-                    toast('✅ Shared!', 3000);
-                } else {
-                    const cleanPhone = doc.client.phone.replace(/[^0-9+]/g, '').replace(/^0+/, '');
-                    const waRecipient = cleanPhone ? cleanPhone : '';
-                    const waUrl = `https://wa.me/${waRecipient}?text=${encodeURIComponent(msg)}`;
-                    const u = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = u; a.download = fn;
-                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                    setTimeout(() => { window.open(waUrl, '_blank'); URL.revokeObjectURL(u); }, 500);
-                    toast('📥 Downloaded! Opening WhatsApp…', 4000);
-                }
-            } catch(e) {
-                toast('⚠️ Error. Retrying…', 3000);
-            } finally {
-                lo.classList.add('hidden');
-            }
-        };
-
-        const dlPDF = async () => {
-            const lo = document.getElementById('loadingOverlay');
-            lo.classList.remove('hidden');
-            toast('📄 Preparing PDF…', 3000);
-            try {
-                const blob = await makePDF();
-                const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+    // ─── SHARE & DOWNLOAD ────────────────────────
+    const shareWA = async () => {
+        const lo = document.getElementById('loadingOverlay');
+        lo.classList.remove('hidden');
+        toast('📄 Generating professional PDF…', 4000);
+        try {
+            const blob = await makePDF();
+            const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+            const file = new File([blob], fn, {type: 'application/pdf'});
+            const c = calc();
+            const msg = `*${FIRM.name}*\n⚖️ ${FIRM.address}\n📄 ${billTab.replace('_',' ')}: ${doc.no}\n👤 ${doc.client.name}\n📋 ${doc.ref}\n💰 ${F(c.gt)}\n📅 ${doc.date}`;
+            if (navigator.canShare && navigator.canShare({files: [file]})) {
+                await navigator.share({title: `Mauncho Law — ${doc.no}`, text: msg, files: [file]});
+                toast('✅ Shared!', 3000);
+            } else {
+                const cleanPhone = doc.client.phone.replace(/[^0-9+]/g, '').replace(/^0+/, '');
+                const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
                 const u = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = u; a.download = fn;
                 document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                URL.revokeObjectURL(u);
-                toast('✅ Downloaded!', 2500);
-            } catch(e) {
-                toast('⚠️ Failed.', 3000);
-            } finally {
-                lo.classList.add('hidden');
+                setTimeout(() => { window.open(waUrl, '_blank'); URL.revokeObjectURL(u); }, 500);
+                toast('📥 Downloaded! Opening WhatsApp…', 4000);
             }
-        };
+        } catch(e) {
+            toast('⚠️ Error. Retrying…', 3000);
+        } finally {
+            lo.classList.add('hidden');
+        }
+    };
 
-        const previewPDF = () => {
-            const el = document.getElementById('pdfTemplate');
-            el.innerHTML = pdfTemplate();
-            const win = window.open('', '_blank', 'width=820,height=900');
-            win.document.write(el.innerHTML);
-            win.document.close();
-            el.innerHTML = '';
-        };
+    const dlPDF = async () => {
+        const lo = document.getElementById('loadingOverlay');
+        lo.classList.remove('hidden');
+        toast('📄 Preparing PDF…', 3000);
+        try {
+            const blob = await makePDF();
+            const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+            const u = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = u; a.download = fn;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a);
+            URL.revokeObjectURL(u);
+            toast('✅ Downloaded!', 2500);
+        } catch(e) {
+            toast('⚠️ Failed.', 3000);
+        } finally {
+            lo.classList.add('hidden');
+        }
+    };
 
-        const quickShare = () => {
-            if (mainTab !== 'BILLING') {
-                mainTab = 'BILLING';
-                document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
-                document.querySelector('.main-tab:first-child').classList.add('active');
-                render();
-            }
-            setTimeout(() => shareWA(), 300);
-        };
+    const previewPDF = () => {
+        const el = document.getElementById('pdfTemplate');
+        el.innerHTML = pdfTemplate();
+        const win = window.open('', '_blank', 'width=820,height=900');
+        win.document.write(el.innerHTML);
+        win.document.close();
+        el.innerHTML = '';
+    };
 
-        // ─── DATA MANIPULATION ───────────────────────
-        const addItem = () => {
-            items.push({ id: nid++, code: '', desc: '', hrs: 0, rate: 0, disb: 0 });
-            renderBilling(); // full re-render needed for new row
-            saveState();
-        };
-        const delItem = (id) => {
-            if (items.length <= 1) { toast('⚠️ Need at least 1 item'); return; }
-            items = items.filter(i => i.id !== id);
-            renderBilling();
-            saveState();
-        };
-        const updItem = (id, field, value) => {
-            const item = items.find(i => i.id === id);
-            if (!item) return;
-            if (field === 'hrs' || field === 'rate' || field === 'disb') {
-                item[field] = parseFloat(value) || 0;
-            } else {
-                item[field] = value;
-            }
-            refreshTotals();
-            saveState();
-        };
-
-        const refreshTotals = () => {
-            const c = calc();
-            // Update each row total
-            document.querySelectorAll('.items-table tbody tr').forEach(row => {
-                const id = parseInt(row.dataset.id);
-                const item = items.find(i => i.id === id);
-                if (item) {
-                    const totalCell = row.querySelector('.row-total');
-                    if (totalCell) totalCell.textContent = F(item.hrs * item.rate + (item.disb || 0));
-                }
-            });
-            // Update totals block
-            const subtotalEl = document.getElementById('subtotalVal');
-            const vatEl = document.getElementById('vatVal');
-            const grandEl = document.getElementById('grandVal');
-            if (subtotalEl) subtotalEl.textContent = F(c.s);
-            if (vatEl) vatEl.textContent = F(c.tx);
-            if (grandEl) grandEl.textContent = F(c.gt);
-        };
-
-        const updDoc = (field, value) => {
-            doc[field] = value;
-            if (field === 'no') document.getElementById('docNumber').textContent = value;
-            saveState();
-        };
-        const updClient = (field, value) => {
-            doc.client[field] = value;
-            saveState();
-        };
-        const updDisc = (val) => {
-            disc = parseFloat(val) || 0;
-            refreshTotals();
-            saveState();
-        };
-        const updVat = (val) => {
-            vat = parseFloat(val) || 0;
-            refreshTotals();
-            saveState();
-        };
-
-        const addMatter = () => {
-            const t = prompt('Title:'); if (!t) return;
-            const d = prompt('Date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
-            matters.push({
-                id: nmid++, title: t, date: d,
-                time: prompt('Time:','9:00 AM') || '9:00 AM',
-                court: prompt('Court:','Nanyuki Law Courts') || 'Nanyuki Law Courts',
-                caseNo: prompt('Case No:') || '',
-                client: prompt('Client:') || '',
-                judge: prompt('Judge:') || ''
-            });
-            renderMatters();
-            saveState();
-        };
-        const editMatter = (id) => {
-            const m = matters.find(x => x.id === id); if (!m) return;
-            const t = prompt('Title:', m.title); if (t === null) return;
-            const d = prompt('Date:', m.date); if (d === null) return;
-            Object.assign(m, {
-                title: t || m.title, date: d || m.date,
-                time: prompt('Time:', m.time) || m.time,
-                court: prompt('Court:', m.court) || m.court,
-                caseNo: prompt('Case No:', m.caseNo) || m.caseNo,
-                client: prompt('Client:', m.client) || m.client,
-                judge: prompt('Judge:', m.judge) || m.judge
-            });
-            renderMatters();
-            saveState();
-        };
-        const delMatter = (id) => {
-            if (confirm('Delete?')) { matters = matters.filter(x => x.id !== id); renderMatters(); saveState(); }
-        };
-
-        const addReminder = () => {
-            const t = prompt('Reminder title:'); if (!t) return;
-            const d = prompt('Due date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
-            reminders.push({
-                id: nrid++, title: t, dueDate: d,
-                note: prompt('Note:') || '',
-                type: prompt('Type (task/payment/court):', 'task') || 'task'
-            });
-            renderReminders();
-            saveState();
-        };
-        const editReminder = (id) => {
-            const r = reminders.find(x => x.id === id); if (!r) return;
-            const t = prompt('Title:', r.title); if (t === null) return;
-            const d = prompt('Due date:', r.dueDate); if (d === null) return;
-            Object.assign(r, {
-                title: t || r.title, dueDate: d || r.dueDate,
-                note: prompt('Note:', r.note) || r.note,
-                type: prompt('Type:', r.type) || r.type
-            });
-            renderReminders();
-            saveState();
-        };
-        const delReminder = (id) => {
-            if (confirm('Delete this reminder?')) { reminders = reminders.filter(x => x.id !== id); renderReminders(); saveState(); }
-        };
-
-        // ─── RENDERERS ───────────────────────────────
-        const renderBilling = () => {
-            const c = calc();
-            const tabs = ['FEE_NOTE','INVOICE','RECEIPT'];
-            document.getElementById('mainContent').innerHTML = `
-                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
-                <div class="sub-tabs">${tabs.map(t => `<button class="sub-tab${billTab===t?' active':''}" onclick="switchBillTab('${t}')">${t.replace('_',' ')}</button>`).join('')}</div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${billTab.replace('_',' ')} Details</span></div><div class="form-body">
-                  <div class="field-row"><div class="field"><label>Number</label><input value="${doc.no}" onchange="updDoc('no',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${doc.date}" onchange="updDoc('date',this.value)"></div></div>
-                  <div class="field-row"><div class="field"><label>Matter Ref</label><input value="${doc.ref}" onchange="updDoc('ref',this.value)"></div><div class="field"><label>Due Date</label><input value="${doc.due}" onchange="updDoc('due',this.value)"></div></div>
-                </div></div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client</span></div><div class="form-body">
-                  <div class="field"><label>Name</label><input value="${doc.client.name}" onchange="updClient('name',this.value)"></div>
-                  <div class="field-row"><div class="field"><label>Phone</label><input value="${doc.client.phone}" onchange="updClient('phone',this.value)"></div><div class="field"><label>Email</label><input value="${doc.client.email}" onchange="updClient('email',this.value)"></div></div>
-                  <div class="field"><label>Address</label><input value="${doc.client.addr}" onchange="updClient('addr',this.value)"></div>
-                </div></div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Services</span></div>
-                  <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hrs</th><th class="right">Rate</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
-                    ${items.map(i => `<tr data-id="${i.id}">
-                      <td><input class="code" value="${i.code||''}" onchange="updItem(${i.id},'code',this.value)"></td>
-                      <td><input class="desc" value="${i.desc}" onchange="updItem(${i.id},'desc',this.value)"></td>
-                      <td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" onchange="updItem(${i.id},'hrs',this.value)"></td>
-                      <td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" onchange="updItem(${i.id},'rate',this.value)"></td>
-                      <td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" onchange="updItem(${i.id},'disb',this.value)"></td>
-                      <td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td>
-                      <td><button class="del-btn" onclick="delItem(${i.id})">×</button></td>
-                    </tr>`).join('')}
-                  </tbody></table></div>
-                  <div style="padding:4px 16px 16px">
-                    <button class="add-row-btn" onclick="addItem()">+ Add Service</button>
-                    <div class="divider"></div>
-                    <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" onchange="updDisc(this.value)"><span class="adj-label">%</span></div>
-                    <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" onchange="updVat(this.value)"><span class="adj-label">%</span></div>
-                    <div class="totals-block">
-                      <div class="totals-row"><span>Subtotal</span><span class="val" id="subtotalVal">${F(c.s)}</span></div>
-                      <div class="totals-row"><span>VAT (${vat}%)</span><span class="val" id="vatVal">${F(c.tx)}</span></div>
-                    </div>
-                    <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val" id="grandVal">${F(c.gt)}</span></div>
-                  </div>
-                </div></div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
-                  <div class="field"><label>Notes</label><textarea rows="2" onchange="updDoc('notes',this.value)">${doc.notes}</textarea></div>
-                  <div class="field"><label>Terms</label><textarea rows="2" onchange="updDoc('terms',this.value)">${doc.terms}</textarea></div>
-                </div></div>
-                <div class="section-card"><div class="form-body actions">
-                  <button class="btn-preview" onclick="previewPDF()">📄 PREVIEW PDF</button>
-                  <button class="btn-whatsapp" onclick="shareWA()">📤 SHARE TO WHATSAPP (PDF)</button>
-                  <button class="btn-download" onclick="dlPDF()">⬇ DOWNLOAD PDF</button>
-                </div></div>`;
-            document.getElementById('docNumber').textContent = doc.no;
-        };
-
-        const renderMatters = () => {
-            const today = new Date().toISOString().slice(0,10);
-            const sorted = [...matters].sort((a,b) => a.date.localeCompare(b.date));
-            const up = sorted.filter(m => m.date >= today);
-            const past = sorted.filter(m => m.date < today);
-            document.getElementById('mainContent').innerHTML = `
-                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
-                  ${up.length===0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>' :
-                    up.map(m => {
-                        const md = new Date(m.date+'T00:00:00');
-                        const isToday = m.date === today;
-                        const tom = new Date(); tom.setDate(tom.getDate()+1);
-                        const isTom = m.date === tom.toISOString().slice(0,10);
-                        return `<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;">
-                          <div style="display:flex;justify-content:space-between;align-items:start;">
-                            <div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div>
-                            <div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div>
-                          </div>
-                          <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div>
-                          <div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
-                        </div>`;
-                    }).join('')}
-                </div></div>
-                ${past.length>0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m => {
-                    const md = new Date(m.date+'T00:00:00');
-                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${m.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;
-                }).join('')}</div></div>` : ''}
-                <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
-            document.getElementById('docNumber').textContent = 'MATTERS';
-        };
-
-        const renderReminders = () => {
-            const today = new Date().toISOString().slice(0,10);
-            const up = reminders.filter(r => r.dueDate >= today);
-            const past = reminders.filter(r => r.dueDate < today);
-            document.getElementById('mainContent').innerHTML = `
-                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
-                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">⏰ Upcoming Reminders (${up.length})</span></div><div class="form-body">
-                  ${up.length === 0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">No upcoming reminders.</p>' :
-                    up.map(r => {
-                        const d = new Date(r.dueDate+'T00:00:00');
-                        const isToday = r.dueDate === today;
-                        return `<div class="reminder-card${isToday ? ' today' : ''}">
-                          <div style="display:flex;justify-content:space-between;align-items:center;">
-                            <div><strong>${r.title}</strong> ${isToday ? '<span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>' : ''}</div>
-                            <div style="display:flex;gap:4px;"><button onclick="editReminder(${r.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">✏️</button><button onclick="delReminder(${r.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">🗑️</button></div>
-                          </div>
-                          <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div>
-                          ${r.note ? `<div style="font-size:10px;color:#4b5563;">📝 ${r.note}</div>` : ''}
-                        </div>`;
-                    }).join('')}
-                </div></div>
-                ${past.length > 0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(r => {
-                    const d = new Date(r.dueDate+'T00:00:00');
-                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${r.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div></div>`;
-                }).join('')}</div></div>` : ''}
-                <button class="add-row-btn" onclick="addReminder()" style="margin-top:0;">➕ New Reminder</button>`;
-            document.getElementById('docNumber').textContent = 'REMINDERS';
-        };
-
-        const render = () => {
-            if (mainTab === 'BILLING') renderBilling();
-            else if (mainTab === 'MATTERS') renderMatters();
-            else if (mainTab === 'REMINDERS') renderReminders();
-            saveState();
-        };
-
-        // ─── TAB SWITCHING ────────────────────────────
-        window.switchMainTab = (tab, el) => {
-            mainTab = tab;
+    const quickShare = () => {
+        if (mainTab !== 'BILLING') {
+            mainTab = 'BILLING';
             document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
-            el.classList.add('active');
+            document.querySelector('.main-tab:first-child').classList.add('active');
             render();
-        };
-        window.switchBillTab = (tab) => {
-            billTab = tab;
-            const prefix = { FEE_NOTE:'FBN-', INVOICE:'INV-', RECEIPT:'RCT-' };
-            const suffix = { FEE_NOTE:'2024-001', INVOICE:'2024-089', RECEIPT:'2024-089' };
-            doc.no = prefix[tab] + suffix[tab];
-            renderBilling();
-        };
+        }
+        setTimeout(() => shareWA(), 300);
+    };
 
-        // Expose globals for inline handlers
-        window.updDoc = updDoc; window.updClient = updClient; window.updDisc = updDisc; window.updVat = updVat;
-        window.addItem = addItem; window.delItem = delItem; window.updItem = updItem;
-        window.shareWA = shareWA; window.dlPDF = dlPDF; window.previewPDF = previewPDF; window.quickShare = quickShare;
-        window.addMatter = addMatter; window.editMatter = editMatter; window.delMatter = delMatter;
-        window.addReminder = addReminder; window.editReminder = editReminder; window.delReminder = delReminder;
+    // ─── DATA MANIPULATION ───────────────────────
+    const addItem = () => {
+        items.push({ id: nid++, code: '', desc: '', hrs: 0, rate: 0, disb: 0 });
+        renderBilling();
+        saveState();
+    };
+    const delItem = (id) => {
+        if (items.length <= 1) { toast('⚠️ Need at least 1 item'); return; }
+        items = items.filter(i => i.id !== id);
+        renderBilling();
+        saveState();
+    };
+    const updItem = (id, field, value) => {
+        const item = items.find(i => i.id === id);
+        if (!item) return;
+        if (field === 'hrs' || field === 'rate' || field === 'disb') {
+            item[field] = parseFloat(value) || 0;
+        } else {
+            item[field] = value;
+        }
+        refreshTotals();
+        saveState();
+    };
 
-        // ─── INIT ─────────────────────────────────────
-        loadState();
-        loadLibs().catch(() => {});
+    const refreshTotals = () => {
+        const c = calc();
+        document.querySelectorAll('.items-table tbody tr').forEach(row => {
+            const id = parseInt(row.dataset.id);
+            const item = items.find(i => i.id === id);
+            if (item) {
+                const totalCell = row.querySelector('.row-total');
+                if (totalCell) totalCell.textContent = F(item.hrs * item.rate + (item.disb || 0));
+            }
+        });
+        const subtotalEl = document.getElementById('subtotalVal');
+        const vatEl = document.getElementById('vatVal');
+        const grandEl = document.getElementById('grandVal');
+        if (subtotalEl) subtotalEl.textContent = F(c.s);
+        if (vatEl) vatEl.textContent = F(c.tx);
+        if (grandEl) grandEl.textContent = F(c.gt);
+    };
+
+    const updDoc = (field, value) => {
+        doc[field] = value;
+        if (field === 'no') document.getElementById('docNumber').textContent = value;
+        saveState();
+    };
+    const updClient = (field, value) => {
+        doc.client[field] = value;
+        saveState();
+    };
+    const updDisc = (val) => {
+        disc = parseFloat(val) || 0;
+        refreshTotals();
+        saveState();
+    };
+    const updVat = (val) => {
+        vat = parseFloat(val) || 0;
+        refreshTotals();
+        saveState();
+    };
+
+    const addMatter = () => {
+        const t = prompt('Title:'); if (!t) return;
+        const d = prompt('Date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
+        matters.push({
+            id: nmid++, title: t, date: d,
+            time: prompt('Time:','9:00 AM') || '9:00 AM',
+            court: prompt('Court:','Nanyuki Law Courts') || 'Nanyuki Law Courts',
+            caseNo: prompt('Case No:') || '',
+            client: prompt('Client:') || '',
+            judge: prompt('Judge:') || ''
+        });
+        renderMattersContent();
+        saveState();
+    };
+    const editMatter = (id) => {
+        const m = matters.find(x => x.id === id); if (!m) return;
+        const t = prompt('Title:', m.title); if (t === null) return;
+        const d = prompt('Date:', m.date); if (d === null) return;
+        Object.assign(m, {
+            title: t || m.title, date: d || m.date,
+            time: prompt('Time:', m.time) || m.time,
+            court: prompt('Court:', m.court) || m.court,
+            caseNo: prompt('Case No:', m.caseNo) || m.caseNo,
+            client: prompt('Client:', m.client) || m.client,
+            judge: prompt('Judge:', m.judge) || m.judge
+        });
+        renderMattersContent();
+        saveState();
+    };
+    const delMatter = (id) => {
+        if (confirm('Delete?')) { matters = matters.filter(x => x.id !== id); renderMattersContent(); saveState(); }
+    };
+
+    const addReminder = () => {
+        const t = prompt('Reminder title:'); if (!t) return;
+        const d = prompt('Due date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
+        reminders.push({
+            id: nrid++, title: t, dueDate: d,
+            note: prompt('Note:') || '',
+            type: prompt('Type (task/payment/court):', 'task') || 'task'
+        });
+        renderReminders();
+        saveState();
+    };
+    const editReminder = (id) => {
+        const r = reminders.find(x => x.id === id); if (!r) return;
+        const t = prompt('Title:', r.title); if (t === null) return;
+        const d = prompt('Due date:', r.dueDate); if (d === null) return;
+        Object.assign(r, {
+            title: t || r.title, dueDate: d || r.dueDate,
+            note: prompt('Note:', r.note) || r.note,
+            type: prompt('Type:', r.type) || r.type
+        });
+        renderReminders();
+        saveState();
+    };
+    const delReminder = (id) => {
+        if (confirm('Delete this reminder?')) { reminders = reminders.filter(x => x.id !== id); renderReminders(); saveState(); }
+    };
+
+    // ─── CALENDAR HELPER ─────────────────────────
+    const getMattersForDay = (dateStr) => matters.filter(m => m.date === dateStr);
+    
+    const renderCalendar = () => {
+        const now = new Date();
+        if (!calYear) { calYear = now.getFullYear(); calMonth = now.getMonth(); }
+        const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+        const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+        const todayStr = now.toISOString().slice(0,10);
+        const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+        let html = `<div class="calendar-nav">
+            <button onclick="changeMonth(-1)">← Prev</button>
+            <strong style="font-family:'Rajdhani',sans-serif;">${monthNames[calMonth]} ${calYear}</strong>
+            <button onclick="changeMonth(1)">Next →</button>
+        </div>`;
+        html += `<div class="calendar-grid">`;
+        ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => html += `<div class="calendar-day-header">${d}</div>`);
+        for (let i = 0; i < firstDay; i++) html += `<div class="calendar-day" style="background:transparent;cursor:default;"></div>`;
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+            const dayMatters = getMattersForDay(dateStr);
+            const isToday = dateStr === todayStr;
+            html += `<div class="calendar-day${isToday ? ' today' : ''}" onclick="showDayMatters('${dateStr}')">
+                <span class="day-num">${day}</span>
+                ${dayMatters.length > 0 ? `<span class="badge">${dayMatters.length} Matter(s)</span>` : ''}
+            </div>`;
+        }
+        html += `</div>`;
+        return html;
+    };
+
+    window.changeMonth = (delta) => {
+        calMonth += delta;
+        if (calMonth < 0) { calMonth = 11; calYear--; }
+        if (calMonth > 11) { calMonth = 0; calYear++; }
+        renderMattersContent();
+    };
+
+    window.showDayMatters = (dateStr) => {
+        const dayMatters = getMattersForDay(dateStr);
+        const d = new Date(dateStr+'T00:00:00');
+        const dateDisplay = d.toLocaleDateString('en-KE', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+        let popupHtml = `<div class="popup-backdrop" id="popupBackdrop" onclick="closeDayMatters()"></div>`;
+        popupHtml += `<div class="day-matters-popup" id="dayMattersPopup">
+            <h4 style="font-family:'Rajdhani',sans-serif;">${dateDisplay}</h4>
+            ${dayMatters.length === 0 ? '<p>No matters scheduled.</p>' : ''}
+            ${dayMatters.map(m => `
+                <div style="background:#fafaf9; border-left:3px solid var(--gold); padding:8px; margin-bottom:6px; border-radius:6px;">
+                    <strong>${m.title}</strong>
+                    <div style="font-size:10px; color:#6b5e4a;">🕐 ${m.time} | 🏛️ ${m.court}</div>
+                    <div style="font-size:10px; color:#6b5e4a;">👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
+                    <div style="margin-top:6px; display:flex; gap:6px;">
+                        <button onclick="editMatter(${m.id});closeDayMatters();" style="background:#f0f0f0; border:none; padding:2px 8px; border-radius:4px; cursor:pointer; font-size:9px;">✏️</button>
+                        <button onclick="delMatter(${m.id});closeDayMatters();" style="background:#fde8e8; color:#8b2500; border:none; padding:2px 8px; border-radius:4px; cursor:pointer; font-size:9px;">🗑️</button>
+                    </div>
+                </div>
+            `).join('')}
+            <button onclick="closeDayMatters()" style="margin-top:8px; width:100%; background:var(--black); color:white; border:none; padding:8px; border-radius:6px; font-weight:600;">Close</button>
+        </div>`;
+        const container = document.createElement('div');
+        container.innerHTML = popupHtml;
+        document.body.appendChild(container);
+    };
+
+    window.closeDayMatters = () => {
+        const backdrop = document.getElementById('popupBackdrop');
+        const popup = document.getElementById('dayMattersPopup');
+        if (backdrop) backdrop.remove();
+        if (popup) popup.remove();
+    };
+
+    // ─── RENDERERS ───────────────────────────────
+    const renderBilling = () => {
+        const c = calc();
+        const tabs = ['FEE_NOTE','INVOICE','RECEIPT'];
+        document.getElementById('mainContent').innerHTML = `
+            <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+            <div class="sub-tabs">${tabs.map(t => `<button class="sub-tab${billTab===t?' active':''}" onclick="switchBillTab('${t}')">${t.replace('_',' ')}</button>`).join('')}</div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${billTab.replace('_',' ')} Details</span></div><div class="form-body">
+              <div class="field-row"><div class="field"><label>Number</label><input value="${doc.no}" onchange="updDoc('no',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${doc.date}" onchange="updDoc('date',this.value)"></div></div>
+              <div class="field-row"><div class="field"><label>Matter Ref</label><input value="${doc.ref}" onchange="updDoc('ref',this.value)"></div><div class="field"><label>Due Date</label><input value="${doc.due}" onchange="updDoc('due',this.value)"></div></div>
+            </div></div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client</span></div><div class="form-body">
+              <div class="field"><label>Name</label><input value="${doc.client.name}" onchange="updClient('name',this.value)"></div>
+              <div class="field-row"><div class="field"><label>Phone</label><input value="${doc.client.phone}" onchange="updClient('phone',this.value)"></div><div class="field"><label>Email</label><input value="${doc.client.email}" onchange="updClient('email',this.value)"></div></div>
+              <div class="field"><label>Address</label><input value="${doc.client.addr}" onchange="updClient('addr',this.value)"></div>
+            </div></div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Services</span></div>
+              <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hrs</th><th class="right">Rate</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
+                ${items.map(i => `<tr data-id="${i.id}">
+                  <td><input class="code" value="${i.code||''}" onchange="updItem(${i.id},'code',this.value)"></td>
+                  <td><input class="desc" value="${i.desc}" onchange="updItem(${i.id},'desc',this.value)"></td>
+                  <td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" onchange="updItem(${i.id},'hrs',this.value)"></td>
+                  <td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" onchange="updItem(${i.id},'rate',this.value)"></td>
+                  <td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" onchange="updItem(${i.id},'disb',this.value)"></td>
+                  <td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td>
+                  <td><button class="del-btn" onclick="delItem(${i.id})">×</button></td>
+                </tr>`).join('')}
+              </tbody></table></div>
+              <div style="padding:4px 16px 16px">
+                <button class="add-row-btn" onclick="addItem()">+ Add Service</button>
+                <div class="divider"></div>
+                <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" onchange="updDisc(this.value)"><span class="adj-label">%</span></div>
+                <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" onchange="updVat(this.value)"><span class="adj-label">%</span></div>
+                <div class="totals-block">
+                  <div class="totals-row"><span>Subtotal</span><span class="val" id="subtotalVal">${F(c.s)}</span></div>
+                  <div class="totals-row"><span>VAT (${vat}%)</span><span class="val" id="vatVal">${F(c.tx)}</span></div>
+                </div>
+                <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val" id="grandVal">${F(c.gt)}</span></div>
+              </div>
+            </div></div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
+              <div class="field"><label>Notes</label><textarea rows="2" onchange="updDoc('notes',this.value)">${doc.notes}</textarea></div>
+              <div class="field"><label>Terms</label><textarea rows="2" onchange="updDoc('terms',this.value)">${doc.terms}</textarea></div>
+            </div></div>
+            <div class="section-card"><div class="form-body actions">
+              <button class="btn-preview" onclick="previewPDF()">📄 PREVIEW PDF</button>
+              <button class="btn-whatsapp" onclick="shareWA()">📤 SHARE TO WHATSAPP (PDF)</button>
+              <button class="btn-download" onclick="dlPDF()">⬇ DOWNLOAD PDF</button>
+            </div></div>`;
+        document.getElementById('docNumber').textContent = doc.no;
+    };
+
+    const renderMattersContent = () => {
+        if (matterViewMode === 'list') {
+            renderMattersList();
+        } else {
+            renderMattersCalendar();
+        }
+    };
+
+    const renderMattersList = () => {
+        const today = new Date().toISOString().slice(0,10);
+        const sorted = [...matters].sort((a,b) => a.date.localeCompare(b.date));
+        const up = sorted.filter(m => m.date >= today);
+        const past = sorted.filter(m => m.date < today);
+        document.getElementById('mainContent').innerHTML = `
+            <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+            <div class="sub-tabs">
+                <button class="sub-tab" onclick="setMatterView('calendar')">📅 Calendar</button>
+                <button class="sub-tab active" onclick="setMatterView('list')">📋 List</button>
+            </div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
+              ${up.length===0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>' :
+                up.map(m => {
+                    const md = new Date(m.date+'T00:00:00');
+                    const isToday = m.date === today;
+                    const tom = new Date(); tom.setDate(tom.getDate()+1);
+                    const isTom = m.date === tom.toISOString().slice(0,10);
+                    return `<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;">
+                      <div style="display:flex;justify-content:space-between;align-items:start;">
+                        <div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div>
+                        <div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div>
+                      </div>
+                      <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div>
+                      <div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
+                    </div>`;
+                }).join('')}
+            </div></div>
+            ${past.length>0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m => {
+                const md = new Date(m.date+'T00:00:00');
+                return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${m.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;
+            }).join('')}</div></div>` : ''}
+            <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
+        document.getElementById('docNumber').textContent = 'MATTERS';
+    };
+
+    const renderMattersCalendar = () => {
+        document.getElementById('mainContent').innerHTML = `
+            <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+            <div class="sub-tabs">
+                <button class="sub-tab active" onclick="setMatterView('calendar')">📅 Calendar</button>
+                <button class="sub-tab" onclick="setMatterView('list')">📋 List</button>
+            </div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">My Scheduled Matters</span></div>
+            <div class="form-body">
+                ${renderCalendar()}
+            </div></div>
+            <button class="add-row-btn" onclick="addMatter()" style="margin-top:8px;">📅 + Schedule New Matter</button>`;
+        document.getElementById('docNumber').textContent = 'MATTERS';
+    };
+
+    window.setMatterView = (mode) => {
+        matterViewMode = mode;
+        renderMattersContent();
+        saveState();
+    };
+
+    const renderReminders = () => {
+        const today = new Date().toISOString().slice(0,10);
+        const up = reminders.filter(r => r.dueDate >= today);
+        const past = reminders.filter(r => r.dueDate < today);
+        document.getElementById('mainContent').innerHTML = `
+            <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+            <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">⏰ Upcoming Reminders (${up.length})</span></div><div class="form-body">
+              ${up.length === 0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">No upcoming reminders.</p>' :
+                up.map(r => {
+                    const d = new Date(r.dueDate+'T00:00:00');
+                    const isToday = r.dueDate === today;
+                    return `<div class="reminder-card${isToday ? ' today' : ''}">
+                      <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <div><strong>${r.title}</strong> ${isToday ? '<span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>' : ''}</div>
+                        <div style="display:flex;gap:4px;"><button onclick="editReminder(${r.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">✏️</button><button onclick="delReminder(${r.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">🗑️</button></div>
+                      </div>
+                      <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div>
+                      ${r.note ? `<div style="font-size:10px;color:#4b5563;">📝 ${r.note}</div>` : ''}
+                    </div>`;
+                }).join('')}
+            </div></div>
+            ${past.length > 0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(r => {
+                const d = new Date(r.dueDate+'T00:00:00');
+                return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${r.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div></div>`;
+            }).join('')}</div></div>` : ''}
+            <button class="add-row-btn" onclick="addReminder()" style="margin-top:0;">➕ New Reminder</button>`;
+        document.getElementById('docNumber').textContent = 'REMINDERS';
+    };
+
+    const render = () => {
+        if (mainTab === 'BILLING') renderBilling();
+        else if (mainTab === 'MATTERS') renderMattersContent();
+        else if (mainTab === 'REMINDERS') renderReminders();
+        saveState();
+    };
+
+    // ─── TAB SWITCHING ────────────────────────────
+    window.switchMainTab = (tab, el) => {
+        mainTab = tab;
+        document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
         render();
-    })();
+    };
+    window.switchBillTab = (tab) => {
+        billTab = tab;
+        const prefix = { FEE_NOTE:'FBN-', INVOICE:'INV-', RECEIPT:'RCT-' };
+        const suffix = { FEE_NOTE:'2024-001', INVOICE:'2024-089', RECEIPT:'2024-089' };
+        doc.no = prefix[tab] + suffix[tab];
+        renderBilling();
+    };
+
+    // Expose globally for inline handlers
+    window.updDoc = updDoc; window.updClient = updClient; window.updDisc = updDisc; window.updVat = updVat;
+    window.addItem = addItem; window.delItem = delItem; window.updItem = updItem;
+    window.shareWA = shareWA; window.dlPDF = dlPDF; window.previewPDF = previewPDF; window.quickShare = quickShare;
+    window.addMatter = addMatter; window.editMatter = editMatter; window.delMatter = delMatter;
+    window.addReminder = addReminder; window.editReminder = editReminder; window.delReminder = delReminder;
+
+    // ─── INIT ─────────────────────────────────────
+    loadState();
+    loadLibs().catch(() => {});
+    render();
+})();
 </script>
 </body>
 </html>
