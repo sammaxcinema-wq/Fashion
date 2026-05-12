@@ -83,11 +83,13 @@
         .adj-row .adj-label { font-size: 11px; color: var(--muted); }
         .divider { height: 1px; background: var(--border); margin: 12px 0; }
         .actions { padding: 4px 0; display: flex; flex-direction: column; gap: 10px; }
-        .btn-whatsapp, .btn-download { display: flex; align-items: center; justify-content: center; gap: 10px; border: none; border-radius: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s; color: #ffffff; padding: 14px; font-size: 14px; }
+        .btn-whatsapp, .btn-download, .btn-preview { display: flex; align-items: center; justify-content: center; gap: 10px; border: none; border-radius: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 2px; cursor: pointer; transition: all 0.25s; color: #ffffff; padding: 14px; font-size: 14px; }
         .btn-whatsapp { background: var(--whatsapp); border: 2px solid var(--whatsapp); }
         .btn-whatsapp:hover { background: var(--whatsapp-dark); border-color: var(--whatsapp-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.3); }
         .btn-download { background: #000000; }
         .btn-download:hover { background: var(--near-black); transform: translateY(-2px); }
+        .btn-preview { background: #2c3e50; border: 2px solid #2c3e50; }
+        .btn-preview:hover { background: #1a252f; border-color: #1a252f; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .firm-info-bar { background: #fafaf9; border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
         .toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); background: #000000; color: #ffffff; padding: 10px 22px; border-radius: 10px; font-size: 13px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,0,0,0.3); z-index: 9999; border-left: 4px solid var(--gold); animation: toastIn 0.3s ease; white-space: nowrap; }
         @keyframes toastIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
@@ -104,6 +106,8 @@
         .sub-tab { flex: 1; padding: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; letter-spacing: 1.5px; border: none; cursor: pointer; border-radius: 8px; font-size: 11px; transition: all 0.2s; }
         .sub-tab.active { background: #000000; color: var(--gold); }
         .sub-tab:not(.active) { background: #f0f0f0; color: #666666; }
+        .reminder-card { background: #fafaf9; border-left: 3px solid var(--gold); padding: 10px; margin-bottom: 8px; border-radius: 6px; }
+        .reminder-card.today { border-left-color: var(--gold-dark); background: var(--gold-bg); }
     </style>
 </head>
 <body>
@@ -123,6 +127,7 @@
     <div class="main-tabs">
         <button class="main-tab active" onclick="switchMainTab('BILLING', this)">💼 Billing</button>
         <button class="main-tab" onclick="switchMainTab('MATTERS', this)">📋 Matters</button>
+        <button class="main-tab" onclick="switchMainTab('REMINDERS', this)">⏰ Reminders</button>
     </div>
 </header>
 
@@ -142,79 +147,115 @@
 </div>
 
 <script>
-    let libsReady = false;
-    function loadLibs() {
-        return new Promise((resolve, reject) => {
-            if (libsReady || (window.html2canvas && window.jspdf)) { libsReady = true; return resolve(); }
-            const s1 = document.createElement('script');
-            s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-            s1.onload = () => {
-                const s2 = document.createElement('script');
-                s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                s2.onload = () => { libsReady = true; resolve(); };
-                s2.onerror = reject; document.head.appendChild(s2);
-            };
-            s1.onerror = reject; document.head.appendChild(s1);
-        });
-    }
+    (function() {
+        // ─── STATE ───────────────────────────────────
+        let libsReady = false;
+        let mainTab = 'BILLING', billTab = 'INVOICE';
+        let items = [
+            { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
+            { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
+            { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
+            { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
+        ];
+        let nid = 5, disc = 0, vat = 16;
+        let doc = {
+            no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
+            client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
+            notes:'Professional fees as per Advocates Remuneration Order.',
+            terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
+        };
+        let matters = [
+            { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
+            { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
+        ];
+        let nmid = 106;
+        let reminders = [
+            { id:1, title:'Follow up fees payment', dueDate:'2026-05-15', note:'Send reminder email to James Mwangi', type:'payment' },
+            { id:2, title:'File list of documents', dueDate:'2026-05-09', note:'Submit to court registry', type:'task' }
+        ];
+        let nrid = 3;
 
-    const FIRM = {
-        name: 'MAUNCHOLAW ADVOCATES',
-        address: 'Laipha House, Third Floor, Nanyuki',
-        email: 'wakilimauncho@gmail.com',
-        phone: '+254 746 388 218',
-        logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
-        watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
-    };
+        const FIRM = {
+            name: 'MAUNCHOLAW ADVOCATES',
+            address: 'Laipha House, Third Floor, Nanyuki',
+            email: 'wakilimauncho@gmail.com',
+            phone: '+254 746 388 218',
+            logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
+            watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
+        };
 
-    let mainTab = 'BILLING', billTab = 'INVOICE';
-    let items = [
-        { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
-        { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
-        { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
-        { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
-    ];
-    let nid = 5, disc = 0, vat = 16;
-    let doc = {
-        no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
-        client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
-        notes:'Professional fees as per Advocates Remuneration Order.',
-        terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
-    };
-    let matters = [
-        { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
-        { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
-    ];
-    let nmid = 106;
+        // ─── HELPERS ─────────────────────────────────
+        const F = n => 'KSH ' + Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+        const FP = n => Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+        const calc = () => {
+            const f = items.reduce((s,i) => s + (i.hrs * i.rate), 0);
+            const d = items.reduce((s,i) => s + (i.disb || 0), 0);
+            const s = f + d, di = s * (disc/100), ad = s - di, tx = ad * (vat/100), gt = ad + tx;
+            return {f, d, s, di, ad, tx, gt};
+        };
+        const toast = (m, d=2500) => {
+            const t = document.getElementById('toast');
+            t.textContent = m; t.style.display = 'block';
+            clearTimeout(window._tt);
+            window._tt = setTimeout(() => { t.style.display = 'none'; }, d);
+        };
 
-    function F(n){ return 'KSH '+Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-    function FP(n){ return Number(n).toLocaleString('en-KE',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-    function calc(){
-        const f = items.reduce((s,i)=>s+(i.hrs*i.rate),0);
-        const d = items.reduce((s,i)=>s+(i.disb||0),0);
-        const s = f+d, di = s*(disc/100), ad = s-di, tx = ad*(vat/100), gt = ad+tx;
-        return {f,d,s,di,ad,tx,gt};
-    }
-    function toast(m,d=2500){ const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(window._tt);window._tt=setTimeout(()=>{t.style.display='none';},d); }
+        // ─── PERSISTENCE ────────────────────────────
+        const saveState = () => {
+            const state = { items, nid, disc, vat, doc, matters, nmid, reminders, nrid, billTab, mainTab };
+            localStorage.setItem('mauncho_pro_state', JSON.stringify(state));
+        };
+        const loadState = () => {
+            const saved = localStorage.getItem('mauncho_pro_state');
+            if (saved) {
+                try {
+                    const s = JSON.parse(saved);
+                    items = s.items || items; nid = s.nid || nid; disc = s.disc || 0; vat = s.vat || 16;
+                    doc = s.doc || doc; matters = s.matters || matters; nmid = s.nmid || nmid;
+                    reminders = s.reminders || reminders; nrid = s.nrid || nrid;
+                    billTab = s.billTab || 'INVOICE'; mainTab = s.mainTab || 'BILLING';
+                } catch(e) { /* ignore */ }
+            }
+        };
+        // Auto-save after any data change
+        window.addEventListener('beforeunload', saveState);
+        // Save periodically
+        setInterval(saveState, 3000);
 
-    // ─── ADVANCED QUICKBOOKS‑INSPIRED PDF TEMPLATE ────────────
-    function pdfTemplate() {
-        const c = calc();
-        const rows = items.map(i=>`
-            <tr>
-                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.code||'—'}</td>
-                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.desc||'—'}</td>
-                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:center;">${i.hrs||0}</td>
-                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.rate)}</td>
-                <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.disb||0)}</td>
-                <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;font-weight:600;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
-            </tr>`).join('');
+        // ─── LIBRARY LOADING ────────────────────────
+        const loadLibs = () => {
+            return new Promise((resolve, reject) => {
+                if (libsReady || (window.html2canvas && window.jspdf)) { libsReady = true; return resolve(); }
+                const s1 = document.createElement('script');
+                s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                s1.onload = () => {
+                    const s2 = document.createElement('script');
+                    s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    s2.onload = () => { libsReady = true; resolve(); };
+                    s2.onerror = reject; document.head.appendChild(s2);
+                };
+                s1.onerror = reject; document.head.appendChild(s1);
+            });
+        };
 
-        return `<!DOCTYPE html>
+        // ─── ADVANCED PDF TEMPLATE WITH DISCOUNT ────
+        const pdfTemplate = () => {
+            const c = calc();
+            const rows = items.map(i => `
+                <tr>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.code||'—'}</td>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.desc||'—'}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:center;">${i.hrs||0}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.rate)}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.disb||0)}</td>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;font-weight:600;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+                </tr>`).join('');
+
+            return `<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI','Roboto',system-ui,-apple-system,sans-serif;padding:28px 16px;margin:0;}
+    body{background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI','Roboto',system-ui,sans-serif;padding:28px 16px;margin:0;}
     .page{max-width:760px;width:100%;margin:0 auto;}
     .invoice-card{background:#ffffff;box-shadow:0 2px 16px rgba(0,0,0,0.08),0 1px 4px rgba(0,0,0,0.04);border-radius:6px;overflow:hidden;}
     .card-top{background:#1a1f2b;padding:24px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #c9a84c;}
@@ -281,15 +322,15 @@
         </div>
         <table>
             <thead>
-                <tr>
-                    <th>Code</th><th>Description</th><th class="th-center">Hours</th><th class="th-right">Rate (KSH)</th><th class="th-right">Disb. (KSH)</th><th class="th-right">Total (KSH)</th>
-                </tr>
+                <tr><th>Code</th><th>Description</th><th class="th-center">Hours</th><th class="th-right">Rate (KSH)</th><th class="th-right">Disb. (KSH)</th><th class="th-right">Total (KSH)</th></tr>
             </thead>
             <tbody>${rows}</tbody>
         </table>
         <div class="totals-area">
             <div class="totals-box">
                 <div class="t-row"><span>Subtotal</span><span>${FP(c.s)}</span></div>
+                ${disc > 0 ? `<div class="t-row"><span>Discount (${disc}%)</span><span>-${FP(c.di)}</span></div>` : ''}
+                <div class="t-row"><span>Net</span><span>${FP(c.ad)}</span></div>
                 <div class="t-row vat-row"><span>VAT (${vat}%)</span><span>${FP(c.tx)}</span></div>
                 <div class="t-row grand-row"><span>GRAND TOTAL</span><span>KSH ${FP(c.gt)}</span></div>
             </div>
@@ -307,152 +348,390 @@
 </div>
 </body>
 </html>`;
-    }
+        };
 
-    // ─── HIGH‑QUALITY PDF RENDERING ──────────────────────────
-    async function makePDF() {
-        await loadLibs();
-        const el = document.getElementById('pdfTemplate');
-        el.innerHTML = pdfTemplate();
-        await new Promise(r=>setTimeout(r,700));
-        const canvas = await html2canvas(el,{
-            scale:2.8, useCORS:true, backgroundColor:'#f0f2f5', logging:false,
-            width:el.scrollWidth, height:el.scrollHeight
-        });
-        const { jsPDF } = window.jspdf;
-        const img = canvas.toDataURL('image/png');
-        const pw = 210, ph = (canvas.height * pw) / canvas.width;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        pdf.addImage(img, 'PNG', 0, 0, pw, Math.min(ph, 297));
-        if (ph > 297) {
-            let rem = ph - 297;
-            while (rem > 0) {
-                pdf.addPage();
-                pdf.addImage(img, 'PNG', 0, -(297 * (pdf.getNumberOfPages() - 1)), pw, ph);
-                rem -= 297;
+        // ─── MULTI‑PAGE PDF RENDERING ────────────────
+        const makePDF = async () => {
+            await loadLibs();
+            const el = document.getElementById('pdfTemplate');
+            el.innerHTML = pdfTemplate();
+            await new Promise(r => setTimeout(r, 700));
+            const canvas = await html2canvas(el, {
+                scale: 2.8, useCORS: true, backgroundColor: '#f0f2f5', logging: false,
+                width: el.scrollWidth, height: el.scrollHeight
+            });
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = 210;
+            const pageHeight = 297;
+            const pdfWidth = pageWidth;
+            const totalHeightPx = canvas.height;
+            const scale = pdfWidth / canvas.width; // mm per px
+            const pageHeightPx = pageHeight / scale;
+
+            let srcY = 0;
+            while (srcY < totalHeightPx) {
+                const sliceHeight = Math.min(pageHeightPx, totalHeightPx - srcY);
+                const sliceCanvas = document.createElement('canvas');
+                sliceCanvas.width = canvas.width;
+                sliceCanvas.height = sliceHeight;
+                const ctx = sliceCanvas.getContext('2d');
+                ctx.drawImage(canvas, 0, srcY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+                const imgData = sliceCanvas.toDataURL('image/png');
+                if (srcY === 0) {
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
+                } else {
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, sliceHeight * scale);
+                }
+                srcY += sliceHeight;
             }
-        }
-        el.innerHTML = '';
-        return pdf.output('blob');
-    }
+            el.innerHTML = '';
+            return pdf.output('blob');
+        };
 
-    async function shareWA(){
-        const lo=document.getElementById('loadingOverlay');lo.classList.remove('hidden');
-        toast('📄 Generating professional PDF…',4000);
-        try{
-            const blob=await makePDF();
-            const fn=`Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
-            const file=new File([blob],fn,{type:'application/pdf'});
-            const c=calc();
-            const msg=`*${FIRM.name}*\n⚖️ ${FIRM.address}\n📄 ${billTab.replace('_',' ')}: ${doc.no}\n👤 ${doc.client.name}\n📋 ${doc.ref}\n💰 ${F(c.gt)}\n📅 ${doc.date}`;
-            if(navigator.canShare&&navigator.canShare({files:[file]})){
-                await navigator.share({title:`Mauncho Law — ${doc.no}`,text:msg,files:[file]});
-                toast('✅ Shared!',3000);
-            }else{
-                const u=URL.createObjectURL(blob);const a=document.createElement('a');
-                a.href=u;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);
-                setTimeout(()=>{window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');URL.revokeObjectURL(u);},500);
-                toast('📥 Downloaded! Opening WhatsApp…',4000);
+        // ─── SHARE & DOWNLOAD ────────────────────────
+        const shareWA = async () => {
+            const lo = document.getElementById('loadingOverlay');
+            lo.classList.remove('hidden');
+            toast('📄 Generating professional PDF…', 4000);
+            try {
+                const blob = await makePDF();
+                const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+                const file = new File([blob], fn, {type: 'application/pdf'});
+                const c = calc();
+                const msg = `*${FIRM.name}*\n⚖️ ${FIRM.address}\n📄 ${billTab.replace('_',' ')}: ${doc.no}\n👤 ${doc.client.name}\n📋 ${doc.ref}\n💰 ${F(c.gt)}\n📅 ${doc.date}`;
+                if (navigator.canShare && navigator.canShare({files: [file]})) {
+                    await navigator.share({title: `Mauncho Law — ${doc.no}`, text: msg, files: [file]});
+                    toast('✅ Shared!', 3000);
+                } else {
+                    const cleanPhone = doc.client.phone.replace(/[^0-9+]/g, '').replace(/^0+/, '');
+                    const waRecipient = cleanPhone ? cleanPhone : '';
+                    const waUrl = `https://wa.me/${waRecipient}?text=${encodeURIComponent(msg)}`;
+                    const u = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = u; a.download = fn;
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                    setTimeout(() => { window.open(waUrl, '_blank'); URL.revokeObjectURL(u); }, 500);
+                    toast('📥 Downloaded! Opening WhatsApp…', 4000);
+                }
+            } catch(e) {
+                toast('⚠️ Error. Retrying…', 3000);
+            } finally {
+                lo.classList.add('hidden');
             }
-        }catch(e){toast('⚠️ Error. Retrying…',3000);}
-        finally{lo.classList.add('hidden');}
-    }
+        };
 
-    async function dlPDF(){
-        const lo=document.getElementById('loadingOverlay');lo.classList.remove('hidden');
-        toast('📄 Preparing PDF…',3000);
-        try{
-            const blob=await makePDF();
-            const fn=`Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
-            const u=URL.createObjectURL(blob);const a=document.createElement('a');
-            a.href=u;a.download=fn;document.body.appendChild(a);a.click();document.body.removeChild(a);
-            URL.revokeObjectURL(u);toast('✅ Downloaded!',2500);
-        }catch(e){toast('⚠️ Failed.',3000);}
-        finally{lo.classList.add('hidden');}
-    }
+        const dlPDF = async () => {
+            const lo = document.getElementById('loadingOverlay');
+            lo.classList.remove('hidden');
+            toast('📄 Preparing PDF…', 3000);
+            try {
+                const blob = await makePDF();
+                const fn = `Mauncho_Law_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+                const u = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = u; a.download = fn;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                URL.revokeObjectURL(u);
+                toast('✅ Downloaded!', 2500);
+            } catch(e) {
+                toast('⚠️ Failed.', 3000);
+            } finally {
+                lo.classList.add('hidden');
+            }
+        };
 
-    function quickShare(){ if(mainTab!=='BILLING'){mainTab='BILLING';document.querySelectorAll('.main-tab').forEach(t=>t.classList.remove('active'));document.querySelector('.main-tab:first-child').classList.add('active');} render();setTimeout(()=>shareWA(),300); }
+        const previewPDF = () => {
+            const el = document.getElementById('pdfTemplate');
+            el.innerHTML = pdfTemplate();
+            const win = window.open('', '_blank', 'width=820,height=900');
+            win.document.write(el.innerHTML);
+            win.document.close();
+            el.innerHTML = '';
+        };
 
-    function addMatter(){
-        const t=prompt('Title:');if(!t)return;
-        const d=prompt('Date (YYYY-MM-DD):',new Date().toISOString().slice(0,10));if(!d)return;
-        matters.push({id:nmid++,title:t,date:d,time:prompt('Time:','9:00 AM')||'9:00 AM',court:prompt('Court:','Nanyuki Law Courts')||'Nanyuki Law Courts',caseNo:prompt('Case No:')||'',client:prompt('Client:')||'',judge:prompt('Judge:')||''});
-        render();toast('✅ Matter added!',2000);
-    }
-    function editMatter(id){
-        const m=matters.find(x=>x.id===id);if(!m)return;
-        const t=prompt('Title:',m.title);if(t===null)return;
-        const d=prompt('Date:',m.date);if(d===null)return;
-        Object.assign(m,{title:t||m.title,date:d||m.date,time:prompt('Time:',m.time)||m.time,court:prompt('Court:',m.court)||m.court,caseNo:prompt('Case No:',m.caseNo)||m.caseNo,client:prompt('Client:',m.client)||m.client,judge:prompt('Judge:',m.judge)||m.judge});
-        render();toast('✅ Updated!',2000);
-    }
-    function delMatter(id){if(confirm('Delete?')){matters=matters.filter(x=>x.id!==id);render();toast('🗑️ Deleted',2000);}}
+        const quickShare = () => {
+            if (mainTab !== 'BILLING') {
+                mainTab = 'BILLING';
+                document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+                document.querySelector('.main-tab:first-child').classList.add('active');
+                render();
+            }
+            setTimeout(() => shareWA(), 300);
+        };
 
-    function addItem(){items.push({id:nid++,code:'',desc:'',hrs:0,rate:0,disb:0});render();}
-    function delItem(id){if(items.length<=1){toast('⚠️ Need at least 1 item');return;}items=items.filter(i=>i.id!==id);render();}
-    function updItem(id,f,v){const i=items.find(x=>x.id===id);if(!i)return;if(f==='hrs'||f==='rate'||f==='disb')i[f]=parseFloat(v)||0;else i[f]=v;render();}
+        // ─── DATA MANIPULATION ───────────────────────
+        const addItem = () => {
+            items.push({ id: nid++, code: '', desc: '', hrs: 0, rate: 0, disb: 0 });
+            renderBilling(); // full re-render needed for new row
+            saveState();
+        };
+        const delItem = (id) => {
+            if (items.length <= 1) { toast('⚠️ Need at least 1 item'); return; }
+            items = items.filter(i => i.id !== id);
+            renderBilling();
+            saveState();
+        };
+        const updItem = (id, field, value) => {
+            const item = items.find(i => i.id === id);
+            if (!item) return;
+            if (field === 'hrs' || field === 'rate' || field === 'disb') {
+                item[field] = parseFloat(value) || 0;
+            } else {
+                item[field] = value;
+            }
+            refreshTotals();
+            saveState();
+        };
 
-    function renderBilling(){
-        const c=calc();
-        const tabs=['FEE_NOTE','INVOICE','RECEIPT'];
-        return `<div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
-        <div class="sub-tabs">${tabs.map(t=>`<button class="sub-tab${billTab===t?' active':''}" onclick="switchBillTab('${t}')">${t.replace('_',' ')}</button>`).join('')}</div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${billTab.replace('_',' ')} Details</span></div><div class="form-body">
-          <div class="field-row"><div class="field"><label>Number</label><input value="${doc.no}" oninput="updDoc('no',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${doc.date}" oninput="updDoc('date',this.value)"></div></div>
-          <div class="field-row"><div class="field"><label>Matter Ref</label><input value="${doc.ref}" oninput="updDoc('ref',this.value)"></div><div class="field"><label>Due Date</label><input value="${doc.due}" oninput="updDoc('due',this.value)"></div></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client</span></div><div class="form-body">
-          <div class="field"><label>Name</label><input value="${doc.client.name}" oninput="updClient('name',this.value)"></div>
-          <div class="field-row"><div class="field"><label>Phone</label><input value="${doc.client.phone}" oninput="updClient('phone',this.value)"></div><div class="field"><label>Email</label><input value="${doc.client.email}" oninput="updClient('email',this.value)"></div></div>
-          <div class="field"><label>Address</label><input value="${doc.client.addr}" oninput="updClient('addr',this.value)"></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Services</span></div>
-          <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hrs</th><th class="right">Rate</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
-            ${items.map(i=>`<tr><td><input class="code" value="${i.code||''}" oninput="updItem(${i.id},'code',this.value)"></td><td><input class="desc" value="${i.desc}" oninput="updItem(${i.id},'desc',this.value)"></td><td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" oninput="updItem(${i.id},'hrs',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" oninput="updItem(${i.id},'rate',this.value)"></td><td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" oninput="updItem(${i.id},'disb',this.value)"></td><td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td><td><button class="del-btn" onclick="delItem(${i.id})">×</button></td></tr>`).join('')}
-          </tbody></table></div>
-          <div style="padding:4px 16px 16px"><button class="add-row-btn" onclick="addItem()">+ Add Service</button>
-          <div class="divider"></div><div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" oninput="updDisc(this.value)"><span class="adj-label">%</span></div>
-          <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" oninput="updVat(this.value)"><span class="adj-label">%</span></div>
-          <div class="totals-block"><div class="totals-row"><span>Subtotal</span><span class="val">${F(c.s)}</span></div><div class="totals-row"><span>VAT (${vat}%)</span><span class="val">${F(c.tx)}</span></div></div>
-          <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val">${F(c.gt)}</span></div>
-        </div></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
-          <div class="field"><label>Notes</label><textarea rows="2" oninput="updDoc('notes',this.value)">${doc.notes}</textarea></div>
-          <div class="field"><label>Terms</label><textarea rows="2" oninput="updDoc('terms',this.value)">${doc.terms}</textarea></div>
-        </div></div>
-        <div class="section-card"><div class="form-body actions">
-          <button class="btn-whatsapp" onclick="shareWA()">📤 SHARE TO WHATSAPP (PDF)</button>
-          <button class="btn-download" onclick="dlPDF()">⬇ DOWNLOAD PDF</button>
-        </div></div>`;
-    }
+        const refreshTotals = () => {
+            const c = calc();
+            // Update each row total
+            document.querySelectorAll('.items-table tbody tr').forEach(row => {
+                const id = parseInt(row.dataset.id);
+                const item = items.find(i => i.id === id);
+                if (item) {
+                    const totalCell = row.querySelector('.row-total');
+                    if (totalCell) totalCell.textContent = F(item.hrs * item.rate + (item.disb || 0));
+                }
+            });
+            // Update totals block
+            const subtotalEl = document.getElementById('subtotalVal');
+            const vatEl = document.getElementById('vatVal');
+            const grandEl = document.getElementById('grandVal');
+            if (subtotalEl) subtotalEl.textContent = F(c.s);
+            if (vatEl) vatEl.textContent = F(c.tx);
+            if (grandEl) grandEl.textContent = F(c.gt);
+        };
 
-    function renderMatters(){
-        const today=new Date().toISOString().slice(0,10);
-        const sorted=[...matters].sort((a,b)=>a.date.localeCompare(b.date));
-        const up=sorted.filter(m=>m.date>=today), past=sorted.filter(m=>m.date<today);
-        return `<div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
-        <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
-          ${up.length===0?'<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>':up.map(m=>{const md=new Date(m.date+'T00:00:00'),isToday=m.date===today,tom=new Date();tom.setDate(tom.getDate()+1);const isTom=m.date===tom.toISOString().slice(0,10);return`<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;"><div style="display:flex;justify-content:space-between;align-items:start;"><div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div><div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div></div><div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div><div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div></div>`;}).join('')}
-        </div></div>
-        ${past.length>0?`<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m=>{const md=new Date(m.date+'T00:00:00');return`<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${m.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;}).join('')}</div></div>`:''}
-        <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
-    }
+        const updDoc = (field, value) => {
+            doc[field] = value;
+            if (field === 'no') document.getElementById('docNumber').textContent = value;
+            saveState();
+        };
+        const updClient = (field, value) => {
+            doc.client[field] = value;
+            saveState();
+        };
+        const updDisc = (val) => {
+            disc = parseFloat(val) || 0;
+            refreshTotals();
+            saveState();
+        };
+        const updVat = (val) => {
+            vat = parseFloat(val) || 0;
+            refreshTotals();
+            saveState();
+        };
 
-    function render(){ document.getElementById('mainContent').innerHTML=mainTab==='BILLING'?renderBilling():renderMatters();document.getElementById('docNumber').textContent=mainTab==='BILLING'?doc.no:'MATTERS'; }
-    function switchMainTab(t,el){mainTab=t;document.querySelectorAll('.main-tab').forEach(x=>x.classList.remove('active'));el.classList.add('active');render();}
-    function switchBillTab(t){billTab=t;const p={FEE_NOTE:'FBN-',INVOICE:'INV-',RECEIPT:'RCT-'},s={FEE_NOTE:'2024-001',INVOICE:'2024-089',RECEIPT:'2024-089'};doc.no=p[t]+s[t];render();}
-    function updDoc(f,v){doc[f]=v;if(f==='no')document.getElementById('docNumber').textContent=v;render();}
-    function updClient(f,v){doc.client[f]=v;render();}
-    function updDisc(v){disc=parseFloat(v)||0;render();}
-    function updVat(v){vat=parseFloat(v)||0;render();}
+        const addMatter = () => {
+            const t = prompt('Title:'); if (!t) return;
+            const d = prompt('Date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
+            matters.push({
+                id: nmid++, title: t, date: d,
+                time: prompt('Time:','9:00 AM') || '9:00 AM',
+                court: prompt('Court:','Nanyuki Law Courts') || 'Nanyuki Law Courts',
+                caseNo: prompt('Case No:') || '',
+                client: prompt('Client:') || '',
+                judge: prompt('Judge:') || ''
+            });
+            renderMatters();
+            saveState();
+        };
+        const editMatter = (id) => {
+            const m = matters.find(x => x.id === id); if (!m) return;
+            const t = prompt('Title:', m.title); if (t === null) return;
+            const d = prompt('Date:', m.date); if (d === null) return;
+            Object.assign(m, {
+                title: t || m.title, date: d || m.date,
+                time: prompt('Time:', m.time) || m.time,
+                court: prompt('Court:', m.court) || m.court,
+                caseNo: prompt('Case No:', m.caseNo) || m.caseNo,
+                client: prompt('Client:', m.client) || m.client,
+                judge: prompt('Judge:', m.judge) || m.judge
+            });
+            renderMatters();
+            saveState();
+        };
+        const delMatter = (id) => {
+            if (confirm('Delete?')) { matters = matters.filter(x => x.id !== id); renderMatters(); saveState(); }
+        };
 
-    window.switchMainTab=switchMainTab;window.switchBillTab=switchBillTab;
-    window.updDoc=updDoc;window.updClient=updClient;window.updDisc=updDisc;window.updVat=updVat;
-    window.addItem=addItem;window.delItem=delItem;window.updItem=updItem;
-    window.shareWA=shareWA;window.dlPDF=dlPDF;window.quickShare=quickShare;
-    window.addMatter=addMatter;window.editMatter=editMatter;window.delMatter=delMatter;
-    loadLibs().catch(()=>{});
-    render();
+        const addReminder = () => {
+            const t = prompt('Reminder title:'); if (!t) return;
+            const d = prompt('Due date (YYYY-MM-DD):', new Date().toISOString().slice(0,10)); if (!d) return;
+            reminders.push({
+                id: nrid++, title: t, dueDate: d,
+                note: prompt('Note:') || '',
+                type: prompt('Type (task/payment/court):', 'task') || 'task'
+            });
+            renderReminders();
+            saveState();
+        };
+        const editReminder = (id) => {
+            const r = reminders.find(x => x.id === id); if (!r) return;
+            const t = prompt('Title:', r.title); if (t === null) return;
+            const d = prompt('Due date:', r.dueDate); if (d === null) return;
+            Object.assign(r, {
+                title: t || r.title, dueDate: d || r.dueDate,
+                note: prompt('Note:', r.note) || r.note,
+                type: prompt('Type:', r.type) || r.type
+            });
+            renderReminders();
+            saveState();
+        };
+        const delReminder = (id) => {
+            if (confirm('Delete this reminder?')) { reminders = reminders.filter(x => x.id !== id); renderReminders(); saveState(); }
+        };
+
+        // ─── RENDERERS ───────────────────────────────
+        const renderBilling = () => {
+            const c = calc();
+            const tabs = ['FEE_NOTE','INVOICE','RECEIPT'];
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="sub-tabs">${tabs.map(t => `<button class="sub-tab${billTab===t?' active':''}" onclick="switchBillTab('${t}')">${t.replace('_',' ')}</button>`).join('')}</div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${billTab.replace('_',' ')} Details</span></div><div class="form-body">
+                  <div class="field-row"><div class="field"><label>Number</label><input value="${doc.no}" onchange="updDoc('no',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${doc.date}" onchange="updDoc('date',this.value)"></div></div>
+                  <div class="field-row"><div class="field"><label>Matter Ref</label><input value="${doc.ref}" onchange="updDoc('ref',this.value)"></div><div class="field"><label>Due Date</label><input value="${doc.due}" onchange="updDoc('due',this.value)"></div></div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client</span></div><div class="form-body">
+                  <div class="field"><label>Name</label><input value="${doc.client.name}" onchange="updClient('name',this.value)"></div>
+                  <div class="field-row"><div class="field"><label>Phone</label><input value="${doc.client.phone}" onchange="updClient('phone',this.value)"></div><div class="field"><label>Email</label><input value="${doc.client.email}" onchange="updClient('email',this.value)"></div></div>
+                  <div class="field"><label>Address</label><input value="${doc.client.addr}" onchange="updClient('addr',this.value)"></div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Services</span></div>
+                  <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hrs</th><th class="right">Rate</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
+                    ${items.map(i => `<tr data-id="${i.id}">
+                      <td><input class="code" value="${i.code||''}" onchange="updItem(${i.id},'code',this.value)"></td>
+                      <td><input class="desc" value="${i.desc}" onchange="updItem(${i.id},'desc',this.value)"></td>
+                      <td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" onchange="updItem(${i.id},'hrs',this.value)"></td>
+                      <td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" onchange="updItem(${i.id},'rate',this.value)"></td>
+                      <td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" onchange="updItem(${i.id},'disb',this.value)"></td>
+                      <td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td>
+                      <td><button class="del-btn" onclick="delItem(${i.id})">×</button></td>
+                    </tr>`).join('')}
+                  </tbody></table></div>
+                  <div style="padding:4px 16px 16px">
+                    <button class="add-row-btn" onclick="addItem()">+ Add Service</button>
+                    <div class="divider"></div>
+                    <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" onchange="updDisc(this.value)"><span class="adj-label">%</span></div>
+                    <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" onchange="updVat(this.value)"><span class="adj-label">%</span></div>
+                    <div class="totals-block">
+                      <div class="totals-row"><span>Subtotal</span><span class="val" id="subtotalVal">${F(c.s)}</span></div>
+                      <div class="totals-row"><span>VAT (${vat}%)</span><span class="val" id="vatVal">${F(c.tx)}</span></div>
+                    </div>
+                    <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val" id="grandVal">${F(c.gt)}</span></div>
+                  </div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
+                  <div class="field"><label>Notes</label><textarea rows="2" onchange="updDoc('notes',this.value)">${doc.notes}</textarea></div>
+                  <div class="field"><label>Terms</label><textarea rows="2" onchange="updDoc('terms',this.value)">${doc.terms}</textarea></div>
+                </div></div>
+                <div class="section-card"><div class="form-body actions">
+                  <button class="btn-preview" onclick="previewPDF()">📄 PREVIEW PDF</button>
+                  <button class="btn-whatsapp" onclick="shareWA()">📤 SHARE TO WHATSAPP (PDF)</button>
+                  <button class="btn-download" onclick="dlPDF()">⬇ DOWNLOAD PDF</button>
+                </div></div>`;
+            document.getElementById('docNumber').textContent = doc.no;
+        };
+
+        const renderMatters = () => {
+            const today = new Date().toISOString().slice(0,10);
+            const sorted = [...matters].sort((a,b) => a.date.localeCompare(b.date));
+            const up = sorted.filter(m => m.date >= today);
+            const past = sorted.filter(m => m.date < today);
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
+                  ${up.length===0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>' :
+                    up.map(m => {
+                        const md = new Date(m.date+'T00:00:00');
+                        const isToday = m.date === today;
+                        const tom = new Date(); tom.setDate(tom.getDate()+1);
+                        const isTom = m.date === tom.toISOString().slice(0,10);
+                        return `<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;">
+                          <div style="display:flex;justify-content:space-between;align-items:start;">
+                            <div style="flex:1;"><strong style="font-size:13px;">${m.title}</strong>${isToday?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>':''}${isTom?' <span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TOMORROW</span>':''}</div>
+                            <div style="display:flex;gap:4px;"><button onclick="editMatter(${m.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">✏️</button><button onclick="delMatter(${m.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;font-weight:700;">🗑️</button></div>
+                          </div>
+                          <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div>
+                          <div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
+                        </div>`;
+                    }).join('')}
+                </div></div>
+                ${past.length>0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m => {
+                    const md = new Date(m.date+'T00:00:00');
+                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${m.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;
+                }).join('')}</div></div>` : ''}
+                <button class="add-row-btn" onclick="addMatter()" style="margin-top:0;">📅 + Schedule New Matter</button>`;
+            document.getElementById('docNumber').textContent = 'MATTERS';
+        };
+
+        const renderReminders = () => {
+            const today = new Date().toISOString().slice(0,10);
+            const up = reminders.filter(r => r.dueDate >= today);
+            const past = reminders.filter(r => r.dueDate < today);
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">⏰ Upcoming Reminders (${up.length})</span></div><div class="form-body">
+                  ${up.length === 0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">No upcoming reminders.</p>' :
+                    up.map(r => {
+                        const d = new Date(r.dueDate+'T00:00:00');
+                        const isToday = r.dueDate === today;
+                        return `<div class="reminder-card${isToday ? ' today' : ''}">
+                          <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <div><strong>${r.title}</strong> ${isToday ? '<span style="background:#fef9f0;color:#8b6914;padding:1px 6px;border-radius:8px;font-size:8px;font-weight:700;">TODAY</span>' : ''}</div>
+                            <div style="display:flex;gap:4px;"><button onclick="editReminder(${r.id})" style="background:#f0f0f0;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">✏️</button><button onclick="delReminder(${r.id})" style="background:#fde8e8;color:#8b2500;border:none;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:9px;">🗑️</button></div>
+                          </div>
+                          <div style="font-size:10px;color:#6b5e4a;margin-top:4px;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div>
+                          ${r.note ? `<div style="font-size:10px;color:#4b5563;">📝 ${r.note}</div>` : ''}
+                        </div>`;
+                    }).join('')}
+                </div></div>
+                ${past.length > 0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(r => {
+                    const d = new Date(r.dueDate+'T00:00:00');
+                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong style="font-size:12px;">${r.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div></div>`;
+                }).join('')}</div></div>` : ''}
+                <button class="add-row-btn" onclick="addReminder()" style="margin-top:0;">➕ New Reminder</button>`;
+            document.getElementById('docNumber').textContent = 'REMINDERS';
+        };
+
+        const render = () => {
+            if (mainTab === 'BILLING') renderBilling();
+            else if (mainTab === 'MATTERS') renderMatters();
+            else if (mainTab === 'REMINDERS') renderReminders();
+            saveState();
+        };
+
+        // ─── TAB SWITCHING ────────────────────────────
+        window.switchMainTab = (tab, el) => {
+            mainTab = tab;
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            render();
+        };
+        window.switchBillTab = (tab) => {
+            billTab = tab;
+            const prefix = { FEE_NOTE:'FBN-', INVOICE:'INV-', RECEIPT:'RCT-' };
+            const suffix = { FEE_NOTE:'2024-001', INVOICE:'2024-089', RECEIPT:'2024-089' };
+            doc.no = prefix[tab] + suffix[tab];
+            renderBilling();
+        };
+
+        // Expose globals for inline handlers
+        window.updDoc = updDoc; window.updClient = updClient; window.updDisc = updDisc; window.updVat = updVat;
+        window.addItem = addItem; window.delItem = delItem; window.updItem = updItem;
+        window.shareWA = shareWA; window.dlPDF = dlPDF; window.previewPDF = previewPDF; window.quickShare = quickShare;
+        window.addMatter = addMatter; window.editMatter = editMatter; window.delMatter = delMatter;
+        window.addReminder = addReminder; window.editReminder = editReminder; window.delReminder = delReminder;
+
+        // ─── INIT ─────────────────────────────────────
+        loadState();
+        loadLibs().catch(() => {});
+        render();
+    })();
 </script>
 </body>
 </html>
