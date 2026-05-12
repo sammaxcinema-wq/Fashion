@@ -8,21 +8,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
     <style>
-        /* ===== EXISTING STYLES (unchanged) ===== */
         :root {
-            --gold: #c9a84c;
-            --gold-dark: #8b6914;
-            --gold-bg: #fdf8ed;
-            --white: #ffffff;
-            --off-white: #fafaf9;
-            --black: #000000;
-            --near-black: #111111;
-            --border: #e0e0e0;
-            --border-light: #f0f0f0;
-            --text: #2c2c2c;
-            --muted: #6b5e4a;
-            --whatsapp: #25D366;
-            --whatsapp-dark: #128C7E;
+            --gold: #c9a84c; --gold-dark: #8b6914; --gold-bg: #fdf8ed;
+            --white: #ffffff; --off-white: #fafaf9; --black: #000000; --near-black: #111111;
+            --border: #e0e0e0; --border-light: #f0f0f0; --text: #2c2c2c; --muted: #6b5e4a;
+            --whatsapp: #25D366; --whatsapp-dark: #128C7E;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'DM Sans', sans-serif; background: #ffffff; color: var(--text); min-height: 100vh; padding-bottom: 100px; }
@@ -109,8 +99,6 @@
         .sub-tab:not(.active) { background: #f0f0f0; color: #666666; }
         .reminder-card { background: #fafaf9; border-left: 3px solid var(--gold); padding: 10px; margin-bottom: 8px; border-radius: 6px; }
         .reminder-card.today { border-left-color: var(--gold-dark); background: var(--gold-bg); }
-
-        /* Calendar styles */
         .calendar-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
         .calendar-nav button { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-family: 'Rajdhani', sans-serif; font-weight: 700; cursor: pointer; color: var(--text); }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 4px; }
@@ -123,14 +111,8 @@
         .day-matters-popup { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3); z-index: 10001; width: 90%; max-width: 400px; max-height: 70vh; overflow-y: auto; padding: 16px; }
         .day-matters-popup h4 { margin-bottom: 12px; }
         .popup-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10000; }
-
-        /* ===== AUTH STYLES ===== */
-        #authContainer {
-            position: fixed; inset: 0; background: #f5f5f5; display: flex; align-items: center; justify-content: center; z-index: 20000;
-        }
-        .auth-card {
-            background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 90%; max-width: 400px; padding: 30px 24px; text-align: center;
-        }
+        #authContainer { position: fixed; inset: 0; background: #f5f5f5; display: flex; align-items: center; justify-content: center; z-index: 20000; }
+        .auth-card { background: white; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 90%; max-width: 400px; padding: 30px 24px; text-align: center; }
         .auth-card .brand { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 26px; color: #000; letter-spacing: 2px; margin-bottom: 4px; }
         .auth-card .brand-sub { font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 12px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; }
         .auth-input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; text-align: left; }
@@ -141,8 +123,7 @@
         .auth-toggle { margin-top: 16px; font-size: 13px; color: #777; }
         .auth-toggle span { color: var(--gold-dark); font-weight: 600; cursor: pointer; }
         .error-msg { color: #c0392b; font-size: 12px; margin-top: -4px; margin-bottom: 8px; text-align: left; }
-
-        .user-menu { position: relative; display: inline-block; margin-left: auto; }
+        .user-menu { position: relative; }
         .user-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: black; font-weight: 700; display: flex; align-items: center; justify-content: center; cursor: pointer; font-family: 'Rajdhani', sans-serif; }
         .user-dropdown { position: absolute; right: 0; top: 40px; background: white; border: 1px solid var(--border); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); min-width: 160px; padding: 8px 0; z-index: 200; display: none; }
         .user-dropdown a { display: block; padding: 8px 16px; font-size: 13px; color: var(--text); text-decoration: none; cursor: pointer; }
@@ -152,282 +133,850 @@
     </style>
 </head>
 <body>
-
-<!-- AUTH CONTAINER -->
-<div id="authContainer"></div>
-
-<!-- MAIN APP (hidden until login) -->
-<div id="appContainer" class="hidden">
-    <header class="app-header">
-        <div class="logo-row">
-            <div class="logo-icon">
-                <img src="https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg" alt="Mauncho Law Logo" crossorigin="anonymous">
-            </div>
-            <div class="logo-text">
-                <div class="brand">MAUNCHO LAW</div>
-                <div class="brand-sub">ADVOCATES</div>
-                <div class="tagline">Laipha House • Third Floor, Nanyuki</div>
-            </div>
-            <div class="doc-number" id="docNumber">INV-2024-089</div>
-            <!-- User menu -->
-            <div class="user-menu">
-                <div class="user-icon" id="userIconBtn" onclick="toggleUserMenu()">👤</div>
-                <div class="user-dropdown" id="userDropdown">
-                    <a onclick="openSettings()">⚙️ Settings</a>
-                    <a onclick="logout()">🚪 Logout</a>
+    <div id="authContainer"></div>
+    <div id="appContainer" class="hidden">
+        <header class="app-header">
+            <div class="logo-row">
+                <div class="logo-icon">
+                    <img src="https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg" alt="Mauncho Law Logo" crossorigin="anonymous">
+                </div>
+                <div class="logo-text">
+                    <div class="brand">MAUNCHO LAW</div>
+                    <div class="brand-sub">ADVOCATES</div>
+                    <div class="tagline">Laipha House • Third Floor, Nanyuki</div>
+                </div>
+                <div class="doc-number" id="docNumber">INV-2024-089</div>
+                <div class="user-menu">
+                    <div class="user-icon" id="userIconBtn" onclick="toggleUserMenu()">👤</div>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a onclick="openSettings()">⚙️ Settings</a>
+                        <a onclick="logout()">🚪 Logout</a>
+                    </div>
                 </div>
             </div>
+            <div class="main-tabs">
+                <button class="main-tab active" type="button" onclick="switchMainTab('BILLING', this)">💼 Billing</button>
+                <button class="main-tab" type="button" onclick="switchMainTab('MATTERS', this)">📋 Matters</button>
+                <button class="main-tab" type="button" onclick="switchMainTab('REMINDERS', this)">⏰ Reminders</button>
+            </div>
+        </header>
+        <div class="toast" id="toast" style="display:none"></div>
+        <div class="loading-overlay hidden" id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="text">RENDERING PROFESSIONAL PDF…</div>
         </div>
-        <div class="main-tabs">
-            <button class="main-tab active" onclick="switchMainTab('BILLING', this)">💼 Billing</button>
-            <button class="main-tab" onclick="switchMainTab('MATTERS', this)">📋 Matters</button>
-            <button class="main-tab" onclick="switchMainTab('REMINDERS', this)">⏰ Reminders</button>
+        <div class="content" id="mainContent"></div>
+        <div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:820px;pointer-events:none;"></div>
+        <div class="float-whatsapp">
+            <button class="float-btn" type="button" onclick="quickShare()" aria-label="Quick Share">
+                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+            </button>
         </div>
-    </header>
-
-    <div class="toast" id="toast" style="display:none"></div>
-    <div class="loading-overlay hidden" id="loadingOverlay">
-        <div class="spinner"></div>
-        <div class="text">RENDERING PROFESSIONAL PDF…</div>
     </div>
 
-    <div class="content" id="mainContent"></div>
-    <div id="pdfTemplate" style="position:absolute;left:-9999px;top:0;width:820px;pointer-events:none;"></div>
+    <script>
+    (function() {
+        // ========== AUTH ==========
+        const AUTH_KEY = 'mauncho_auth';
+        const SALT_PREFIX = '_mauncho_salt_';
+        let currentUser = null;
+        let logoDataUri = null;
+        let logoPromise = null;
 
-    <div class="float-whatsapp">
-        <button class="float-btn" onclick="quickShare()" aria-label="Quick Share">
-            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
-        </button>
-    </div>
-</div>
+        async function sha256(m) {
+            const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(m));
+            return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+        }
 
-<script>
-(function() {
-    // ==================== AUTH MODULE ====================
-    const AUTH_KEY = 'mauncho_auth';
-    let currentUser = null;
+        function saltedHash(input, username) {
+            return sha256(SALT_PREFIX + username + input);
+        }
 
-    // Hash password using Web Crypto
-    async function sha256(message) {
-        const msgBuffer = new TextEncoder().encode(message);
-        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
+        async function saveUser(u) {
+            const all = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
+            all[u.username] = { passwordHash: u.passwordHash, securityQuestion: u.securityQuestion, securityAnswerHash: u.securityAnswerHash };
+            localStorage.setItem(AUTH_KEY, JSON.stringify(all));
+        }
 
-    async function saveUser(user) {
-        const existing = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-        existing[user.username] = {
-            passwordHash: user.passwordHash,
-            securityQuestion: user.securityQuestion,
-            securityAnswerHash: user.securityAnswerHash
+        async function getUser(username) {
+            const all = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
+            return all[username] || null;
+        }
+
+        async function registerUser(username, password, question, answer) {
+            if (await getUser(username)) throw new Error('Username already exists.');
+            const user = {
+                username,
+                passwordHash: await saltedHash(password, username),
+                securityQuestion: question,
+                securityAnswerHash: await sha256(answer.toLowerCase().trim())
+            };
+            await saveUser(user);
+            return user;
+        }
+
+        async function loginUser(username, password) {
+            const user = await getUser(username);
+            if (!user) throw new Error('User not found.');
+            if (await saltedHash(password, username) !== user.passwordHash) throw new Error('Invalid password.');
+            return user;
+        }
+
+        async function recoverPassword(username, answer, newPassword) {
+            const user = await getUser(username);
+            if (!user) throw new Error('User not found.');
+            if (await sha256(answer.toLowerCase().trim()) !== user.securityAnswerHash) throw new Error('Security answer incorrect.');
+            user.passwordHash = await saltedHash(newPassword, username);
+            await saveUser(user);
+        }
+
+        async function changePassword(username, oldPassword, newPassword) {
+            const user = await getUser(username);
+            if (!user) throw new Error('User not found.');
+            if (await saltedHash(oldPassword, username) !== user.passwordHash) throw new Error('Current password is incorrect.');
+            user.passwordHash = await saltedHash(newPassword, username);
+            await saveUser(user);
+        }
+
+        // ---------- auth UI ----------
+        function renderAuth() {
+            document.getElementById('authContainer').innerHTML = `
+                <div class="auth-card">
+                    <div class="brand">MAUNCHO LAW</div>
+                    <div class="brand-sub">ADVOCATES</div>
+                    <div id="authFormArea"></div>
+                </div>`;
+            showLoginForm();
+        }
+
+        function showLoginForm() {
+            document.getElementById('authFormArea').innerHTML = `
+                <input class="auth-input" id="loginUsername" placeholder="Username" autocomplete="username">
+                <input type="password" class="auth-input" id="loginPassword" placeholder="Password">
+                <div class="error-msg" id="loginError" style="display:none;"></div>
+                <button class="auth-btn" type="button" onclick="handleLogin()">Sign In</button>
+                <span class="auth-link" onclick="showRecoveryForm()">Forgot password?</span>
+                <div class="auth-toggle">Don't have an account? <span onclick="showRegisterForm()">Sign up</span></div>`;
+        }
+
+        function showRegisterForm() {
+            document.getElementById('authFormArea').innerHTML = `
+                <input class="auth-input" id="regUsername" placeholder="Choose a username">
+                <input type="password" class="auth-input" id="regPassword" placeholder="Create password">
+                <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Confirm password">
+                <input class="auth-input" id="regQuestion" placeholder="Security question (e.g., Pet's name)">
+                <input class="auth-input" id="regAnswer" placeholder="Your answer">
+                <div class="error-msg" id="regError" style="display:none;"></div>
+                <button class="auth-btn" type="button" onclick="handleRegister()">Create Account</button>
+                <div class="auth-toggle">Already have an account? <span onclick="showLoginForm()">Sign in</span></div>`;
+        }
+
+        function showRecoveryForm() {
+            document.getElementById('authFormArea').innerHTML = `
+                <p style="margin-bottom:12px;">Reset your password</p>
+                <input class="auth-input" id="recoverUsername" placeholder="Username">
+                <input class="auth-input" id="recoverAnswer" placeholder="Answer to security question">
+                <input type="password" class="auth-input" id="recoverNewPassword" placeholder="New password">
+                <div class="error-msg" id="recoverError" style="display:none;"></div>
+                <button class="auth-btn" type="button" onclick="handleRecovery()">Reset Password</button>
+                <span class="auth-link" onclick="showLoginForm()">Back to Sign In</span>`;
+        }
+
+        window.handleLogin = async () => {
+            const u = document.getElementById('loginUsername').value.trim();
+            const p = document.getElementById('loginPassword').value;
+            const err = document.getElementById('loginError');
+            if(!u||!p) { err.textContent='All fields required.'; err.style.display='block'; return; }
+            try {
+                await loginUser(u, p);
+                currentUser = u;
+                document.getElementById('authContainer').classList.add('hidden');
+                document.getElementById('appContainer').classList.remove('hidden');
+                document.getElementById('userIconBtn').textContent = u.charAt(0).toUpperCase();
+                loadAppData();
+                setMainTabActive(mainTab);
+                render();
+            } catch(e) { err.textContent = e.message; err.style.display='block'; }
         };
-        localStorage.setItem(AUTH_KEY, JSON.stringify(existing));
-    }
+        window.handleRegister = async () => {
+            const u = document.getElementById('regUsername').value.trim();
+            const p = document.getElementById('regPassword').value;
+            const p2 = document.getElementById('regPasswordConfirm').value;
+            const q = document.getElementById('regQuestion').value.trim();
+            const a = document.getElementById('regAnswer').value.trim();
+            const err = document.getElementById('regError');
+            if(!u||!p||!q||!a) { err.textContent='All fields required.'; err.style.display='block'; return; }
+            if(p!==p2) { err.textContent='Passwords do not match.'; err.style.display='block'; return; }
+            try {
+                await registerUser(u, p, q, a);
+                toast('Account created! Please sign in.', 3000);
+                showLoginForm();
+            } catch(e) { err.textContent = e.message; err.style.display='block'; }
+        };
+        window.handleRecovery = async () => {
+            const u = document.getElementById('recoverUsername').value.trim();
+            const a = document.getElementById('recoverAnswer').value.trim();
+            const np = document.getElementById('recoverNewPassword').value;
+            const err = document.getElementById('recoverError');
+            if(!u||!a||!np) { err.textContent='All fields required.'; err.style.display='block'; return; }
+            try {
+                await recoverPassword(u, a, np);
+                toast('Password updated. Please sign in.', 3000);
+                showLoginForm();
+            } catch(e) { err.textContent = e.message; err.style.display='block'; }
+        };
+        window.logout = () => {
+            currentUser = null;
+            document.getElementById('appContainer').classList.add('hidden');
+            document.getElementById('authContainer').classList.remove('hidden');
+            renderAuth();
+        };
+        window.toggleUserMenu = () => {
+            const d = document.getElementById('userDropdown');
+            d.style.display = d.style.display === 'block' ? 'none' : 'block';
+        };
+        window.openSettings = () => {
+            document.getElementById('userDropdown').style.display = 'none';
+            const modal = document.createElement('div');
+            modal.className = 'settings-modal';
+            modal.innerHTML = `
+                <div class="settings-content">
+                    <h3 style="margin-bottom:16px;font-family:'Rajdhani',sans-serif;">Account Settings</h3>
+                    <div class="field"><label>Username</label><input value="${currentUser}" disabled></div>
+                    <div class="field"><label>Current Password</label><input type="password" id="oldPass"></div>
+                    <div class="field"><label>New Password</label><input type="password" id="newPass1"></div>
+                    <div class="field"><label>Confirm New Password</label><input type="password" id="newPass2"></div>
+                    <div class="error-msg" id="settingsError" style="display:none;"></div>
+                    <div style="display:flex;gap:8px;margin-top:12px;">
+                        <button class="auth-btn" type="button" onclick="handleChangePassword()">Update</button>
+                        <button class="auth-btn" type="button" style="background:#888;" onclick="this.closest('.settings-modal').remove()">Cancel</button>
+                    </div>
+                </div>`;
+            document.body.appendChild(modal);
+        };
+        window.handleChangePassword = async () => {
+            const old = document.getElementById('oldPass').value;
+            const n1 = document.getElementById('newPass1').value;
+            const n2 = document.getElementById('newPass2').value;
+            const err = document.getElementById('settingsError');
+            if(!old||!n1||!n2) { err.textContent='All fields required.'; err.style.display='block'; return; }
+            if(n1!==n2) { err.textContent='New passwords do not match.'; err.style.display='block'; return; }
+            try {
+                await changePassword(currentUser, old, n1);
+                toast('Password updated.', 3000);
+                document.querySelector('.settings-modal').remove();
+            } catch(e) { err.textContent = e.message; err.style.display='block'; }
+        };
 
-    async function getUser(username) {
-        const all = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-        return all[username] || null;
-    }
+        // ========== APP STATE ==========
+        let libsReady = false;
+        let mainTab = 'BILLING', billTab = 'INVOICE';
+        let items = [
+            { id:1, code:'ADV-001', desc:'Legal Consultation & Advisory on Land Matter', hrs:3.5, rate:12000, disb:0 },
+            { id:2, code:'DRF-042', desc:'Drafting & Filing Plaint (ELC Case No. 45/2024)', hrs:8, rate:10000, disb:3500 },
+            { id:3, code:'CRT-017', desc:'Court Attendance (Nanyuki Law Courts)', hrs:2, rate:15000, disb:1500 },
+            { id:4, code:'SRV-003', desc:'Service of Process & Court Summons', hrs:0, rate:0, disb:5000 }
+        ];
+        let nid = 5, disc = 0, vat = 16;
+        let doc = {
+            no:'INV-2024-089', date:'2026-05-07', due:'Within 30 Days', ref:'ELC Case No. 45/2024',
+            client:{ name:'James Mwangi', phone:'+254 722 890123', email:'j.mwangi@corporation.co.ke', addr:'Nanyuki Town' },
+            notes:'Professional fees as per Advocates Remuneration Order.',
+            terms:'Payment within 30 days. Interest at 14% p.a. on overdue amounts.'
+        };
+        let matters = [
+            { id:101, title:'Mention - ELC Case 45/2024', court:'Nanyuki Law Courts', date:'2026-05-08', time:'9:00 AM', judge:'Hon. Justice Mwangi', caseNo:'ELC 45/2024', client:'James Mwangi' },
+            { id:102, title:'Hearing - Succession Cause 12/2024', court:'Nanyuki Law Courts', date:'2026-05-12', time:'10:30 AM', judge:'Hon. Justice Wanjiku', caseNo:'SUC 12/2024', client:'Peter Njoroge' }
+        ];
+        let nmid = 106;
+        let reminders = [
+            { id:1, title:'Follow up fees payment', dueDate:'2026-05-15', note:'Send reminder email to James Mwangi', type:'payment' },
+            { id:2, title:'File list of documents', dueDate:'2026-05-09', note:'Submit to court registry', type:'task' }
+        ];
+        let nrid = 3;
+        let calYear = new Date().getFullYear(), calMonth = new Date().getMonth();
+        let matterViewMode = 'calendar';
 
-    async function registerUser(username, password, question, answer) {
-        const existing = await getUser(username);
-        if (existing) throw new Error('Username already exists.');
-        const passwordHash = await sha256(password);
-        const securityAnswerHash = await sha256(answer.toLowerCase().trim());
-        const user = { username, passwordHash, securityQuestion: question, securityAnswerHash };
-        await saveUser(user);
-        return user;
-    }
+        const FIRM = {
+            name: 'MAUNCHO LAW ADVOCATES',
+            address: 'Laipha House, Third Floor, Nanyuki',
+            email: 'wakilimauncho@gmail.com',
+            phone: '+254 746 388 218',
+            logo: 'https://i.ibb.co/mCPRGMdP/IMG-20260506-WA0258.jpg',
+            watermark: 'https://i.ibb.co/Kz6kgz9T/file-00000000d254722f993c63521e7dc065.png'
+        };
 
-    async function loginUser(username, password) {
-        const user = await getUser(username);
-        if (!user) throw new Error('User not found.');
-        const hash = await sha256(password);
-        if (hash !== user.passwordHash) throw new Error('Invalid password.');
-        return user;
-    }
+        const F = n => 'KSH ' + Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
+        const FP = n => Number(n).toLocaleString('en-KE', {minimumFractionDigits:2, maximumFractionDigits:2});
 
-    async function recoverPassword(username, answer, newPassword) {
-        const user = await getUser(username);
-        if (!user) throw new Error('User not found.');
-        const answerHash = await sha256(answer.toLowerCase().trim());
-        if (answerHash !== user.securityAnswerHash) throw new Error('Security answer incorrect.');
-        const newHash = await sha256(newPassword);
-        user.passwordHash = newHash;
-        await saveUser(user);
-        return true;
-    }
-
-    async function changePassword(username, oldPassword, newPassword) {
-        const user = await getUser(username);
-        if (!user) throw new Error('User not found.');
-        const oldHash = await sha256(oldPassword);
-        if (oldHash !== user.passwordHash) throw new Error('Current password is incorrect.');
-        const newHash = await sha256(newPassword);
-        user.passwordHash = newHash;
-        await saveUser(user);
-        return true;
-    }
-
-    function renderAuth() {
-        const container = document.getElementById('authContainer');
-        container.innerHTML = `
-            <div class="auth-card" id="authCard">
-                <div class="brand">MAUNCHO LAW</div>
-                <div class="brand-sub">ADVOCATES</div>
-                <div id="authFormArea"></div>
-            </div>
-        `;
-        showLoginForm();
-    }
-
-    function showLoginForm() {
-        document.getElementById('authFormArea').innerHTML = `
-            <input type="text" class="auth-input" id="loginUsername" placeholder="Username" autocomplete="username">
-            <input type="password" class="auth-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
-            <div class="error-msg" id="loginError" style="display:none;"></div>
-            <button class="auth-btn" onclick="handleLogin()">Sign In</button>
-            <span class="auth-link" onclick="showRecoveryForm()">Forgot password?</span>
-            <div class="auth-toggle">Don't have an account? <span onclick="showRegisterForm()">Sign up</span></div>
-        `;
-    }
-
-    function showRegisterForm() {
-        document.getElementById('authFormArea').innerHTML = `
-            <input type="text" class="auth-input" id="regUsername" placeholder="Choose a username">
-            <input type="password" class="auth-input" id="regPassword" placeholder="Create password">
-            <input type="password" class="auth-input" id="regPasswordConfirm" placeholder="Confirm password">
-            <input type="text" class="auth-input" id="regQuestion" placeholder="Security question (e.g., Pet's name)">
-            <input type="text" class="auth-input" id="regAnswer" placeholder="Your answer">
-            <div class="error-msg" id="regError" style="display:none;"></div>
-            <button class="auth-btn" onclick="handleRegister()">Create Account</button>
-            <div class="auth-toggle">Already have an account? <span onclick="showLoginForm()">Sign in</span></div>
-        `;
-    }
-
-    function showRecoveryForm() {
-        document.getElementById('authFormArea').innerHTML = `
-            <p style="margin-bottom:12px; font-size:14px; color:#444;">Reset your password</p>
-            <input type="text" class="auth-input" id="recoverUsername" placeholder="Username">
-            <input type="text" class="auth-input" id="recoverAnswer" placeholder="Answer to security question">
-            <input type="password" class="auth-input" id="recoverNewPassword" placeholder="New password">
-            <div class="error-msg" id="recoverError" style="display:none;"></div>
-            <button class="auth-btn" onclick="handleRecovery()">Reset Password</button>
-            <span class="auth-link" onclick="showLoginForm()">Back to Sign In</span>
-        `;
-    }
-
-    window.handleLogin = async () => {
-        const user = document.getElementById('loginUsername').value.trim();
-        const pass = document.getElementById('loginPassword').value;
-        const errEl = document.getElementById('loginError');
-        if (!user || !pass) { errEl.textContent = 'All fields required.'; errEl.style.display='block'; return; }
-        try {
-            const logged = await loginUser(user, pass);
-            currentUser = logged.username;
-            document.getElementById('authContainer').classList.add('hidden');
-            document.getElementById('appContainer').classList.remove('hidden');
-            document.getElementById('userIconBtn').textContent = user.charAt(0).toUpperCase();
-            loadAppData();
-            render();
-        } catch (e) {
-            errEl.textContent = e.message; errEl.style.display='block';
+        function calc() {
+            const f = items.reduce((s,i) => s + i.hrs*i.rate, 0);
+            const d = items.reduce((s,i) => s + (i.disb||0), 0);
+            const s = f + d, di = s*(disc/100), ad = s - di, tx = ad*(vat/100), gt = ad + tx;
+            return {f,d,s,di,ad,tx,gt};
         }
-    };
 
-    window.handleRegister = async () => {
-        const user = document.getElementById('regUsername').value.trim();
-        const pass = document.getElementById('regPassword').value;
-        const pass2 = document.getElementById('regPasswordConfirm').value;
-        const q = document.getElementById('regQuestion').value.trim();
-        const a = document.getElementById('regAnswer').value.trim();
-        const errEl = document.getElementById('regError');
-        if (!user || !pass || !q || !a) { errEl.textContent='All fields required.'; errEl.style.display='block'; return; }
-        if (pass !== pass2) { errEl.textContent='Passwords do not match.'; errEl.style.display='block'; return; }
-        try {
-            await registerUser(user, pass, q, a);
-            toast('Account created! Please sign in.', 3000);
-            showLoginForm();
-        } catch (e) {
-            errEl.textContent = e.message; errEl.style.display='block';
+        function toast(m, d=2500) {
+            const t = document.getElementById('toast');
+            // Hide any currently visible toast instantly
+            t.style.display = 'none';
+            clearTimeout(window._tt);
+            t.textContent = m;
+            t.style.display = 'block';
+            window._tt = setTimeout(() => { t.style.display = 'none'; }, d);
         }
-    };
 
-    window.handleRecovery = async () => {
-        const user = document.getElementById('recoverUsername').value.trim();
-        const answer = document.getElementById('recoverAnswer').value.trim();
-        const newPass = document.getElementById('recoverNewPassword').value;
-        const errEl = document.getElementById('recoverError');
-        if (!user || !answer || !newPass) { errEl.textContent='All fields required.'; errEl.style.display='block'; return; }
-        try {
-            await recoverPassword(user, answer, newPass);
-            toast('Password updated. Please sign in.', 3000);
-            showLoginForm();
-        } catch (e) {
-            errEl.textContent = e.message; errEl.style.display='block';
+        const APP_STORE = 'mauncho_pro_state';
+        function saveAppData() {
+            const state = { items, nid, disc, vat, doc, matters, nmid, reminders, nrid, billTab, mainTab, matterViewMode };
+            try { localStorage.setItem(APP_STORE, JSON.stringify(state)); } catch(e) { toast('Storage full. Please clear old data.', 3000); }
         }
-    };
+        function loadAppData() {
+            const saved = localStorage.getItem(APP_STORE);
+            if (saved) {
+                try {
+                    const s = JSON.parse(saved);
+                    items = s.items || items; nid = s.nid || nid; disc = s.disc||0; vat = s.vat||16;
+                    doc = s.doc || doc; matters = s.matters||matters; nmid = s.nmid||nmid;
+                    reminders = s.reminders||reminders; nrid = s.nrid||nrid;
+                    billTab = s.billTab||'INVOICE'; mainTab = s.mainTab||'BILLING';
+                    matterViewMode = s.matterViewMode||'calendar';
+                } catch(e){}
+            }
+        }
 
-    window.logout = () => {
-        currentUser = null;
-        document.getElementById('appContainer').classList.add('hidden');
-        document.getElementById('authContainer').classList.remove('hidden');
-        renderAuth();
-    };
+        function setMainTabActive(tab) {
+            document.querySelectorAll('.main-tab').forEach(el => {
+                el.classList.remove('active');
+                if (el.textContent.toUpperCase().includes(tab.toUpperCase())) el.classList.add('active');
+            });
+        }
 
-    window.toggleUserMenu = () => {
-        const dropdown = document.getElementById('userDropdown');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    };
+        window.addEventListener('beforeunload', saveAppData);
+        setInterval(saveAppData, 3000);
 
-    window.openSettings = () => {
-        document.getElementById('userDropdown').style.display = 'none';
-        const modal = document.createElement('div');
-        modal.className = 'settings-modal';
-        modal.innerHTML = `
-            <div class="settings-content">
-                <h3 style="margin-bottom:16px;font-family:'Rajdhani',sans-serif;">Account Settings</h3>
-                <div class="field"><label>Username</label><input value="${currentUser}" disabled></div>
-                <div class="field"><label>Current Password</label><input type="password" id="oldPass"></div>
-                <div class="field"><label>New Password</label><input type="password" id="newPass1"></div>
-                <div class="field"><label>Confirm New Password</label><input type="password" id="newPass2"></div>
-                <div class="error-msg" id="settingsError" style="display:none;"></div>
-                <div style="display:flex; gap:8px; margin-top:12px;">
-                    <button class="auth-btn" onclick="handleChangePassword()">Update Password</button>
-                    <button class="auth-btn" style="background:#888;" onclick="this.closest('.settings-modal').remove()">Cancel</button>
+        // ========== LIBRARIES & LOGO CACHING ==========
+        function loadLibs() {
+            return new Promise((resolve, reject) => {
+                if (libsReady || (window.html2canvas && window.jspdf)) { libsReady = true; resolve(); return; }
+                const s1 = document.createElement('script');
+                s1.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                s1.onload = () => {
+                    const s2 = document.createElement('script');
+                    s2.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                    s2.onload = () => { libsReady = true; resolve(); };
+                    s2.onerror = () => reject(new Error('jsPDF failed to load'));
+                    document.head.appendChild(s2);
+                };
+                s1.onerror = () => reject(new Error('html2canvas failed to load'));
+                document.head.appendChild(s1);
+            });
+        }
+
+        async function getLogoDataUri() {
+            if (logoDataUri) return logoDataUri;
+            if (logoPromise) return await logoPromise;
+            logoPromise = (async () => {
+                try {
+                    const response = await fetch(FIRM.logo, { mode: 'cors' });
+                    if (!response.ok) throw new Error('Fetch failed');
+                    const blob = await response.blob();
+                    logoDataUri = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (e) {
+                    console.warn('Logo fetch failed, using fallback SVG', e);
+                    logoDataUri = 'data:image/svg+xml,' + encodeURIComponent(
+                        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52" fill="#c9a84c"><text x="8" y="42" font-family="Playfair Display,serif" font-weight="800" font-size="42" fill="#000">M</text></svg>'
+                    );
+                }
+                return logoDataUri;
+            })();
+            return await logoPromise;
+        }
+
+        function pdfTemplate(logoUrl, billTab) {
+            const c = calc();
+            const titles = { FEE_NOTE: 'FEE NOTE', INVOICE: 'TAX INVOICE', RECEIPT: 'OFFICIAL RECEIPT' };
+            const heading = titles[billTab] || 'TAX INVOICE';
+            const rows = items.map(i => `
+                <tr>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.code||'—'}</td>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;">${i.desc||'—'}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:center;">${i.hrs||0}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.rate)}</td>
+                    <td style="padding:11px 8px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;">${FP(i.disb||0)}</td>
+                    <td style="padding:11px 10px;border-bottom:1px solid #e8ecf1;color:#1f2937;font-size:12.5px;text-align:right;font-weight:600;">${FP(i.hrs*i.rate+(i.disb||0))}</td>
+                </tr>`).join('');
+
+            return `<!DOCTYPE html><html><head><meta charset="UTF-8"><style>
+                *{margin:0;padding:0;box-sizing:border-box;} body{background:#f0f2f5;display:flex;justify-content:center;align-items:center;min-height:100vh;font-family:'Segoe UI',sans-serif;padding:28px 16px;}
+                .page{max-width:760px;width:100%;} .invoice-card{background:#fff;box-shadow:0 2px 16px rgba(0,0,0,0.08);border-radius:6px;overflow:hidden;}
+                .card-top{background:#1a1f2b;padding:24px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #c9a84c;}
+                .card-top-brand{display:flex;align-items:center;gap:14px;} .card-top-brand img{width:50px;height:50px;object-fit:contain;border-radius:6px;border:2px solid #c9a84c;}
+                .card-top-brand-text{color:#fff;} .card-top-brand-text .firm-name{font-family:'Playfair Display',serif;font-weight:800;font-size:20px;letter-spacing:1px;}
+                .card-top-brand-text .firm-sub{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;color:#c9a84c;letter-spacing:2px;text-transform:uppercase;}
+                .card-top-title{text-align:right;} .card-top-title h2{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;color:#fff;text-transform:uppercase;}
+                .card-top-title .subtitle{font-size:9px;color:#a0a8b4;letter-spacing:1px;} .card-body{padding:28px 32px 24px;}
+                .bill-section{display:flex;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px;}
+                .bill-to h3{font-family:'Rajdhani',sans-serif;font-weight:700;font-size:10px;letter-spacing:2px;color:#8b6914;text-transform:uppercase;margin-bottom:6px;}
+                .bill-to .name{font-size:18px;font-weight:700;color:#0f1922;} .bill-to .detail{font-size:12px;color:#4b5563;}
+                .meta{text-align:right;min-width:160px;} .meta-row{display:flex;justify-content:space-between;gap:24px;font-size:11px;padding:3px 0;}
+                .meta-row .mlabel{color:#6b7280;} .meta-row .mvalue{color:#111827;font-weight:600;}
+                table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+                thead th{text-align:left;padding:10px;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:9px;letter-spacing:1.5px;color:#6b7280;text-transform:uppercase;background:#f8f9fb;border-bottom:2px solid #d1d5db;}
+                .totals-area{display:flex;justify-content:flex-end;margin-bottom:20px;} .totals-box{width:260px;}
+                .t-row{display:flex;justify-content:space-between;padding:5px 0;font-size:12px;color:#4b5563;}
+                .t-row.vat-row{border-bottom:1px solid #e5e7eb;padding-bottom:7px;margin-bottom:5px;}
+                .t-row.grand-row{font-weight:700;font-size:13px;color:#0f1922;border-top:2px solid #1f2937;padding-top:9px;margin-top:5px;}
+                .notes-box{background:#f8f9fb;border-radius:6px;padding:14px 16px;margin-bottom:16px;font-size:11px;color:#4b5563;line-height:1.5;}
+                .footer-bar{display:flex;justify-content:space-between;padding-top:14px;border-top:1px solid #e5e7eb;font-size:10px;color:#9ca3af;}
+            </style></head><body><div class="page"><div class="invoice-card">
+                <div class="card-top"><div class="card-top-brand"><img src="${logoUrl}"><div class="card-top-brand-text"><div class="firm-name">MAUNCHO LAW</div><div class="firm-sub">ADVOCATES</div></div></div>
+                <div class="card-top-title"><h2>${heading}</h2><div class="subtitle">${FIRM.address} • ${FIRM.phone}</div></div></div>
+                <div class="card-body"><div class="bill-section"><div class="bill-to"><h3>BILL TO</h3><div class="name">${doc.client.name}</div><div class="detail">${doc.ref}</div><div class="detail">${doc.client.addr}</div></div>
+                <div class="meta"><div class="meta-row"><span class="mlabel">Invoice No</span><span class="mvalue">${doc.no}</span></div>
+                <div class="meta-row"><span class="mlabel">Date</span><span class="mvalue">${doc.date}</span></div>
+                <div class="meta-row"><span class="mlabel">Due</span><span class="mvalue">${doc.due}</span></div></div></div>
+                <table><thead><tr><th>Code</th><th>Description</th><th style="text-align:center;">Hrs</th><th style="text-align:right;">Rate</th><th style="text-align:right;">Disb.</th><th style="text-align:right;">Total</th></tr></thead><tbody>${rows}</tbody></table>
+                <div class="totals-area"><div class="totals-box">
+                    <div class="t-row"><span>Subtotal</span><span>${FP(c.s)}</span></div>
+                    ${disc>0?`<div class="t-row"><span>Discount (${disc}%)</span><span>-${FP(c.di)}</span></div>`:''}
+                    <div class="t-row"><span>Net</span><span>${FP(c.ad)}</span></div>
+                    <div class="t-row vat-row"><span>VAT (${vat}%)</span><span>${FP(c.tx)}</span></div>
+                    <div class="t-row grand-row"><span>GRAND TOTAL</span><span>KSH ${FP(c.gt)}</span></div>
+                </div></div>
+                <div class="notes-box"><strong>Notes</strong><br>${doc.notes}<br><br><strong>Terms</strong><br>${doc.terms}</div>
+                <div class="footer-bar"><span>${FIRM.name}</span><span>${FIRM.email}</span></div></div>
+            </div></div></body></html>`;
+        }
+
+        async function makePDF() {
+            await loadLibs();
+            const logoUrl = await getLogoDataUri();
+            const el = document.getElementById('pdfTemplate');
+            el.innerHTML = pdfTemplate(logoUrl, billTab);
+            // Wait for layout and paint using rAF
+            await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+            const canvas = await html2canvas(el, { scale:2.8, useCORS:true, backgroundColor:'#f0f2f5', logging:false });
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageHeight = 297, scale = 210 / canvas.width;
+            let srcY = 0;
+            while (srcY < canvas.height) {
+                const slice = Math.min(canvas.height - srcY, pageHeight / scale);
+                const sliceCanvas = document.createElement('canvas');
+                sliceCanvas.width = canvas.width; sliceCanvas.height = slice;
+                sliceCanvas.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, slice, 0, 0, canvas.width, slice);
+                pdf.addImage(sliceCanvas.toDataURL('image/png'), 'PNG', 0, 0, 210, slice * scale);
+                srcY += slice;
+                if (srcY < canvas.height) pdf.addPage();
+            }
+            el.innerHTML = '';
+            return pdf.output('blob');
+        }
+
+        async function shareWA() {
+            const lo = document.getElementById('loadingOverlay'); lo.classList.remove('hidden');
+            toast('Generating PDF…', 4000);
+            try {
+                const blob = await makePDF();
+                const fn = `Mauncho_${billTab}_${doc.no.replace(/[/#]/g,'_')}.pdf`;
+                const file = new File([blob], fn, {type:'application/pdf'});
+                const c = calc();
+                const msg = `*${FIRM.name}*\n${FIRM.address}\n${billTab}: ${doc.no}\nClient: ${doc.client.name}\nTotal: ${F(c.gt)}`;
+                if (navigator.canShare && navigator.canShare({files:[file]})) {
+                    await navigator.share({title: `Mauncho Law - ${doc.no}`, text: msg, files: [file]});
+                } else {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = fn;
+                    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+                }
+                toast('Shared!', 2500);
+            } catch(e) { toast('Error sharing.', 2500); }
+            finally { lo.classList.add('hidden'); }
+        }
+
+        async function dlPDF() {
+            const lo = document.getElementById('loadingOverlay'); lo.classList.remove('hidden');
+            try {
+                const blob = await makePDF();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); a.href = url; a.download = `Mauncho_${billTab}_${doc.no}.pdf`;
+                document.body.appendChild(a); a.click(); document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                toast('PDF downloaded.', 2500);
+            } catch(e) { toast('Download failed.', 2500); }
+            finally { lo.classList.add('hidden'); }
+        }
+
+        window.previewPDF = async () => {
+            const logoUrl = await getLogoDataUri();
+            const win = window.open('', '_blank', 'width=820,height=900');
+            win.document.write(pdfTemplate(logoUrl, billTab)); win.document.close();
+        };
+
+        window.quickShare = () => {
+            if(mainTab!=='BILLING'){
+                mainTab='BILLING';
+                setMainTabActive('BILLING');
+                render();
+            }
+            setTimeout(shareWA, 300);
+        };
+
+        // ========== DATA OPS ==========
+        window.addItem = () => { items.push({id:nid++, code:'', desc:'', hrs:0, rate:0, disb:0}); renderBilling(); saveAppData(); };
+        window.delItem = (id) => { if(items.length<=1) return toast('Need at least one item.'); items = items.filter(i=>i.id!==id); renderBilling(); saveAppData(); };
+        window.updItem = (id, field, value) => {
+            const item = items.find(i=>i.id===id); if(!item) return;
+            if(['hrs','rate','disb'].includes(field)) {
+                let num = parseFloat(value)||0;
+                if (num < 0) num = 0;
+                item[field] = num;
+            } else { item[field] = value; }
+            refreshTotals(); saveAppData();
+        };
+        function refreshTotals() {
+            const c = calc();
+            document.querySelectorAll('.items-table tbody tr').forEach(row => {
+                const id = parseInt(row.dataset.id);
+                const item = items.find(i=>i.id===id);
+                if(item) row.querySelector('.row-total').textContent = F(item.hrs*item.rate+(item.disb||0));
+            });
+            const s = document.getElementById('subtotalVal'), v = document.getElementById('vatVal'), g = document.getElementById('grandVal');
+            if(s) s.textContent = F(c.s); if(v) v.textContent = F(c.tx); if(g) g.textContent = F(c.gt);
+        }
+
+        window.updDoc = (f,v) => { doc[f]=v; if(f==='no') document.getElementById('docNumber').textContent=v; saveAppData(); };
+        window.updClient = (f,v) => { doc.client[f]=v; saveAppData(); };
+        window.updDisc = (v) => { disc=Math.min(100, Math.max(0, parseFloat(v)||0)); refreshTotals(); saveAppData(); };
+        window.updVat = (v) => { vat=Math.min(100, Math.max(0, parseFloat(v)||0)); refreshTotals(); saveAppData(); };
+
+        // ========== MATTERS ==========
+        window.addMatter = () => {
+            const t = prompt('Title:');
+            if (t === null) return; // Cancel
+            if (!t) { toast('Title required.'); return; }
+            const d = prompt('Date (YYYY-MM-DD):');
+            if (d === null) return; // Cancel
+            if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d) || isNaN(new Date(d).getTime())) {
+                toast('Invalid date format. Use YYYY-MM-DD.');
+                return;
+            }
+            matters.push({
+                id: nmid++,
+                title: t,
+                date: d,
+                time: prompt('Time:', '9:00 AM') || '9:00 AM',
+                court: prompt('Court:', 'Nanyuki Law Courts'),
+                caseNo: prompt('Case No:'),
+                client: prompt('Client:'),
+                judge: prompt('Judge:')
+            });
+            renderMatters(); saveAppData();
+        };
+
+        window.editMatter = (id) => {
+            const m = matters.find(x => x.id === id);
+            if (!m) return;
+            const t = prompt('Title:', m.title);
+            if (t === null) return; // Cancel
+            const d = prompt('Date (YYYY-MM-DD):', m.date);
+            if (d === null) return; // Cancel
+            if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d) || isNaN(new Date(d).getTime())) {
+                toast('Invalid date.');
+                return;
+            }
+            Object.assign(m, {
+                title: t || m.title,
+                date: d,
+                time: prompt('Time:', m.time) || m.time,
+                court: prompt('Court:', m.court) || m.court,
+                caseNo: prompt('Case No:', m.caseNo) || m.caseNo,
+                client: prompt('Client:', m.client) || m.client,
+                judge: prompt('Judge:', m.judge) || m.judge
+            });
+            renderMatters(); saveAppData();
+        };
+
+        window.delMatter = (id) => {
+            if (confirm('Delete?')) {
+                matters = matters.filter(x => x.id !== id);
+                renderMatters(); saveAppData();
+            }
+        };
+
+        // ========== REMINDERS ==========
+        window.addReminder = () => {
+            const t = prompt('Title:');
+            if (t === null) return;
+            if (!t) { toast('Title required.'); return; }
+            const d = prompt('Due date (YYYY-MM-DD):');
+            if (d === null) return;
+            if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d) || isNaN(new Date(d).getTime())) {
+                toast('Invalid date format. Use YYYY-MM-DD.');
+                return;
+            }
+            reminders.push({
+                id: nrid++,
+                title: t,
+                dueDate: d,
+                note: prompt('Note:') || '',
+                type: prompt('Type:', 'task') || 'task'
+            });
+            renderReminders(); saveAppData();
+        };
+
+        window.editReminder = (id) => {
+            const r = reminders.find(x => x.id === id);
+            if (!r) return;
+            const t = prompt('Title:', r.title);
+            if (t === null) return;
+            const d = prompt('Due date (YYYY-MM-DD):', r.dueDate);
+            if (d === null) return;
+            if (!d || !/^\d{4}-\d{2}-\d{2}$/.test(d) || isNaN(new Date(d).getTime())) {
+                toast('Invalid date.');
+                return;
+            }
+            Object.assign(r, {
+                title: t || r.title,
+                dueDate: d,
+                note: prompt('Note:', r.note) || r.note,
+                type: prompt('Type:', r.type) || r.type
+            });
+            renderReminders(); saveAppData();
+        };
+
+        window.delReminder = (id) => {
+            if (confirm('Delete?')) {
+                reminders = reminders.filter(x => x.id !== id);
+                renderReminders(); saveAppData();
+            }
+        };
+
+        // ========== CALENDAR ==========
+        function getMattersForDay(dateStr) { return matters.filter(m => m.date === dateStr); }
+
+        function renderCalendar() {
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const firstDay = new Date(calYear, calMonth, 1).getDay();
+            const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+            let html = `<div class="calendar-nav">
+                <button type="button" onclick="changeMonth(-1)">← Prev</button>
+                <strong>${monthNames[calMonth]} ${calYear}</strong>
+                <button type="button" onclick="changeMonth(1)">Next →</button>
+            </div>`;
+            html += `<div class="calendar-grid">`;
+            ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].forEach(d => html += `<div class="calendar-day-header">${d}</div>`);
+            for (let i = 0; i < firstDay; i++) html += `<div class="calendar-day" style="background:transparent;cursor:default;"></div>`;
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const dayMatters = getMattersForDay(dateStr);
+                html += `<div class="calendar-day${dateStr === todayStr ? ' today' : ''}" onclick="showDayMatters('${dateStr}')">
+                    <span class="day-num">${day}</span>
+                    ${dayMatters.length ? `<span class="badge">${dayMatters.length} Matter(s)</span>` : ''}
+                </div>`;
+            }
+            html += `</div>`;
+            return html;
+        }
+
+        window.changeMonth = (delta) => {
+            calMonth += delta;
+            if (calMonth < 0) { calMonth = 11; calYear--; }
+            if (calMonth > 11) { calMonth = 0; calYear++; }
+            renderMatters();
+        };
+
+        window.showDayMatters = (dateStr) => {
+            const dayMatters = getMattersForDay(dateStr);
+            const d = new Date(dateStr + 'T00:00:00');
+            const dateDisplay = d.toLocaleDateString('en-KE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+            // Build a wrapper to easily remove both backdrop and popup together
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = `
+                <div class="popup-backdrop" onclick="this.parentNode.remove()"></div>
+                <div class="day-matters-popup">
+                    <h4>${dateDisplay}</h4>
+                    ${dayMatters.length === 0 ? '<p>No matters.</p>' : dayMatters.map(m => `
+                        <div style="background:#fafaf9;border-left:3px solid var(--gold);padding:8px;margin-bottom:6px;border-radius:6px;">
+                            <strong>${m.title}</strong>
+                            <div style="font-size:10px;color:#6b5e4a;">🕐 ${m.time} | 🏛️ ${m.court}</div>
+                            <div style="font-size:10px;color:#6b5e4a;">👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
+                            <div style="margin-top:6px;display:flex;gap:6px;">
+                                <button type="button" onclick="editMatter(${m.id});this.closest('.day-matters-popup').parentNode.remove();">✏️</button>
+                                <button type="button" onclick="delMatter(${m.id});this.closest('.day-matters-popup').parentNode.remove();">🗑️</button>
+                            </div>
+                        </div>`).join('')}
+                    <button type="button" onclick="this.parentNode.parentNode.remove()" style="width:100%;margin-top:8px;background:var(--black);color:white;border:none;padding:8px;border-radius:6px;">Close</button>
+                </div>`;
+            document.body.appendChild(wrapper);
+        };
+
+        // ========== RENDERING ==========
+        function renderBilling() {
+            const c = calc();
+            const tabs = ['FEE_NOTE', 'INVOICE', 'RECEIPT'];
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="sub-tabs">${tabs.map(t => `<button class="sub-tab${billTab === t ? ' active' : ''}" type="button" onclick="switchBillTab('${t}')">${t.replace('_', ' ')}</button>`).join('')}</div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">${billTab.replace('_', ' ')} Details</span></div><div class="form-body">
+                    <div class="field-row"><div class="field"><label>Number</label><input value="${doc.no}" onchange="updDoc('no',this.value)"></div><div class="field"><label>Date</label><input type="date" value="${doc.date}" onchange="updDoc('date',this.value)"></div></div>
+                    <div class="field-row"><div class="field"><label>Matter Ref</label><input value="${doc.ref}" onchange="updDoc('ref',this.value)"></div><div class="field"><label>Due Date</label><input value="${doc.due}" onchange="updDoc('due',this.value)"></div></div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Client</span></div><div class="form-body">
+                    <div class="field"><label>Name</label><input value="${doc.client.name}" onchange="updClient('name',this.value)"></div>
+                    <div class="field-row"><div class="field"><label>Phone</label><input value="${doc.client.phone}" onchange="updClient('phone',this.value)"></div><div class="field"><label>Email</label><input value="${doc.client.email}" onchange="updClient('email',this.value)"></div></div>
+                    <div class="field"><label>Address</label><input value="${doc.client.addr}" onchange="updClient('addr',this.value)"></div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Services</span></div>
+                    <div class="items-table-wrap"><table class="items-table"><thead><tr><th>Code</th><th>Description</th><th class="center">Hrs</th><th class="right">Rate</th><th class="right">Disb.</th><th class="right">Total</th><th></th></tr></thead><tbody>
+                        ${items.map(i => `<tr data-id="${i.id}">
+                            <td><input class="code" value="${i.code||''}" onchange="updItem(${i.id},'code',this.value)"></td>
+                            <td><input class="desc" value="${i.desc}" onchange="updItem(${i.id},'desc',this.value)"></td>
+                            <td class="center"><input class="hours" type="number" min="0" step="0.5" value="${i.hrs}" onchange="updItem(${i.id},'hrs',this.value)"></td>
+                            <td class="right"><input class="rate" type="number" min="0" step="500" value="${i.rate}" onchange="updItem(${i.id},'rate',this.value)"></td>
+                            <td class="right"><input class="rate" type="number" min="0" step="100" value="${i.disb||0}" onchange="updItem(${i.id},'disb',this.value)"></td>
+                            <td class="right"><span class="row-total">${F(i.hrs*i.rate+(i.disb||0))}</span></td>
+                            <td><button class="del-btn" type="button" onclick="delItem(${i.id})">×</button></td>
+                        </tr>`).join('')}
+                    </tbody></table></div>
+                    <div style="padding:4px 16px 16px">
+                        <button class="add-row-btn" type="button" onclick="addItem()">+ Add Service</button>
+                        <div class="divider"></div>
+                        <div class="adj-row"><label>Discount</label><input type="number" min="0" max="100" value="${disc}" onchange="updDisc(this.value)"><span class="adj-label">%</span></div>
+                        <div class="adj-row"><label>VAT</label><input type="number" min="0" max="100" value="${vat}" onchange="updVat(this.value)"><span class="adj-label">%</span></div>
+                        <div class="totals-block"><div class="totals-row"><span>Subtotal</span><span class="val" id="subtotalVal">${F(c.s)}</span></div><div class="totals-row"><span>VAT (${vat}%)</span><span class="val" id="vatVal">${F(c.tx)}</span></div></div>
+                        <div class="grand-total-row"><span class="label">GRAND TOTAL</span><span class="val" id="grandVal">${F(c.gt)}</span></div>
+                    </div>
+                </div></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">Notes & Terms</span></div><div class="form-body">
+                    <div class="field"><label>Notes</label><textarea rows="2" onchange="updDoc('notes',this.value)">${doc.notes}</textarea></div>
+                    <div class="field"><label>Terms</label><textarea rows="2" onchange="updDoc('terms',this.value)">${doc.terms}</textarea></div>
+                </div></div>
+                <div class="section-card"><div class="form-body actions">
+                    <button class="btn-preview" type="button" onclick="previewPDF()">📄 PREVIEW PDF</button>
+                    <button class="btn-whatsapp" type="button" onclick="shareWA()">📤 SHARE TO WHATSAPP</button>
+                    <button class="btn-download" type="button" onclick="dlPDF()">⬇ DOWNLOAD PDF</button>
+                </div></div>`;
+            document.getElementById('docNumber').textContent = doc.no;
+        }
+
+        function renderMatters() {
+            if (matterViewMode === 'list') renderMattersList();
+            else renderMattersCalendar();
+        }
+
+        function renderMattersList() {
+            const today = new Date().toISOString().slice(0, 10);
+            const sorted = [...matters].sort((a, b) => a.date.localeCompare(b.date));
+            const up = sorted.filter(m => m.date >= today), past = sorted.filter(m => m.date < today);
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="sub-tabs">
+                    <button class="sub-tab" type="button" onclick="setMatterView('calendar')">📅 Calendar</button>
+                    <button class="sub-tab active" type="button" onclick="setMatterView('list')">📋 List</button>
                 </div>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    };
-
-    window.handleChangePassword = async () => {
-        const old = document.getElementById('oldPass').value;
-        const n1 = document.getElementById('newPass1').value;
-        const n2 = document.getElementById('newPass2').value;
-        const err = document.getElementById('settingsError');
-        if (!old || !n1 || !n2) { err.textContent='All fields required.'; err.style.display='block'; return; }
-        if (n1 !== n2) { err.textContent='New passwords do not match.'; err.style.display='block'; return; }
-        try {
-            await changePassword(currentUser, old, n1);
-            toast('Password updated successfully.', 3000);
-            document.querySelector('.settings-modal').remove();
-        } catch (e) {
-            err.textContent = e.message; err.style.display='block';
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📅 Upcoming (${up.length})</span></div><div class="form-body">
+                    ${up.length === 0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">None scheduled.</p>' : up.map(m => {
+                        const md = new Date(m.date + 'T00:00:00');
+                        return `<div style="background:#fafaf9;border-left:3px solid var(--gold);padding:10px;margin-bottom:8px;border-radius:6px;">
+                            <div style="display:flex;justify-content:space-between;align-items:start;"><strong>${m.title}</strong>
+                                <div style="display:flex;gap:4px;">
+                                    <button type="button" onclick="editMatter(${m.id})">✏️</button>
+                                    <button type="button" onclick="delMatter(${m.id})">🗑️</button>
+                                </div>
+                            </div>
+                            <div style="font-size:10px;color:#6b5e4a;">📅 ${md.toLocaleDateString('en-KE',{weekday:'long',day:'numeric',month:'long',year:'numeric'})} | 🕐 ${m.time}</div>
+                            <div style="font-size:10px;color:#6b5e4a;">🏛️ ${m.court} | 👨‍⚖️ ${m.judge||'TBA'} | 📁 ${m.caseNo||'N/A'}</div>
+                        </div>`;
+                    }).join('')}
+                </div></div>
+                ${past.length > 0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(m => {
+                    const md = new Date(m.date + 'T00:00:00');
+                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong>${m.title}</strong><div style="font-size:9px;">📅 ${md.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | 🏛️ ${m.court}</div></div>`;
+                }).join('')}</div></div>` : ''}
+                <button class="add-row-btn" type="button" onclick="addMatter()">📅 + Schedule New Matter</button>`;
+            document.getElementById('docNumber').textContent = 'MATTERS';
         }
-    };
 
-    // ==================== APP LOGIC (unchanged from previous) ====================
-    // (All your existing variables, functions, PDF generation, rendering, etc.)
-    // To keep the answer concise, the full app code continues below without repetition,
-    // but in the actual HTML it's included entirely. I'll just place a placeholder here.
-    // In the actual answer, the complete code would be present – I've assembled it separately.
-    // For brevity in reasoning, I'll note that the existing code is intact after the auth module.
+        function renderMattersCalendar() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="sub-tabs">
+                    <button class="sub-tab active" type="button" onclick="setMatterView('calendar')">📅 Calendar</button>
+                    <button class="sub-tab" type="button" onclick="setMatterView('list')">📋 List</button>
+                </div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">My Scheduled Matters</span></div><div class="form-body">${renderCalendar()}</div></div>
+                <button class="add-row-btn" type="button" onclick="addMatter()">📅 + Schedule New Matter</button>`;
+            document.getElementById('docNumber').textContent = 'MATTERS';
+        }
 
-    // Initialise auth on load
-    renderAuth();
-})();
-</script>
+        window.setMatterView = (mode) => { matterViewMode = mode; renderMatters(); saveAppData(); };
+
+        function renderReminders() {
+            const today = new Date().toISOString().slice(0, 10);
+            const up = reminders.filter(r => r.dueDate >= today), past = reminders.filter(r => r.dueDate < today);
+            document.getElementById('mainContent').innerHTML = `
+                <div class="firm-info-bar"><span>📍 ${FIRM.address}</span><span>📧 ${FIRM.email}</span><span>📞 ${FIRM.phone}</span></div>
+                <div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">⏰ Upcoming (${up.length})</span></div><div class="form-body">
+                    ${up.length === 0 ? '<p style="text-align:center;color:var(--muted);padding:20px;">No upcoming reminders.</p>' : up.map(r => {
+                        const d = new Date(r.dueDate + 'T00:00:00');
+                        return `<div class="reminder-card${r.dueDate === today ? ' today' : ''}">
+                            <div style="display:flex;justify-content:space-between;align-items:center;"><strong>${r.title}</strong>
+                                <div style="display:flex;gap:4px;">
+                                    <button type="button" onclick="editReminder(${r.id})">✏️</button>
+                                    <button type="button" onclick="delReminder(${r.id})">🗑️</button>
+                                </div>
+                            </div>
+                            <div style="font-size:10px;color:#6b5e4a;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div>
+                            ${r.note ? `<div style="font-size:10px;color:#4b5563;">📝 ${r.note}</div>` : ''}
+                        </div>`;
+                    }).join('')}
+                </div></div>
+                ${past.length > 0 ? `<div class="section-card"><div class="section-header"><span class="section-dot"></span><span class="section-title">📂 Past (${past.length})</span></div><div class="form-body">${past.slice(-5).reverse().map(r => {
+                    const d = new Date(r.dueDate + 'T00:00:00');
+                    return `<div style="background:#fafaf9;border-left:3px solid #ccc;padding:8px;margin-bottom:6px;border-radius:6px;opacity:0.7;"><strong>${r.title}</strong><div style="font-size:9px;color:#6b5e4a;">📅 ${d.toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'})} | ${r.type}</div></div>`;
+                }).join('')}</div></div>` : ''}
+                <button class="add-row-btn" type="button" onclick="addReminder()">➕ New Reminder</button>`;
+            document.getElementById('docNumber').textContent = 'REMINDERS';
+        }
+
+        function render() {
+            if (mainTab === 'BILLING') renderBilling();
+            else if (mainTab === 'MATTERS') renderMatters();
+            else if (mainTab === 'REMINDERS') renderReminders();
+            saveAppData();
+        }
+
+        window.switchMainTab = (tab, el) => {
+            mainTab = tab;
+            setMainTabActive(tab);
+            render();
+        };
+
+        window.switchBillTab = (tab) => {
+            billTab = tab;
+            const prefix = { FEE_NOTE: 'FBN-', INVOICE: 'INV-', RECEIPT: 'RCT-' };
+            const suffix = { FEE_NOTE: '2024-001', INVOICE: '2024-089', RECEIPT: '2024-089' };
+            doc.no = prefix[tab] + suffix[tab];
+            renderBilling();
+            saveAppData();
+        };
+
+        Object.assign(window, { showLoginForm, showRegisterForm, showRecoveryForm });
+
+        loadLibs().catch(() => {});
+        renderAuth();
+    })();
+    </script>
 </body>
 </html>
